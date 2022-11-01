@@ -22,6 +22,7 @@ from timezone_field.rest_framework import TimeZoneSerializerField
 from ghostwriter.commandcenter.models import CompanyInformation
 from ghostwriter.reporting.models import (
     Evidence,
+    ExtraReportContext,
     Finding,
     Report,
     ReportFindingLink,
@@ -660,6 +661,37 @@ class WhiteCardSerializer(CustomModelSerializer):
         fields = "__all__"
 
 
+class ExtraReportContextSerializer(CustomModelSerializer):
+    """Serialize :model:`reporting:ExtraReportContext` entries."""
+
+    name = SerializerMethodField("get_name")
+    value = SerializerMethodField("get_value")
+    content_type = SerializerMethodField("get_content_type")
+
+    class Meta:
+        model = ExtraReportContext
+        fields = ["name", "value", "content_type"]
+
+    def get_name(self, obj):
+        return obj.context_type.name
+
+    def get_value(self, obj):
+        value = None
+        content_type = obj.context_type.content_type
+        if content_type == "richtext":
+            value = obj.richtext_content
+        elif content_type == "boolean":
+            value = obj.boolean_value
+        elif content_type == "variable":
+            value = obj.variable_content
+        elif content_type == "json":
+            value = obj.json_content
+        return value
+
+    def get_content_type(self, obj):
+        return obj.context_type.content_type
+
+
 class ReportDataSerializer(CustomModelSerializer):
     """Serialize :model:`rolodex:Project` and all related entries."""
 
@@ -722,6 +754,7 @@ class ReportDataSerializer(CustomModelSerializer):
         ]
     )
     company = SerializerMethodField("get_company_info")
+    extras = ExtraReportContextSerializer(source="extrareportcontext_set", many=True)
 
     class Meta:
         model = Report
@@ -773,6 +806,13 @@ class ReportDataSerializer(CustomModelSerializer):
             elif finding["severity"].lower() == "informational":
                 info_findings += 1
             finding_order += 1
+
+        # Add "extra" content to the report in a way that each value is easily accessible
+        # i.e., a boolean like ``bool`` is accessible as ``{{ bool }}`` in the template
+        for ex in rep["extras"]:
+            name = ex["name"]
+            value = ex["value"]
+            rep[name] = value
 
         # Add a ``totals`` key to track the values
         rep["totals"] = {}

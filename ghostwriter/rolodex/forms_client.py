@@ -119,7 +119,9 @@ class ClientContactForm(forms.ModelForm):
         self.fields["job_title"].widget.attrs["placeholder"] = "COO"
         self.fields["phone"].widget.attrs["placeholder"] = "(212) 897-1964"
         self.fields["phone"].label = "Phone Number"
-        self.fields["note"].widget.attrs["placeholder"] = "Janine is our main contact for assessment work and ..."
+        self.fields["note"].widget.attrs[
+            "placeholder"
+        ] = "Janine is our main contact for assessment work and ..."
         self.fields["timezone"].initial = general_config.default_timezone
         self.helper = FormHelper()
         # Disable the <form> tags because this will be part of an instance of `ClientForm()`
@@ -174,7 +176,10 @@ class ClientContactForm(forms.ModelForm):
                         ),
                         Column(
                             Field(
-                                "DELETE", style="display: none;", visibility="hidden", template="delete_checkbox.html"
+                                "DELETE",
+                                style="display: none;",
+                                visibility="hidden",
+                                template="delete_checkbox.html",
                             ),
                             css_class="form-group col-3 text-center",
                         ),
@@ -214,10 +219,16 @@ class ClientForm(forms.ModelForm):
             self.fields[field].widget.attrs["autocomplete"] = "off"
         self.fields["name"].widget.attrs["placeholder"] = "SpecterOps"
         self.fields["short_name"].widget.attrs["placeholder"] = "Specter"
-        self.fields["note"].widget.attrs["placeholder"] = "This client approached us with concerns in these areas ..."
-        self.fields["address"].widget.attrs["placeholder"] = "14 N Moore St, New York, NY 10013"
+        self.fields["note"].widget.attrs[
+            "placeholder"
+        ] = "This client approached us with concerns in these areas ..."
+        self.fields["address"].widget.attrs[
+            "placeholder"
+        ] = "14 N Moore St, New York, NY 10013"
         self.fields["timezone"].initial = general_config.default_timezone
-        self.fields["tags"].widget.attrs["placeholder"] = "cybersecurity, industry:infosec, ..."
+        self.fields["tags"].widget.attrs[
+            "placeholder"
+        ] = "cybersecurity, industry:infosec, ..."
         self.fields["note"].label = "Notes"
         self.fields["tags"].label = "Tags"
         # Design form layout with Crispy FormHelper
@@ -228,7 +239,8 @@ class ClientForm(forms.ModelForm):
         self.helper.layout = Layout(
             TabHolder(
                 CustomTab(
-                    "Client Information",
+                    "Application Information",
+                    # client -> Application
                     HTML(
                         """
                         <p class="form-spacer"></p>

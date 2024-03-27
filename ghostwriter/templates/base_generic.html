@@ -182,19 +182,24 @@
           <li>
             <a href="#clientSubmenu" data-toggle="collapse" aria-expanded="false"
                class="dropdown-toggle sidebar-dropdown-toggle" data-target="#clientSubmenu">
-              Clients
+              <!--Making a change here-->
+              <!--Clients-->
+              Applications
               <div class="expand_caret caret"></div>
             </a>
             <ul class="collapse list-unstyled text-left" id="clientSubmenu">
               {% comment %} Search for Clients {% endcomment %}
               <form class="px-6 py-2" action="{% url 'rolodex:clients' %}" method="GET">
                 <input type="search" autocomplete="off" class="form-control" id="client-search" name="name"
-                       placeholder="Search Clients..." autofocus="autofocus">
+                placeholder="Search Applications..." autofocus="autofocus">
+                <!--Making another change here,replacing Clients with Application-->
               </form>
               {% comment %} Clients Submenu Items {% endcomment %}
-              <li><a class="icon list-icon" href="{% url 'rolodex:clients' %}">Client Library</a></li>
+              <li><a class="icon list-icon" href="{% url 'rolodex:clients' %}">Application Library</a></li>
+              <!--Making change, Appplication substituting Client-->
               {% if request.user|is_privileged %}
-                <li><a class="icon plus-icon" href="{% url 'rolodex:client_create' %}">Add New Client</a></li>
+              <li><a class="icon plus-icon" href="{% url 'rolodex:client_create' %}">Add New Application</a></li>
+              <!--Application Substitutes Client-->
               {% endif %}
             </ul>
           </li>

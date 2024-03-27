@@ -7,7 +7,7 @@
 :root {
   --main-font-size: 16px;
   --secondary-font-size: 14px;
-  --primary-color: #50B071;
+  --primary-color: #ecad38;
   --secondary-color: #6D70A7;
   --secondary-color-fade: #7386D5;
   --secondary-color-med: #947BD3;
@@ -26,7 +26,7 @@
   --main-bg-color: #fafafa;
 
   /* BUTTONS */
-  --button-primary-color: #50B071;
+  --button-primary-color: #ecad38;
   --button-hover-color: #6d7fcc;
   --button-warning-color: #FF7E79;
   --button-border-radius: 4px;

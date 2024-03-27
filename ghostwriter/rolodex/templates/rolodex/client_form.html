@@ -10,20 +10,24 @@
       <li class="breadcrumb-item"><a href="{% url 'home:dashboard' %}">Dashboard</a></li>
       {% comment %} Check if `object` is in context to determine if this is a `ClientUpdate` request {% endcomment %}
       {% if object.id %}
-        <li class="breadcrumb-item"><a href="{% url 'rolodex:clients' %}">Clients</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'rolodex:clients' %}">Applications</a></li>
+      <!--Client -> Application-->
         <li class="breadcrumb-item"><a href="{% url 'rolodex:client_detail' object.id %}">{{ client.name }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">Update</li>
       {% else %}
-        <li class="breadcrumb-item active" aria-current="page">New Client Form</li>
+      <li class="breadcrumb-item active" aria-current="page">New Application Form</li>
+      <!--Application substitute Client-->
       {% endif %}
     </ul>
   </nav>
 {% endblock %}
 
 {% block content %}
-  <strong class="icon client-icon">Setup a Client</strong>
+<strong class="icon client-icon">Setup an Application</strong>
+<!--Application substitute Client-->
   <hr>
-  <p>Use the tabs to provide basic client information and add points of contact:</p>
+  <p>Use the tabs to provide basic Application information and add points of contact:</p>
+  <!--Application substitute Client-->
 
   <!-- Form Error Section -->
   {% if form.errors %}

@@ -4,13 +4,15 @@
 
 {% load bleach_tags %}
 
-{% block pagetitle %}Client List{% endblock %}
+{% block pagetitle %}Application List{% endblock %}
+<!--Client -> Application-->
 
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'home:dashboard' %}">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Clients</li>
+            <li class="breadcrumb-item active" aria-current="page">Applications</li>
+            <!--Client -> Application-->
         </ul>
     </nav>
 {% endblock %}
@@ -22,14 +24,17 @@
     </div>
 
     {% if filter.qs|length == 0 %}
-        <div class="alert alert-warning offset-md-2 col-md-8 mt-3" role="alert">There are no clients to see here yet, or your search returned no results. Create a client above or adjust your filters.</div>
+    <div class="alert alert-warning offset-md-2 col-md-8 mt-3" role="alert">There are no applications to see here yet, or your search returned no results. Create an application above or adjust your filters.</div>
+    <!--Application substitute Client-->
     {% else %}
         <table id="clientTable" class="tablesorter table table-sm table-hover">
             <thead>
                 <tr>
-                    <th class="align-middle">Client</th>
+                    <th class="align-middle">Application</th>
+                    <!--Client -> Application-->
                     <th class="align-middle">Short Name</th>
-                    <th class="align-middle">Codename</th>
+                    <th class="align-middle">CR Number</th>
+                    <!--Codename -> CR Number-->
                     <th class="align-middle">Projects to Date</th>
                 </tr>
             </thead>

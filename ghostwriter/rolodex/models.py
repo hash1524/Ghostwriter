@@ -25,41 +25,51 @@ class Client(models.Model):
     """Stores an individual client."""
 
     name = models.CharField(
-        "Client Name",
+        "Application Name",
+        # client -> applicatio
         max_length=255,
         unique=True,
-        help_text="Provide the client's full name as you want it to appear in a report",
+        help_text="Provide the application's full name as you want it to appear in a report",
+        # client -> application
     )
     short_name = models.CharField(
-        "Client Short Name",
+        "Application Short Name",
+        # client -> application
         max_length=255,
         null=True,
         blank=True,
         help_text="Provide an abbreviated name to be used in reports",
     )
     codename = models.CharField(
-        "Client Codename",
+        "CR Number",
+        # client codename -> CR Number
         max_length=255,
         null=True,
         blank=True,
-        help_text="Give the client a codename (might be a ticket number, CMS reference, or something else)",
+        # help_text="Give the client a codename (might be a ticket number, CMS reference, or something else)",
+        help_text="Enter the CR number here",
     )
     note = models.TextField(
-        "Client Note",
+        "Application Note",
+        # client -> application
         null=True,
         blank=True,
-        help_text="Describe the client or provide some additional information",
+        help_text="Describe the application or provide some additional information",
     )
     timezone = TimeZoneField(
-        "Client Timezone",
+        "Application Timezone",
+        # Client -> Application
         default="America/Los_Angeles",
-        help_text="Primary timezone of the client",
+        help_text="Primary timezone of the application",
+        # might have to remove this code block
     )
     address = models.TextField(
-        "Client Business Address",
+        "Application Business Address",
+        # client -> application
         null=True,
         blank=True,
         help_text="An address to be used for reports or shipping",
+        # might have to remove this code block
     )
     tags = TaggableManager(blank=True)
 
@@ -78,7 +88,9 @@ class Client(models.Model):
 class ClientContact(models.Model):
     """Stores an individual point of contact, related to :model:`rolodex.Client`."""
 
-    name = models.CharField("Name", help_text="Enter the contact's full name", max_length=255)
+    name = models.CharField(
+        "Name", help_text="Enter the contact's full name", max_length=255
+    )
     job_title = models.CharField(
         "Title or Role",
         max_length=255,
@@ -116,7 +128,9 @@ class ClientContact(models.Model):
         help_text="Provide additional information about the contact",
     )
     # Foreign keys
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=False, blank=False)
+    client = models.ForeignKey(
+        Client, on_delete=models.CASCADE, null=False, blank=False
+    )
 
     class Meta:
         unique_together = ["name", "client"]
@@ -160,8 +174,12 @@ class Project(models.Model):
         blank=True,
         help_text="Give the project a codename (might be a ticket number, PMO reference, or something else)",
     )
-    start_date = models.DateField("Start Date", max_length=12, help_text="Enter the start date of this project")
-    end_date = models.DateField("End Date", max_length=12, help_text="Enter the end date of this project")
+    start_date = models.DateField(
+        "Start Date", max_length=12, help_text="Enter the start date of this project"
+    )
+    end_date = models.DateField(
+        "End Date", max_length=12, help_text="Enter the end date of this project"
+    )
     note = models.TextField(
         "Notes",
         null=True,
@@ -175,7 +193,9 @@ class Project(models.Model):
         blank=True,
         help_text="Provide an Slack channel to be used for project notifications",
     )
-    complete = models.BooleanField("Completed", default=False, help_text="Mark this project as complete")
+    complete = models.BooleanField(
+        "Completed", default=False, help_text="Mark this project as complete"
+    )
     timezone = TimeZoneField(
         "Project Timezone",
         default="America/Los_Angeles",
@@ -203,7 +223,9 @@ class Project(models.Model):
         null=False,
         help_text="Select the client to which this project should be attached",
     )
-    operator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    operator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
+    )
     project_type = models.ForeignKey(
         "ProjectType",
         on_delete=models.PROTECT,
@@ -216,9 +238,9 @@ class Project(models.Model):
         Count and return the number of findings across all reports associated with
         an individual :model:`rolodex.Project`.
         """
-        finding_queryset = ReportFindingLink.objects.select_related("report", "report__project").filter(
-            report__project=self.pk
-        )
+        finding_queryset = ReportFindingLink.objects.select_related(
+            "report", "report__project"
+        ).filter(report__project=self.pk)
         return finding_queryset.count()
 
     count = property(count_findings)
@@ -310,7 +332,9 @@ class ProjectAssignment(models.Model):
 class ProjectContact(models.Model):
     """Stores an individual point of contact, related to :model:`rolodex.Project`."""
 
-    name = models.CharField("Name", help_text="Enter the contact's full name", max_length=255)
+    name = models.CharField(
+        "Name", help_text="Enter the contact's full name", max_length=255
+    )
     job_title = models.CharField(
         "Title or Role",
         max_length=255,
@@ -353,7 +377,9 @@ class ProjectContact(models.Model):
         help_text="Flag this contact as the primary point of contact / report recipient for the project",
     )
     # Foreign keys
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=False, blank=False)
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, null=False, blank=False
+    )
 
     class Meta:
         unique_together = ["name", "project"]
@@ -435,7 +461,9 @@ class ProjectObjective(models.Model):
         blank=True,
         help_text="Provide a more detailed description, purpose, or context",
     )
-    complete = models.BooleanField("Completed", default=False, help_text="Mark the objective as complete")
+    complete = models.BooleanField(
+        "Completed", default=False, help_text="Mark the objective as complete"
+    )
     deadline = models.DateField(
         "Due Date",
         max_length=12,
@@ -521,8 +549,12 @@ class ProjectSubTask(models.Model):
         except ObjectiveStatus.DoesNotExist:
             return 1
 
-    task = models.TextField("Task", null=True, blank=True, help_text="Provide a concise objective")
-    complete = models.BooleanField("Completed", default=False, help_text="Mark the objective as complete")
+    task = models.TextField(
+        "Task", null=True, blank=True, help_text="Provide a concise objective"
+    )
+    complete = models.BooleanField(
+        "Completed", default=False, help_text="Mark the objective as complete"
+    )
     deadline = models.DateField(
         "Due Date",
         max_length=12,
@@ -558,7 +590,9 @@ class ClientNote(models.Model):
     """Stores an individual note, related to an individual :model:`rolodex.Client` and :model:`users.User`."""
 
     # This field is automatically filled with the current date
-    timestamp = models.DateField("Timestamp", auto_now_add=True, help_text="Creation timestamp")
+    timestamp = models.DateField(
+        "Timestamp", auto_now_add=True, help_text="Creation timestamp"
+    )
     note = models.TextField(
         "Notes",
         null=True,
@@ -567,7 +601,9 @@ class ClientNote(models.Model):
     )
     # Foreign Keys
     client = models.ForeignKey(Client, on_delete=models.CASCADE, null=False)
-    operator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    operator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
+    )
 
     class Meta:
         ordering = ["client", "timestamp"]
@@ -582,7 +618,9 @@ class ProjectNote(models.Model):
     """Stores an individual note, related to :model:`rolodex.Project` and :model:`users.User`."""
 
     # This field is automatically filled with the current date
-    timestamp = models.DateField("Timestamp", auto_now_add=True, help_text="Creation timestamp")
+    timestamp = models.DateField(
+        "Timestamp", auto_now_add=True, help_text="Creation timestamp"
+    )
     note = models.TextField(
         "Notes",
         null=True,
@@ -591,7 +629,9 @@ class ProjectNote(models.Model):
     )
     # Foreign Keys
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=False)
-    operator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    operator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
+    )
 
     class Meta:
         ordering = ["project", "timestamp"]
@@ -681,7 +721,9 @@ class ProjectTarget(models.Model):
         blank=True,
         help_text="Provide additional information about the target(s) or the environment",
     )
-    compromised = models.BooleanField("Compromised", default=False, help_text="Flag this target as compromised")
+    compromised = models.BooleanField(
+        "Compromised", default=False, help_text="Flag this target as compromised"
+    )
     # Foreign Keys
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=False)
 

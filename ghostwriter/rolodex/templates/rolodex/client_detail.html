@@ -11,7 +11,8 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'home:dashboard' %}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'rolodex:clients' %}">Clients</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'rolodex:clients' %}">Applications</a></li>
+            <!--Client -> Application-->
             <li class="breadcrumb-item active" aria-current="page">{{ client.name }}</li>
         </ul>
     </nav>
@@ -53,7 +54,8 @@
         <!-- Info Tab -->
         <div class="tab-content">
             <div id="general" class="tab-pane in active">
-                <h4>Client Details</h4>
+                <h4>Application Details</h4>
+                <!--Client -> Application-->
                 <hr />
 
                 <table class="table table-borderless table-centered project-details-table">
@@ -70,7 +72,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-left bold">Client's Current Time</td>
+                        <td class="text-left bold">Application's Current Time</td>
+                        <!--Client -> Application-->
                         <td class="text-left"><span class="client-datetime"></span></td>
                     </tr>
                     <tr>
@@ -105,7 +108,8 @@
 
             <!-- POC Tab -->
             <div id="contacts" class="tab-pane">
-                <h4>Client Contacts</h4>
+                <h4>Application Contacts</h4>
+                <!--Client -> Application-->
                 <hr />
 
                 <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:client_update' client.id %}#contacts">Add a Point of Contact</a>
@@ -153,7 +157,8 @@
 
             <!-- Project History Tab -->
             <div id="project-history" class="tab-pane">
-                <h4>Client Projects</h4>
+                <h4>Application Projects</h4>
+                <!--Client -> Application-->
                 <hr />
 
                 <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:project_create' client.id %}">Add a Project</a>
@@ -187,7 +192,8 @@
                         {% endfor %}
                     </table>
                 {% else %}
-                    <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">This client has no project history.</div>
+                <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">This Application has no project history.</div>
+                <!--Client -> Application-->
                 {% endif %}
             </div>
 
@@ -251,13 +257,15 @@
                         </table>
                     {% endif %}
                 {% else %}
-                  <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">No infrastructure history for this client yet.</div>
+                <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">No infrastructure history for this Application yet.</div>
+                <!--Client -> Application-->
                 {% endif %}
             </div>
 
             <!-- Notes Tab -->
             <div id="notes" class="tab-pane">
-                <h4>Client Notes</h4>
+                <h4>Application Notes</h4>
+                <!--Client -> Application-->
                 <hr />
 
                 <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:client_note_add' client.id %}">Add a Note</a>

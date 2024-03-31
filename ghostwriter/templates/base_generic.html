@@ -277,11 +277,10 @@
         </ul>
 
         <!-- Shepherd Section -->
-        <ul class="list-unstyled components">
-          <p class="sideheader icon maintain-icon">Maintain</p>
-
+        <!--<ul class="list-unstyled components">
+          <p class="sideheader icon maintain-icon">Maintain</p>-->
           <!-- Menu Section -->
-          <li>
+          <!--<li>
             <a href="#serverSubmenu" data-toggle="collapse" aria-expanded="false"
                class="dropdown-toggle sidebar-dropdown-toggle">Servers</a>
             <ul class="collapse list-unstyled text-left" id="serverSubmenu">
@@ -310,7 +309,8 @@
             </ul>
           </li>
           <li><a href="{% url 'shepherd:update' %}">Update Controls</a></li>
-        </ul>
+        </ul>-->
+        <!--removing this code block from side menu bar-->
 
         <!-- Admin Section -->
         <ul class="list-unstyled components">
@@ -342,7 +342,7 @@
                   Findings</a></li>
                 <li><a class="icon export-icon" href="{% url 'reporting:export_findings_to_csv' %}">Export Findings to
                   CSV</a></li>
-                <hr>
+                <!-- <hr>
                 <li><a class="icon import-icon" href="{% url 'admin:shepherd_domain_import' %}">Upload Bulk Domains</a>
                 </li>
                 <li><a class="icon export-icon" href="{% url 'shepherd:export_domains_to_csv' %}">Export Domains to
@@ -351,7 +351,8 @@
                 <li><a class="icon import-icon" href="{% url 'admin:shepherd_staticserver_import' %}">Upload Bulk
                   Servers</a></li>
                 <li><a class="icon export-icon" href="{% url 'shepherd:export_servers_to_csv' %}">Export Servers to
-                  CSV</a></li>
+                  CSV</a></li> -->
+                <!-- removing this code block which has servers and domains under bulk imports and exports in submenu-->
               </ul>
             </li>
           {% endif %}

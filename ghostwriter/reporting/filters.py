@@ -31,7 +31,9 @@ class FindingFilter(django_filters.FilterSet):
     title = django_filters.CharFilter(
         lookup_expr="icontains",
         label="Finding Title Contains",
-        widget=TextInput(attrs={"placeholder": "Partial Finding Title", "autocomplete": "off"}),
+        widget=TextInput(
+            attrs={"placeholder": "Partial Finding Title", "autocomplete": "off"}
+        ),
     )
     severity = django_filters.ModelMultipleChoiceFilter(
         queryset=Severity.objects.all().order_by("weight"),
@@ -109,7 +111,9 @@ class ReportFilter(django_filters.FilterSet):
     title = django_filters.CharFilter(
         lookup_expr="icontains",
         label="Report Title Contains",
-        widget=TextInput(attrs={"placeholder": "Partial Report Title", "autocomplete": "off"}),
+        widget=TextInput(
+            attrs={"placeholder": "Partial Report Title", "autocomplete": "off"}
+        ),
     )
 
     STATUS_CHOICES = (
@@ -117,7 +121,9 @@ class ReportFilter(django_filters.FilterSet):
         (1, "Completed"),
     )
 
-    complete = django_filters.ChoiceFilter(choices=STATUS_CHOICES, empty_label=None, label="Report Status")
+    complete = django_filters.ChoiceFilter(
+        choices=STATUS_CHOICES, empty_label=None, label="Report Status"
+    )
 
     class Meta:
         model = Report
@@ -147,7 +153,9 @@ class ReportFilter(django_filters.FilterSet):
                         <a class="btn btn-info col-md-2" role="button" href="{%  url 'reporting:report_create_no_project' %}">Create</a>
                         """
                     ),
-                    Submit("submit_btn", "Filter", css_class="btn btn-primary col-md-2"),
+                    Submit(
+                        "submit_btn", "Filter", css_class="btn btn-primary col-md-2"
+                    ),
                     HTML(
                         """
                         <a class="btn btn-outline-secondary col-md-2" role="button" href="{%  url 'reporting:reports' %}">Reset</a>
@@ -171,9 +179,13 @@ class ArchiveFilter(django_filters.FilterSet):
 
     client = django_filters.CharFilter(
         field_name="project__client__name",
-        label="Client Name Contains",
+        label="Application Name Contains",
+        # Client -> Application
         lookup_expr="icontains",
-        widget=TextInput(attrs={"placeholder": "Partial Client Name", "autocomplete": "off"}),
+        widget=TextInput(
+            attrs={"placeholder": "Partial Application Name", "autocomplete": "off"}
+            # Client -> Application
+        ),
     )
 
     class Meta:
@@ -194,7 +206,9 @@ class ArchiveFilter(django_filters.FilterSet):
                     ),
                 ),
                 ButtonHolder(
-                    Submit("submit_btn", "Filter", css_class="btn btn-primary col-md-2"),
+                    Submit(
+                        "submit_btn", "Filter", css_class="btn btn-primary col-md-2"
+                    ),
                     HTML(
                         """
                         <a class="btn btn-outline-secondary col-md-2" role="button" href="{%  url 'reporting:archived_reports' %}">Reset</a>

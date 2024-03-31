@@ -115,7 +115,9 @@ class BaseProjectObjectiveInlineFormSet(BaseInlineFormSet):
                             form.add_error(
                                 "deadline",
                                 ValidationError(
-                                    _("Your selected date is before the project start date."),
+                                    _(
+                                        "Your selected date is before the project start date."
+                                    ),
                                     code="invalid_date",
                                 ),
                             )
@@ -123,7 +125,9 @@ class BaseProjectObjectiveInlineFormSet(BaseInlineFormSet):
                             form.add_error(
                                 "deadline",
                                 ValidationError(
-                                    _("Your selected date is after the project end date."),
+                                    _(
+                                        "Your selected date is after the project end date."
+                                    ),
                                     code="invalid_date",
                                 ),
                             )
@@ -136,7 +140,9 @@ class BaseProjectAssignmentInlineFormSet(BaseInlineFormSet):
     """
 
     def clean(self):
-        Assignment = namedtuple("Assignment", ["user", "role", "start_date", "end_date"])
+        Assignment = namedtuple(
+            "Assignment", ["user", "role", "start_date", "end_date"]
+        )
         assignments = []
         duplicates = False
         super().clean()
@@ -162,7 +168,9 @@ class BaseProjectAssignmentInlineFormSet(BaseInlineFormSet):
                                     code="invalid_date",
                                 ),
                             )
-                        if any(operator.username in assign.user for assign in assignments):
+                        if any(
+                            operator.username in assign.user for assign in assignments
+                        ):
                             for assign in assignments:
                                 if assign.user == operator.username:
                                     latest_start = max(assign.start_date, start_date)
@@ -172,23 +180,31 @@ class BaseProjectAssignmentInlineFormSet(BaseInlineFormSet):
                                     if overlap > 0:
                                         duplicates = True
 
-                        assignments.append(Assignment(operator.username, role, start_date, end_date))
+                        assignments.append(
+                            Assignment(operator.username, role, start_date, end_date)
+                        )
                         if duplicates:
                             form.add_error(
                                 "operator",
                                 ValidationError(
-                                    _("This operator is assigned more than once for an overlapping time period."),
+                                    _(
+                                        "This operator is assigned more than once for an overlapping time period."
+                                    ),
                                     code="duplicate",
                                 ),
                             )
 
                     # Raise an error if an operator is selected provided without any required details
-                    if operator and any(x is None for x in [start_date, end_date, role]):
+                    if operator and any(
+                        x is None for x in [start_date, end_date, role]
+                    ):
                         if not start_date:
                             form.add_error(
                                 "start_date",
                                 ValidationError(
-                                    _("Your assigned operator is missing a start date."),
+                                    _(
+                                        "Your assigned operator is missing a start date."
+                                    ),
                                     code="incomplete",
                                 ),
                             )
@@ -204,12 +220,16 @@ class BaseProjectAssignmentInlineFormSet(BaseInlineFormSet):
                             form.add_error(
                                 "role",
                                 ValidationError(
-                                    _("Your assigned operator is missing a project role."),
+                                    _(
+                                        "Your assigned operator is missing a project role."
+                                    ),
                                     code="incomplete",
                                 ),
                             )
                     # Raise an error if details are present without a selected operator
-                    elif operator is None and any(x is not None for x in [start_date, end_date, role]):
+                    elif operator is None and any(
+                        x is not None for x in [start_date, end_date, role]
+                    ):
                         form.add_error(
                             "operator",
                             ValidationError(
@@ -218,11 +238,15 @@ class BaseProjectAssignmentInlineFormSet(BaseInlineFormSet):
                             ),
                         )
                     # Raise an error if a form only has a value for the note
-                    elif note and any(x is None for x in [operator, start_date, end_date, role]):
+                    elif note and any(
+                        x is None for x in [operator, start_date, end_date, role]
+                    ):
                         form.add_error(
                             "note",
                             ValidationError(
-                                _("This note is part of an incomplete assignment form."),
+                                _(
+                                    "This note is part of an incomplete assignment form."
+                                ),
                                 code="incomplete",
                             ),
                         )
@@ -232,7 +256,9 @@ class BaseProjectAssignmentInlineFormSet(BaseInlineFormSet):
                             form.add_error(
                                 "start_date",
                                 ValidationError(
-                                    _("Your selected date is before the project start date."),
+                                    _(
+                                        "Your selected date is before the project start date."
+                                    ),
                                     code="invalid_date",
                                 ),
                             )
@@ -240,7 +266,9 @@ class BaseProjectAssignmentInlineFormSet(BaseInlineFormSet):
                             form.add_error(
                                 "end_date",
                                 ValidationError(
-                                    _("Your selected date is after the project end date."),
+                                    _(
+                                        "Your selected date is after the project end date."
+                                    ),
                                     code="invalid_date",
                                 ),
                             )
@@ -349,7 +377,9 @@ class BaseProjectTargetInlineFormSet(BaseInlineFormSet):
                         form.add_error(
                             "note",
                             ValidationError(
-                                _("You must provide a hostname or IP address with your note."),
+                                _(
+                                    "You must provide a hostname or IP address with your note."
+                                ),
                                 code="incomplete",
                             ),
                         )
@@ -377,7 +407,9 @@ class BaseWhiteCardInlineFormSet(BaseInlineFormSet):
                         form.add_error(
                             "issued",
                             ValidationError(
-                                _("Your white card still needs an issued date and time."),
+                                _(
+                                    "Your white card still needs an issued date and time."
+                                ),
                                 code="incomplete",
                             ),
                         )
@@ -396,7 +428,9 @@ class BaseWhiteCardInlineFormSet(BaseInlineFormSet):
                             form.add_error(
                                 "issued",
                                 ValidationError(
-                                    _("Your selected date is after the project end date."),
+                                    _(
+                                        "Your selected date is after the project end date."
+                                    ),
                                     code="invalid_datetime",
                                 ),
                             )
@@ -503,14 +537,18 @@ class ProjectAssignmentForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["operator"].queryset = self.fields["operator"].queryset.order_by("-is_active", "username", "name")
+        self.fields["operator"].queryset = self.fields["operator"].queryset.order_by(
+            "-is_active", "username", "name"
+        )
         self.fields["operator"].label_from_instance = lambda obj: obj.get_display_name
         self.fields["start_date"].widget.attrs["autocomplete"] = "off"
         self.fields["start_date"].widget.input_type = "date"
         self.fields["end_date"].widget.attrs["autocomplete"] = "off"
         self.fields["end_date"].widget.input_type = "date"
         self.fields["note"].widget.attrs["rows"] = 5
-        self.fields["note"].widget.attrs["placeholder"] = "This team member will be responsible for..."
+        self.fields["note"].widget.attrs[
+            "placeholder"
+        ] = "This team member will be responsible for..."
         self.fields["operator"].empty_label = "-- Select a Team Member --"
         self.fields["role"].empty_label = "-- Select a Role --"
         self.helper = FormHelper()
@@ -584,7 +622,10 @@ class ProjectAssignmentForm(forms.ModelForm):
                         ),
                         Column(
                             Field(
-                                "DELETE", style="display: none;", visibility="hidden", template="delete_checkbox.html"
+                                "DELETE",
+                                style="display: none;",
+                                visibility="hidden",
+                                template="delete_checkbox.html",
                             ),
                             css_class="form-group col-3 text-center",
                         ),
@@ -624,7 +665,9 @@ class ProjectObjectiveForm(forms.ModelForm):
         self.fields["deadline"].widget.input_type = "date"
         self.fields["objective"].widget.attrs["rows"] = 5
         self.fields["objective"].widget.attrs["autocomplete"] = "off"
-        self.fields["objective"].widget.attrs["placeholder"] = "Escalate Privileges to Domain Admin"
+        self.fields["objective"].widget.attrs[
+            "placeholder"
+        ] = "Escalate Privileges to Domain Admin"
         self.fields["description"].widget.attrs[
             "placeholder"
         ] = "The task is to escalate privileges to a domain admin and..."
@@ -701,7 +744,10 @@ class ProjectObjectiveForm(forms.ModelForm):
                         ),
                         Column(
                             Field(
-                                "DELETE", style="display: none;", visibility="hidden", template="delete_checkbox.html"
+                                "DELETE",
+                                style="display: none;",
+                                visibility="hidden",
+                                template="delete_checkbox.html",
                             ),
                             css_class="form-group col-3 text-center",
                         ),
@@ -729,7 +775,9 @@ class ProjectScopeForm(forms.ModelForm):
             self.fields[field].widget.attrs["autocomplete"] = "off"
         self.fields["name"].widget.attrs["placeholder"] = "Internal Scope"
         self.fields["scope"].widget.attrs["rows"] = 5
-        self.fields["scope"].widget.attrs["placeholder"] = "ghostwriter.local\nwww.ghostwriter.local\n192.168.100.15"
+        self.fields["scope"].widget.attrs[
+            "placeholder"
+        ] = "ghostwriter.local\nwww.ghostwriter.local\n192.168.100.15"
         self.fields["scope"].label = "Scope List"
         self.fields["description"].widget.attrs["rows"] = 5
         self.fields["description"].widget.attrs[
@@ -792,7 +840,10 @@ class ProjectScopeForm(forms.ModelForm):
                         ),
                         Column(
                             Field(
-                                "DELETE", style="display: none;", visibility="hidden", template="delete_checkbox.html"
+                                "DELETE",
+                                style="display: none;",
+                                visibility="hidden",
+                                template="delete_checkbox.html",
                             ),
                             css_class="form-group col-3 text-center",
                         ),
@@ -825,7 +876,9 @@ class ProjectTargetForm(forms.ModelForm):
         self.fields["ip_address"].widget.attrs["placeholder"] = "172.67.179.71"
         self.fields["hostname"].widget.attrs["placeholder"] = "ghostwriter.wiki"
         self.fields["note"].widget.attrs["rows"] = 5
-        self.fields["note"].widget.attrs["placeholder"] = "This host is a web server related to objective ..."
+        self.fields["note"].widget.attrs[
+            "placeholder"
+        ] = "This host is a web server related to objective ..."
         self.helper = FormHelper()
         # Disable the <form> tags because this will be inside an instance of `ProjectForm()`
         self.helper.form_tag = False
@@ -872,7 +925,10 @@ class ProjectTargetForm(forms.ModelForm):
                         ),
                         Column(
                             Field(
-                                "DELETE", style="display: none;", visibility="hidden", template="delete_checkbox.html"
+                                "DELETE",
+                                style="display: none;",
+                                visibility="hidden",
+                                template="delete_checkbox.html",
                             ),
                             css_class="form-group col-3 text-center",
                         ),
@@ -904,7 +960,9 @@ class WhiteCardForm(forms.ModelForm):
         self.fields["description"].widget.attrs[
             "placeholder"
         ] = "Additional information about the white card, the reason for it, limitations, how it affects the assessment, etc..."
-        self.fields["title"].widget.attrs["placeholder"] = "Provided Initial Access to PCI Network"
+        self.fields["title"].widget.attrs[
+            "placeholder"
+        ] = "Provided Initial Access to PCI Network"
         self.helper = FormHelper()
         self.helper.form_show_errors = False
         # Disable the <form> tags because this will be inside an instance of `ProjectForm()`
@@ -965,7 +1023,10 @@ class WhiteCardForm(forms.ModelForm):
                         ),
                         Column(
                             Field(
-                                "DELETE", style="display: none;", visibility="hidden", template="delete_checkbox.html"
+                                "DELETE",
+                                style="display: none;",
+                                visibility="hidden",
+                                template="delete_checkbox.html",
                             ),
                             css_class="form-group col-3 text-center",
                         ),
@@ -999,7 +1060,9 @@ class ProjectContactForm(forms.ModelForm):
         self.fields["job_title"].widget.attrs["placeholder"] = "COO"
         self.fields["phone"].widget.attrs["placeholder"] = "(212) 897-1964"
         self.fields["phone"].label = "Phone Number"
-        self.fields["note"].widget.attrs["placeholder"] = "Janine is our main contact for assessment work and ..."
+        self.fields["note"].widget.attrs[
+            "placeholder"
+        ] = "Janine is our main contact for assessment work and ..."
         self.fields["timezone"].initial = general_config.default_timezone
         self.helper = FormHelper()
         # Disable the <form> tags because this will be part of an instance of `ProjectForm()`
@@ -1042,7 +1105,9 @@ class ProjectContactForm(forms.ModelForm):
                         Column("timezone", css_class="form-group col-md-4 mb-0"),
                         css_class="form-row",
                     ),
-                    SwitchToggle("primary", onchange="cbChange(this)", css_class="js-cb-toggle"),
+                    SwitchToggle(
+                        "primary", onchange="cbChange(this)", css_class="js-cb-toggle"
+                    ),
                     "note",
                     Row(
                         Column(
@@ -1055,7 +1120,10 @@ class ProjectContactForm(forms.ModelForm):
                         ),
                         Column(
                             Field(
-                                "DELETE", style="display: none;", visibility="hidden", template="delete_checkbox.html"
+                                "DELETE",
+                                style="display: none;",
+                                visibility="hidden",
+                                template="delete_checkbox.html",
                             ),
                             css_class="form-group col-3 text-center",
                         ),
@@ -1162,9 +1230,12 @@ class ProjectForm(forms.ModelForm):
         self.fields["slack_channel"].widget.attrs["placeholder"] = "#slack-channel"
         self.fields["note"].widget.attrs["placeholder"] = "This project is..."
         self.fields["timezone"].initial = general_config.default_timezone
-        self.fields["tags"].widget.attrs["placeholder"] = "evasive, on-site, travel, ..."
+        self.fields["tags"].widget.attrs[
+            "placeholder"
+        ] = "evasive, on-site, travel, ..."
         self.fields["project_type"].label = "Project Type"
-        self.fields["client"].empty_label = "-- Select a Client --"
+        self.fields["client"].empty_label = "-- Select an Application --"
+        # Client -> Application
         self.fields["project_type"].empty_label = "-- Select a Project Type --"
         # Design form layout with Crispy FormHelper
         self.helper = FormHelper()
@@ -1182,17 +1253,18 @@ class ProjectForm(forms.ModelForm):
                         Column(
                             FieldWithButtons(
                                 "codename",
-                                HTML(
-                                    """
-                                    <button
-                                        class="btn btn-secondary js-roll-codename"
-                                        roll-codename-url="{% url 'rolodex:ajax_roll_codename' %}"
-                                        type="button"
-                                    >
-                                    <i class="fas fa-dice"></i>
-                                    </button>
-                                    """
-                                ),
+                                # HTML(
+                                #     """
+                                #     <button
+                                #         class="btn btn-secondary js-roll-codename"
+                                #         roll-codename-url="{% url 'rolodex:ajax_roll_codename' %}"
+                                #         type="button"
+                                #     >
+                                #     <i class="fas fa-dice"></i>
+                                #     </button>
+                                #     """
+                                # ),
+                                # removing the button to generate random code name for project
                             ),
                             css_class="col-md-6",
                         ),
@@ -1337,7 +1409,9 @@ class DeconflictionForm(forms.ModelForm):
             "placeholder"
         ] = "Additional information about the alert, source, related activity..."
         self.fields["title"].widget.attrs["placeholder"] = "Brief and Descriptive Title"
-        self.fields["alert_source"].widget.attrs["placeholder"] = "Source of the Alert – e.g, EDR"
+        self.fields["alert_source"].widget.attrs[
+            "placeholder"
+        ] = "Source of the Alert – e.g, EDR"
         self.fields["report_timestamp"].initial = timezone.now()
         self.helper = FormHelper()
         self.helper.form_show_errors = False
@@ -1358,9 +1432,16 @@ class DeconflictionForm(forms.ModelForm):
                 """
             ),
             Row(
-                Column(Field("alert_timestamp", step=1), css_class="form-group col-4 mb-0"),
-                Column(Field("report_timestamp", step=1), css_class="form-group col-4 mb-0"),
-                Column(Field("response_timestamp", step=1), css_class="form-group col-4 mb-0"),
+                Column(
+                    Field("alert_timestamp", step=1), css_class="form-group col-4 mb-0"
+                ),
+                Column(
+                    Field("report_timestamp", step=1), css_class="form-group col-4 mb-0"
+                ),
+                Column(
+                    Field("response_timestamp", step=1),
+                    css_class="form-group col-4 mb-0",
+                ),
                 css_class="form-group",
             ),
             Row(
@@ -1396,7 +1477,9 @@ class DeconflictionForm(forms.ModelForm):
                 self.add_error(
                     "response_timestamp",
                     ValidationError(
-                        _("The response timestamp cannot be before the report timestamp."),
+                        _(
+                            "The response timestamp cannot be before the report timestamp."
+                        ),
                         code="invalid_datetime",
                     ),
                 )

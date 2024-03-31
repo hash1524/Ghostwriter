@@ -217,18 +217,28 @@ class ClientForm(forms.ModelForm):
         general_config = GeneralConfiguration.get_solo()
         for field in self.fields:
             self.fields[field].widget.attrs["autocomplete"] = "off"
-        self.fields["name"].widget.attrs["placeholder"] = "SpecterOps"
-        self.fields["short_name"].widget.attrs["placeholder"] = "Specter"
+        # self.fields["name"].widget.attrs["placeholder"] = "SpecterOps"
+        self.fields["name"].widget.attrs["placeholder"] = "Application Name..."
+        # self.fields["short_name"].widget.attrs["placeholder"] = "Specter"
+        self.fields["short_name"].widget.attrs[
+            "placeholder"
+        ] = "Application Short Name if any..."
+        # self.fields["note"].widget.attrs[
+        #     "placeholder"
+        # ] = "This client approached us with concerns in these areas ..."
         self.fields["note"].widget.attrs[
             "placeholder"
-        ] = "This client approached us with concerns in these areas ..."
-        self.fields["address"].widget.attrs[
-            "placeholder"
-        ] = "14 N Moore St, New York, NY 10013"
+        ] = "Description of this application..."
+        # self.fields["address"].widget.attrs[
+        #     "placeholder"
+        # ] = "14 N Moore St, New York, NY 10013"
+        self.fields["address"].widget.attrs["placeholder"] = "Application Address..."
+        # Might have to remove this code block
         self.fields["timezone"].initial = general_config.default_timezone
         self.fields["tags"].widget.attrs[
             "placeholder"
         ] = "cybersecurity, industry:infosec, ..."
+        # self.fields["codename"].widget.attrs["placeholder"] = "CR Number here..."
         self.fields["note"].label = "Notes"
         self.fields["tags"].label = "Tags"
         # Design form layout with Crispy FormHelper
@@ -256,17 +266,17 @@ class ClientForm(forms.ModelForm):
                         Column(
                             FieldWithButtons(
                                 "codename",
-                                HTML(
-                                    """
-                                    <button
-                                        class="btn btn-secondary js-roll-codename"
-                                        roll-codename-url="{% url 'rolodex:ajax_roll_codename' %}"
-                                        type="button"
-                                    >
-                                    <i class="fas fa-dice"></i>
-                                    </button>
-                                    """
-                                ),
+                                # HTML(
+                                #     """
+                                #     <button
+                                #         class="btn btn-secondary js-roll-codename"
+                                #         roll-codename-url="{% url 'rolodex:ajax_roll_codename' %}"
+                                #         type="button"
+                                #     >
+                                #     <i class="fas fa-dice"></i>
+                                #     </button>
+                                #     """
+                                # ),
                             ),
                             css_class="col-md-4",
                         ),

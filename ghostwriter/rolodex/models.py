@@ -172,7 +172,8 @@ class Project(models.Model):
         max_length=255,
         null=True,
         blank=True,
-        help_text="Give the project a codename (might be a ticket number, PMO reference, or something else)",
+        # help_text="Give the project a codename (might be a ticket number, PMO reference, or something else)",
+        help_text="Give the CR Number",
     )
     start_date = models.DateField(
         "Start Date", max_length=12, help_text="Enter the start date of this project"
@@ -221,7 +222,8 @@ class Project(models.Model):
         "Client",
         on_delete=models.CASCADE,
         null=False,
-        help_text="Select the client to which this project should be attached",
+        help_text="Select the Application to which this project should be attached",
+        # Client -> Application
     )
     operator = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True

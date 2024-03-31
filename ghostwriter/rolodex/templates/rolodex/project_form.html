@@ -143,18 +143,19 @@
       tinymce.execCommand('mceAddEditor', false, target);
     });
 
-    {% comment %} Roll Codename with AJAX {% endcomment %}
-    $('.js-roll-codename').click(function () {
-      let url = $(this).attr('roll-codename-url');
-      // Send AJAX POST request
-      $.ajax({
-        url: url,
-        type: 'GET',
-        success: function (data) {
-          $("#id_codename").val(data['codename']);
-        }
-      });
-    });
+    // {% comment %} Roll Codename with AJAX {% endcomment %}
+    // $('.js-roll-codename').click(function () {
+    //   let url = $(this).attr('roll-codename-url');
+    //   // Send AJAX POST request
+    //   $.ajax({
+    //     url: url,
+    //     type: 'GET',
+    //     success: function (data) {
+    //       $("#id_codename").val(data['codename']);
+    //     }
+    //   });
+    // });
+    // removed this code block which generates random code name for project, will remove the button as well
 
     {% comment %} Split and trim scope list {% endcomment %}
 

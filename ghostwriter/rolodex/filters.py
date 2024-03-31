@@ -30,7 +30,8 @@ class ClientFilter(django_filters.FilterSet):
 
     name = django_filters.CharFilter(
         method="search_all_names",
-        label="Client Name Contains",
+        label="Application Name Contains",
+        # Client -> Application
         widget=TextInput(
             attrs={
                 "placeholder": "Partial Name, Short Name, or Code Name",

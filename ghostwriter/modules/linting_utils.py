@@ -268,7 +268,9 @@ LINTER_CONTEXT = {
                 "role": "Team Server / C2 Server",
                 "start_date": "Mar. 1, 2021",
                 "end_date": "Jun. 25, 2021",
-                "dns": [{"domain": "ghostwriter.wiki", "endpoint": "", "subdomain": "www"}],
+                "dns": [
+                    {"domain": "ghostwriter.wiki", "endpoint": "", "subdomain": "www"}
+                ],
                 "note": "<p>Long-haul C2 server</p>",
                 "note_rt": "",
             },
@@ -296,7 +298,9 @@ LINTER_CONTEXT = {
                 "activity": "Phishing",
                 "role": "SMTP",
                 "provider": "Amazon Web Services",
-                "dns": [{"domain": "specterops.io", "endpoint": "", "subdomain": "smtp"}],
+                "dns": [
+                    {"domain": "specterops.io", "endpoint": "", "subdomain": "smtp"}
+                ],
                 "ip_address": "30.49.38.30",
                 "name": "SMTP01",
                 "note": "<p>SMTP server for phishing emails; running Gophish</p>",

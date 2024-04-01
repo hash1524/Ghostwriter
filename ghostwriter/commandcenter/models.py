@@ -267,7 +267,7 @@ class VirusTotalConfiguration(SingletonModel):
 class GeneralConfiguration(SingletonModel):
     default_timezone = TimeZoneField(
         "Default Timezone",
-        default="America/Los_Angeles",
+        default="Asia/Kolkata",
         help_text="Select a default timezone for clients and projects",
     )
 

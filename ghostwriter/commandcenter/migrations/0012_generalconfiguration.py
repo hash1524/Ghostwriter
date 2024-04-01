@@ -17,7 +17,8 @@ class Migration(migrations.Migration):
                 (
                     "default_timezone",
                     timezone_field.fields.TimeZoneField(
-                        default="America/Los_Angeles",
+                        default="Asia/Kolkata",
+                        #from america to asia
                         help_text="Select a default timezone for clients and projects",
                         verbose_name="Default Timezone",
                     ),

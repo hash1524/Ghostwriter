@@ -24,7 +24,8 @@ class Migration(migrations.Migration):
             model_name="client",
             name="timezone",
             field=timezone_field.fields.TimeZoneField(
-                default="America/Los_Angeles",
+                default="Asia/Kolkata",
+                # america -> asia
                 help_text="Primary timezone of the client",
                 verbose_name="Client Timezone",
             ),

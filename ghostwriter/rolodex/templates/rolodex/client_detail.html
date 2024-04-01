@@ -161,11 +161,13 @@
 
             <!-- Project History Tab -->
             <div id="project-history" class="tab-pane">
-                <h4>Application Projects</h4>
+                <h4>Activities on this Application</h4>
+                <!--Application Projects -> Activities on this Application-->
                 <!--Client -> Application-->
                 <hr />
 
-                <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:project_create' client.id %}">Add a Project</a>
+                <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:project_create' client.id %}">Add an Activity</a>
+                <!--Project -> Activity-->
                 {% if client.project_set.all %}
                     <table id="projectTable" class="tablesorter table">
                         <thead>
@@ -196,13 +198,14 @@
                         {% endfor %}
                     </table>
                 {% else %}
-                <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">This Application has no project history.</div>
+                <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">This Application has no activity history.</div>
+                <!--Project -> Activity-->
                 <!--Client -> Application-->
                 {% endif %}
             </div>
 
             <!-- Infrastructure History Tab -->
-            <div id="infrastructure-history" class="tab-pane">
+            <!--<div id="infrastructure-history" class="tab-pane">
                 {% if domains or servers or vps %}
                     {% if domains %}
                         <h4>Domains Used with Client</h4>
@@ -262,9 +265,10 @@
                     {% endif %}
                 {% else %}
                 <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">No infrastructure history for this Application yet.</div>
-                <!--Client -> Application-->
                 {% endif %}
-            </div>
+            </div> -->
+            <!--Client -> Application-->
+            <!--removing this block to remove the additional tab of infrastucture history-->
 
             <!-- Notes Tab -->
             <div id="notes" class="tab-pane">

@@ -59,7 +59,7 @@ class Client(models.Model):
     timezone = TimeZoneField(
         "Application Timezone",
         # Client -> Application
-        default="America/Los_Angeles",
+        default="Asia/Kolkata",
         help_text="Primary timezone of the application",
         # might have to remove this code block
     )
@@ -118,7 +118,7 @@ class ClientContact(models.Model):
     )
     timezone = TimeZoneField(
         "Timezone",
-        default="America/Los_Angeles",
+        default="Asia/Kolkata",
         help_text="The contact's timezone",
     )
     note = models.TextField(
@@ -199,7 +199,7 @@ class Project(models.Model):
     )
     timezone = TimeZoneField(
         "Project Timezone",
-        default="America/Los_Angeles",
+        default="Asia/Kolkata",
         help_text="Timezone of the project / working hours",
     )
     start_time = models.TimeField(
@@ -364,7 +364,7 @@ class ProjectContact(models.Model):
     )
     timezone = TimeZoneField(
         "Timezone",
-        default="America/Los_Angeles",
+        default="Asia/Kolkata",
         help_text="The contact's timezone",
     )
     note = models.TextField(

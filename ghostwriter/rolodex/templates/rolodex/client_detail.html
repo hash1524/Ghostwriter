@@ -65,12 +65,13 @@
                             {% if client.short_name %} {{ client.short_name }} {% else %} No Short Name {% endif %}
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td class="text-left bold">Codename</td>
                         <td class="text-left">
                             {% if client.codename %} {{ client.codename }} {% else %} No Codename {% endif %}
                         </td>
-                    </tr>
+                    </tr> -->
+                    <!-- removing this codeblock, unnecessary detail on the application detail page -->
                     <tr>
                         <td class="text-left bold">Application's Current Time</td>
                         <!--Client -> Application-->
@@ -94,7 +95,7 @@
 
                 <div class="hidden-element"></div>
 
-                <h5>Business Address</h5>
+                <!-- <h5>Business Address</h5>
                 <hr>
 
                 <div class="address">
@@ -103,7 +104,9 @@
                     {% else %}
                         <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">No address provided for this client.</div>
                     {% endif %}
-                </div>
+                </div> -->
+
+                <!--removing this code block to remove address of business-->
             </div>
 
             <!-- POC Tab -->

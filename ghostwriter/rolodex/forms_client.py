@@ -114,14 +114,16 @@ class ClientContactForm(forms.ModelForm):
             self.fields[field].widget.attrs["autocomplete"] = "off"
         self.fields["name"].widget.attrs["placeholder"] = "Janine Melnitz"
         self.fields["name"].label = "Full Name"
-        self.fields["email"].widget.attrs["placeholder"] = "info@getghostwriter.io"
+        self.fields["email"].widget.attrs["placeholder"] = "abc@mashreq.com"
         self.fields["email"].label = "Email Address"
         self.fields["job_title"].widget.attrs["placeholder"] = "COO"
-        self.fields["phone"].widget.attrs["placeholder"] = "(212) 897-1964"
-        self.fields["phone"].label = "Phone Number"
+        # self.fields["phone"].widget.attrs["placeholder"] = "(212) 897-1964"
+        self.fields["phone"].widget.attrs["placeholder"] = "DD/MM/YYYY"
+        # self.fields["phone"].label = "Phone Number"
+        self.fields["phone"].label = "Date of Latest Activity"
         self.fields["note"].widget.attrs[
             "placeholder"
-        ] = "Janine is our main contact for assessment work and ..."
+        ] = "Janine is the application owner and from team...."
         self.fields["timezone"].initial = general_config.default_timezone
         self.helper = FormHelper()
         # Disable the <form> tags because this will be part of an instance of `ClientForm()`
@@ -149,9 +151,10 @@ class ClientContactForm(forms.ModelForm):
                 Div(
                     HTML(
                         """
-                        <h6>Contact #<span class="counter">{{ forloop.counter }}</span></h6>
+                        <h6>Application Owner #<span class="counter">{{ forloop.counter }}</span></h6>
                         <hr>
                         """
+                        # Contact -> Application owner
                     ),
                     Row(
                         Column("name", css_class="form-group col-md-6 mb-0"),
@@ -288,7 +291,9 @@ class ClientForm(forms.ModelForm):
                     css_id="client",
                 ),
                 CustomTab(
-                    "Points of Contact",
+                    # "Points of Contact",
+                    # points of contact -> Application Owner
+                    "Application Owners",
                     HTML(
                         """
                         <p class="form-spacer"></p>

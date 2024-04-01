@@ -43,7 +43,8 @@
                 <tr>
                     <td class="align-middle"><a class="clickable" href="{{ client.get_absolute_url }}">{{ client.name }}</i></a></td>
                     <td class="align-middle">{{ client.short_name }}</td>
-                    <td class="align-middle">{{ client.codename }}</td>
+                    <!-- <td class="align-middle">{{ client.codename }}</td> -->
+                    <!-- removing this code block to get rid of the unnecessary column. should reflect the same in details page as well-->
                     <td class="align-middle">{{ client.project_set.all.count }}</td>
                 </tr>
             {% endfor %}

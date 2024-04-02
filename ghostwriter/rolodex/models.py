@@ -176,10 +176,10 @@ class Project(models.Model):
         help_text="Give the CR Number",
     )
     start_date = models.DateField(
-        "Start Date", max_length=12, help_text="Enter the start date of this project"
+        "Start Date", max_length=12, help_text="Enter the start date of this activity"
     )
     end_date = models.DateField(
-        "End Date", max_length=12, help_text="Enter the end date of this project"
+        "End Date", max_length=12, help_text="Enter the end date of this activity"
     )
     note = models.TextField(
         "Notes",
@@ -192,7 +192,7 @@ class Project(models.Model):
         max_length=255,
         null=True,
         blank=True,
-        help_text="Provide an Slack channel to be used for project notifications",
+        help_text="Provide an Slack channel to be used for activity notifications",
     )
     complete = models.BooleanField(
         "Completed", default=False, help_text="Mark this activity as complete"
@@ -222,7 +222,7 @@ class Project(models.Model):
         "Client",
         on_delete=models.CASCADE,
         null=False,
-        help_text="Select the Application to which this project should be attached",
+        help_text="Select the Application to which this activity should be attached",
         # Client -> Application
     )
     operator = models.ForeignKey(
@@ -232,7 +232,7 @@ class Project(models.Model):
         "ProjectType",
         on_delete=models.PROTECT,
         null=False,
-        help_text="Select a category for this project that best describes the work being performed",
+        help_text="Select a category for this activity that best describes the work being performed",
     )
 
     def count_findings(self):

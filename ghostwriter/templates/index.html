@@ -21,7 +21,8 @@
       <div class="dashboard">
         <div class="dashboard__item">
           <div class="card">
-            <p class="dashboard-header text-center">Project Assignments</p>
+            <p class="dashboard-header text-center">Activity Assignments</p>
+            <!--Project -> Activity-->
             {% if active_projects %}
               <table>
                 {% for project in active_projects %}
@@ -34,7 +35,8 @@
                 {% endfor %}
               </table>
             {% else %}
-              <p class="align-middle text-center pt-3">You have no project assignments.</p>
+              <p class="align-middle text-center pt-3">You have no activity assignments.</p>
+              <!--Project -> activity-->
             {% endif %}
           </div>
         </div>

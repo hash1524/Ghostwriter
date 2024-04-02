@@ -156,8 +156,9 @@
           <li>
             <a href="#activeProjectsSubmenu" data-toggle="collapse" aria-expanded="false"
                class="dropdown-toggle sidebar-dropdown-toggle" data-target="#activeProjectsSubmenu">
-              My Active Projects
+              My Active Activities
               <div class="expand_caret caret"></div>
+              <!--Projects -> Activities-->
             </a>
             <ul class="collapse list-unstyled text-left" id="activeProjectsSubmenu">
               {% if request.user.projectassignment_set.all %}
@@ -223,7 +224,7 @@
 
         <!-- Operations Section -->
         <ul class="list-unstyled components">
-          <p class="sideheader icon execution-icon">Execution</p>
+          <p class="sideheader icon icon execution-icon">Execution</p>
 
           <!-- Menu Section -->
           <!-- {% if user.is_authenticated %}
@@ -232,15 +233,18 @@
           <!--removing the code block, contains assets like servers n domains-->
           <li>
             <a href="#projectSubmenu" data-toggle="collapse" aria-expanded="false"
-               class="dropdown-toggle sidebar-dropdown-toggle">Projects</a>
+               class="dropdown-toggle sidebar-dropdown-toggle">Activities</a>
+               <!--Projects -> Activities-->
             <ul class="collapse list-unstyled text-left" id="projectSubmenu">
-              <li><a class="icon list-icon" href="{% url 'rolodex:projects' %}">Projects Library</a></li>
+              <li><a class="icon list-icon" href="{% url 'rolodex:projects' %}">Activity Library</a></li>
+              <!--Projects -> Activity-->
               {% if request.user|is_privileged %}
-                <li><a class="icon plus-icon" href="{% url 'rolodex:project_create_no_client' %}">Add New Project</a></li>
+                <li><a class="icon plus-icon" href="{% url 'rolodex:project_create_no_client' %}">Add New Activity</a></li>
+                <!--Projects -> Activity-->
               {% endif %}
             </ul>
           </li>
-          <li>
+          <!-- <li>
             <a href="#oplogSubmenu" data-toggle="collapse" aria-expanded="false"
                class="dropdown-toggle sidebar-dropdown-toggle">Operation Logs</a>
             <ul class="collapse list-unstyled text-left" id="oplogSubmenu">
@@ -248,7 +252,8 @@
               <li><a class="icon plus-icon" href="{% url 'oplog:oplog_create_no_project' %}">Add New Oplog</a></li>
               <li><a class="icon import-icon" href="{% url 'oplog:oplog_import' %}">Import Oplog Entries</a></li>
             </ul>
-          </li>
+          </li> -->
+          <!--removing this code block to get rid of Operation Logs in the side menu-->
         </ul>
 
         <!-- Reporting Section -->
@@ -358,7 +363,7 @@
             </li>
           {% endif %}
           <!-- Documentation Section -->
-          <li>
+          <!-- <li>
             <a href="#docsSubmenu" data-toggle="collapse" aria-expanded="false"
                class="dropdown-toggle sidebar-dropdown-toggle">Documentation</a>
             <ul class="collapse list-unstyled text-left" id="docsSubmenu">
@@ -366,7 +371,8 @@
               <li><a class="icon github-icon" href="https://github.com/GhostManager/Ghostwriter">Ghostwriter on
                 GitHub</a></li>
             </ul>
-          </li>
+          </li> -->
+          <!--Removing this code block to get rid of documentation-->
         </ul>
 
         <!-- Sidebar Buttons -->
@@ -376,12 +382,13 @@
           {% else %}
             <a href="{% url 'account_login' %}" class="btn btn-primary col-10 icon login-icon">Login</a>
           {% endif %}
-
-          <a href="https://www.specterops.io"><img class="col-8" src="{% static 'images/domain.png' %}"
-                                                   alt="SpecterOps"></a>
+          <hr>
+          <a href="https://www.mashreq.com/en/india/about-us/"><img class="col-8" src="{% static 'images/domain.png' %}"
+                                                   alt="Mashreq Global Ntework"></a>
+                                                   <!--changed the domain and redirection link-->
         </div>
       </div>
-
+      <hr>
       <div class="sidebar-footer col d-flex align-items-center justify-content-center mb-2">
         <span>v{{ VERSION }}, released {{ RELEASE_DATE }}</span>
       </div>

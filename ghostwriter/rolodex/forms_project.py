@@ -1236,7 +1236,7 @@ class ProjectForm(forms.ModelForm):
         self.fields["project_type"].label = "Project Type"
         self.fields["client"].empty_label = "-- Select an Application --"
         # Client -> Application
-        self.fields["project_type"].empty_label = "-- Select a Project Type --"
+        self.fields["project_type"].empty_label = "-- Select an Activity Type --"
         # Design form layout with Crispy FormHelper
         self.helper = FormHelper()
         # Turn on <form> tags for this parent form

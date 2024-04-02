@@ -168,7 +168,7 @@ class Project(models.Model):
     """
 
     codename = models.CharField(
-        "Project Codename",
+        "Activity CR Number",
         max_length=255,
         null=True,
         blank=True,
@@ -185,22 +185,22 @@ class Project(models.Model):
         "Notes",
         null=True,
         blank=True,
-        help_text="Provide additional information about the project and planning",
+        help_text="Provide additional information about the activity and planning",
     )
     slack_channel = models.CharField(
-        "Project Slack Channel",
+        "Activity Slack Channel",
         max_length=255,
         null=True,
         blank=True,
         help_text="Provide an Slack channel to be used for project notifications",
     )
     complete = models.BooleanField(
-        "Completed", default=False, help_text="Mark this project as complete"
+        "Completed", default=False, help_text="Mark this activity as complete"
     )
     timezone = TimeZoneField(
-        "Project Timezone",
+        "Activity Timezone",
         default="Asia/Kolkata",
-        help_text="Timezone of the project / working hours",
+        help_text="Timezone of the activity / working hours",
     )
     start_time = models.TimeField(
         "Start Time",

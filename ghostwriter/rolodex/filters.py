@@ -115,17 +115,17 @@ class ProjectFilter(django_filters.FilterSet):
         method="search_all_client_names",
         widget=TextInput(
             attrs={
-                "placeholder": "Partial Client Name",
+                "placeholder": "Partial Application Name",
                 "autocomplete": "off",
             }
         ),
     )
     codename = django_filters.CharFilter(
-        label="Project Codename Contains",
+        label="Activity Codename Contains",
         lookup_expr="icontains",
         widget=TextInput(
             attrs={
-                "placeholder": "Partial Project Codename",
+                "placeholder": "Partial Activity Codename",
                 "autocomplete": "off",
             }
         ),
@@ -158,7 +158,7 @@ class ProjectFilter(django_filters.FilterSet):
     )
 
     complete = django_filters.ChoiceFilter(
-        choices=STATUS_CHOICES, empty_label="All Projects", label="Project Status"
+        choices=STATUS_CHOICES, empty_label="All Projects", label="Activity Status"
     )
 
     PROJECT_TYPE_CHOICES = []

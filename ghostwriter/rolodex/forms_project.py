@@ -1245,7 +1245,7 @@ class ProjectForm(forms.ModelForm):
         self.helper.layout = Layout(
             TabHolder(
                 CustomTab(
-                    "Project Information",
+                    "Activity Information",
                     Row(
                         Column(
                             "client",
@@ -1286,7 +1286,8 @@ class ProjectForm(forms.ModelForm):
                         Column("tags", css_class="form-group col-md-4 mb-0"),
                         css_class="form-row",
                     ),
-                    SwitchToggle("update_checkouts"),
+                    # SwitchToggle("update_checkouts"),
+                    # removed the server checkout toggle
                     "note",
                     link_css_class="project-icon",
                     css_id="project",

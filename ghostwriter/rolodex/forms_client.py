@@ -235,7 +235,7 @@ class ClientForm(forms.ModelForm):
         # self.fields["address"].widget.attrs[
         #     "placeholder"
         # ] = "14 N Moore St, New York, NY 10013"
-        self.fields["address"].widget.attrs["placeholder"] = "Application Address..."
+        # self.fields["address"].widget.attrs["placeholder"] = "Application Address..."
         # Might have to remove this code block
         self.fields["timezone"].initial = general_config.default_timezone
         self.fields["tags"].widget.attrs[
@@ -265,27 +265,29 @@ class ClientForm(forms.ModelForm):
                         css_class="form-row",
                     ),
                     Row(
-                        Column("tags", css_class="form-group col-md-4 mb-0"),
-                        Column(
-                            FieldWithButtons(
-                                "codename",
-                                # HTML(
-                                #     """
-                                #     <button
-                                #         class="btn btn-secondary js-roll-codename"
-                                #         roll-codename-url="{% url 'rolodex:ajax_roll_codename' %}"
-                                #         type="button"
-                                #     >
-                                #     <i class="fas fa-dice"></i>
-                                #     </button>
-                                #     """
-                                # ),
-                            ),
-                            css_class="col-md-4",
-                        ),
-                        Column("timezone", css_class="form-group col-md-4 mb-0"),
+                        Column("tags", css_class="form-group col-md-6 mb-0"),
+                        # Column(
+                        #     FieldWithButtons(
+                        #         "codename",
+                        #         # HTML(
+                        #         #     """
+                        #         #     <button
+                        #         #         class="btn btn-secondary js-roll-codename"
+                        #         #         roll-codename-url="{% url 'rolodex:ajax_roll_codename' %}"
+                        #         #         type="button"
+                        #         #     >
+                        #         #     <i class="fas fa-dice"></i>
+                        #         #     </button>
+                        #         #     """
+                        #         # ),
+                        #     ),
+                        #     css_class="col-md-4",
+                        # ),
+                        # removing the code block here to get rid of CR Number section in application registration page
+                        Column("timezone", css_class="form-group col-md-6 mb-0"),
+                        css_class="form-row",
                     ),
-                    "address",
+                    # "address",
                     "note",
                     link_css_class="client-icon",
                     css_id="client",

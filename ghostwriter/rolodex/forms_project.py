@@ -1233,7 +1233,10 @@ class ProjectForm(forms.ModelForm):
         self.fields["tags"].widget.attrs[
             "placeholder"
         ] = "evasive, on-site, travel, ..."
-        self.fields["project_type"].label = "Project Type"
+        self.fields["project_type"].label = "Activity Type"
+        # Project -> Activity
+        self.fields["client"].label = "Application"
+        # new line inserted
         self.fields["client"].empty_label = "-- Select an Application --"
         # Client -> Application
         self.fields["project_type"].empty_label = "-- Select an Activity Type --"

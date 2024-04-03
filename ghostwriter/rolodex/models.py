@@ -219,7 +219,7 @@ class Project(models.Model):
     tags = TaggableManager(blank=True)
     # Foreign keys
     client = models.ForeignKey(
-        "Client",
+        Client,
         on_delete=models.CASCADE,
         null=False,
         help_text="Select the Application to which this activity should be attached",
@@ -288,19 +288,19 @@ class ProjectAssignment(models.Model):
         "Start Date",
         null=True,
         blank=True,
-        help_text="Enter the start date of the project",
+        help_text="Enter the start date of the activity",
     )
     end_date = models.DateField(
         "End Date",
         null=True,
         blank=True,
-        help_text="Enter the end date of the project",
+        help_text="Enter the end date of the activity",
     )
     note = models.TextField(
         "Notes",
         null=True,
         blank=True,
-        help_text="Provide additional information about the project role and assignment",
+        help_text="Provide additional information about the activity role and assignment",
     )
     # Foreign keys
     operator = models.ForeignKey(
@@ -308,7 +308,7 @@ class ProjectAssignment(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        help_text="Select a user to assign to this project",
+        help_text="Select a user to assign to this activity",
     )
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=False)
     role = models.ForeignKey(
@@ -316,7 +316,7 @@ class ProjectAssignment(models.Model):
         on_delete=models.PROTECT,
         null=True,
         blank=True,
-        help_text="Select a role that best describes the selected user's role in this project",
+        help_text="Select a role that best describes the selected user's role in this activity",
     )
 
     class Meta:
@@ -342,7 +342,7 @@ class ProjectContact(models.Model):
         max_length=255,
         null=True,
         blank=True,
-        help_text="Enter the contact's job title or project role as you want it to appear in a report",
+        help_text="Enter the contact's job title or activity role as you want it to appear in a report",
     )
     email = models.CharField(
         "Email",
@@ -376,7 +376,7 @@ class ProjectContact(models.Model):
     primary = models.BooleanField(
         "Primary Contact",
         default=False,
-        help_text="Flag this contact as the primary point of contact / report recipient for the project",
+        help_text="Flag this contact as the primary point of contact / report recipient for the activity",
     )
     # Foreign keys
     project = models.ForeignKey(

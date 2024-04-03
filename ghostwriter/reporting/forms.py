@@ -54,14 +54,28 @@ class FindingForm(forms.ModelForm):
         self.fields["title"].widget.attrs["placeholder"] = "Finding Title"
         self.fields["description"].widget.attrs["placeholder"] = "What is this ..."
         self.fields["impact"].widget.attrs["placeholder"] = "What is the impact ..."
-        self.fields["cvss_score"].widget.attrs["placeholder"] = "What is the CVSS score ..."
-        self.fields["cvss_vector"].widget.attrs["placeholder"] = "What is the CVSS vector ..."
+        self.fields["cvss_score"].widget.attrs[
+            "placeholder"
+        ] = "What is the CVSS score ..."
+        self.fields["cvss_vector"].widget.attrs[
+            "placeholder"
+        ] = "What is the CVSS vector ..."
 
-        self.fields["mitigation"].widget.attrs["placeholder"] = "What needs to be done ..."
-        self.fields["replication_steps"].widget.attrs["placeholder"] = "How to reproduce/find this issue ..."
-        self.fields["host_detection_techniques"].widget.attrs["placeholder"] = "How to detect it on an endpoint ..."
-        self.fields["network_detection_techniques"].widget.attrs["placeholder"] = "How to detect it on a network ..."
-        self.fields["references"].widget.attrs["placeholder"] = "Some useful links and references ..."
+        self.fields["mitigation"].widget.attrs[
+            "placeholder"
+        ] = "What needs to be done ..."
+        self.fields["replication_steps"].widget.attrs[
+            "placeholder"
+        ] = "How to reproduce/find this issue ..."
+        self.fields["host_detection_techniques"].widget.attrs[
+            "placeholder"
+        ] = "How to detect it on an endpoint ..."
+        self.fields["network_detection_techniques"].widget.attrs[
+            "placeholder"
+        ] = "How to detect it on a network ..."
+        self.fields["references"].widget.attrs[
+            "placeholder"
+        ] = "Some useful links and references ..."
         self.fields["finding_guidance"].widget.attrs[
             "placeholder"
         ] = "When using this finding in a report be sure to include ..."
@@ -102,27 +116,6 @@ class FindingForm(forms.ModelForm):
                     HTML(
                         """
                         <!-- CVSS -->
-                        <!--
-                        Copyright (c) 2015, FIRST.ORG, INC.
-                        All rights reserved.
-
-                        Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
-                        following conditions are met:
-                        1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following
-                        disclaimer.
-                        2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
-                        following disclaimer in the documentation and/or other materials provided with the distribution.
-                        3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote
-                        products derived from this software without specific prior written permission.
-
-                        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-                        INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-                        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-                        SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-                        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-                        WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-                        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-                        -->
 
                         <div class="form-row" style="text-align:center;display:inline-block">
                         <fieldset id="baseMetricGroup">
@@ -267,15 +260,16 @@ class ReportForm(forms.ModelForm):
 
         if not project:
             projects = get_project_list(user)
-            active_projects = projects.filter(complete=False).order_by("-start_date", "client", "project_type")
+            active_projects = projects.filter(complete=False).order_by(
+                "-start_date", "client", "project_type"
+            )
+            self.fields["project"].label = "Activity"
             if active_projects:
-                self.fields["project"].empty_label = "-- Select an Active Project --"
+                self.fields["project"].empty_label = "-- Select an Active Activity --"
             else:
-                self.fields["project"].empty_label = "-- No Active Projects --"
+                self.fields["project"].empty_label = "-- No Active Activities --"
             self.fields["project"].queryset = active_projects
-            self.fields[
-                "project"
-            ].label_from_instance = (
+            self.fields["project"].label_from_instance = (
                 lambda obj: f"{obj.start_date} {obj.client.name} {obj.project_type} ({obj.codename})"
             )
 
@@ -286,7 +280,9 @@ class ReportForm(forms.ModelForm):
         self.fields["docx_template"].required = False
         self.fields["pptx_template"].required = False
         self.fields["tags"].widget.attrs["placeholder"] = "draft, QA2, ..."
-        self.fields["title"].widget.attrs["placeholder"] = "Red Team Report for Project Foo"
+        self.fields["title"].widget.attrs[
+            "placeholder"
+        ] = "Red Team Report for Project Foo"
 
         report_config = ReportConfiguration.get_solo()
         self.fields["docx_template"].initial = report_config.default_docx_template
@@ -355,17 +351,33 @@ class ReportFindingLinkUpdateForm(forms.ModelForm):
         )
         for field in self.fields:
             self.fields[field].widget.attrs["autocomplete"] = "off"
-        self.fields["affected_entities"].widget.attrs["placeholder"] = "List of Hostnames or IP Addresses"
+        self.fields["affected_entities"].widget.attrs[
+            "placeholder"
+        ] = "List of Hostnames or IP Addresses"
         self.fields["title"].widget.attrs["placeholder"] = "Finding Title"
         self.fields["description"].widget.attrs["placeholder"] = "What is this ..."
         self.fields["impact"].widget.attrs["placeholder"] = "What is the impact ..."
-        self.fields["cvss_score"].widget.attrs["placeholder"] = "What is the CVSS score ..."
-        self.fields["cvss_vector"].widget.attrs["placeholder"] = "What is the CVSS vector ..."
-        self.fields["mitigation"].widget.attrs["placeholder"] = "What needs to be done ..."
-        self.fields["replication_steps"].widget.attrs["placeholder"] = "How to reproduce/find this issue ..."
-        self.fields["host_detection_techniques"].widget.attrs["placeholder"] = "How to detect it on an endpoint ..."
-        self.fields["network_detection_techniques"].widget.attrs["placeholder"] = "How to detect it on a network ..."
-        self.fields["references"].widget.attrs["placeholder"] = "Some useful links and references ..."
+        self.fields["cvss_score"].widget.attrs[
+            "placeholder"
+        ] = "What is the CVSS score ..."
+        self.fields["cvss_vector"].widget.attrs[
+            "placeholder"
+        ] = "What is the CVSS vector ..."
+        self.fields["mitigation"].widget.attrs[
+            "placeholder"
+        ] = "What needs to be done ..."
+        self.fields["replication_steps"].widget.attrs[
+            "placeholder"
+        ] = "How to reproduce/find this issue ..."
+        self.fields["host_detection_techniques"].widget.attrs[
+            "placeholder"
+        ] = "How to detect it on an endpoint ..."
+        self.fields["network_detection_techniques"].widget.attrs[
+            "placeholder"
+        ] = "How to detect it on a network ..."
+        self.fields["references"].widget.attrs[
+            "placeholder"
+        ] = "Some useful links and references ..."
         self.fields["tags"].widget.attrs["placeholder"] = "ATT&CK:T1555, privesc, ..."
         self.fields["finding_type"].label = "Finding Type"
         self.fields["assigned_to"].label = "Assigned Editor"
@@ -586,14 +598,18 @@ class EvidenceForm(forms.ModelForm):
         self.fields["friendly_name"].required = True
         self.fields["friendly_name"].widget.attrs["autocomplete"] = "off"
         self.fields["friendly_name"].widget.attrs["placeholder"] = "Friendly Name"
-        self.fields["description"].widget.attrs["placeholder"] = "Brief Description or Note"
+        self.fields["description"].widget.attrs[
+            "placeholder"
+        ] = "Brief Description or Note"
         self.fields["document"].label = ""
         # Don't set form buttons for a modal pop-up
         if self.is_modal:
             submit = None
             cancel_button = None
         else:
-            submit = Submit("submit-button", "Submit", css_class="btn btn-primary col-md-4")
+            submit = Submit(
+                "submit-button", "Submit", css_class="btn btn-primary col-md-4"
+            )
             cancel_button = HTML(
                 """
                 <button onclick="window.location.href='{{ cancel_link }}'"
@@ -669,7 +685,9 @@ class EvidenceForm(forms.ModelForm):
             for evidence in report_queryset:
                 if friendly_name == evidence[1] and not self.instance.id == evidence[0]:
                     raise ValidationError(
-                        _("This friendly name has already been used for a file attached to this finding."),
+                        _(
+                            "This friendly name has already been used for a file attached to this finding."
+                        ),
                         "duplicate",
                     )
         return friendly_name
@@ -772,8 +790,12 @@ class ReportTemplateForm(forms.ModelForm):
         self.fields["document"].label = ""
         self.fields["document"].widget.attrs["class"] = "custom-file-input"
         self.fields["name"].widget.attrs["placeholder"] = "Default Red Team Report"
-        self.fields["description"].widget.attrs["placeholder"] = "Use this template for any red team work unless ..."
-        self.fields["changelog"].widget.attrs["placeholder"] = "Track Template Modifications"
+        self.fields["description"].widget.attrs[
+            "placeholder"
+        ] = "Use this template for any red team work unless ..."
+        self.fields["changelog"].widget.attrs[
+            "placeholder"
+        ] = "Track Template Modifications"
         self.fields["doc_type"].empty_label = "-- Select a Matching Filetype --"
         self.fields["client"].empty_label = "-- Attach to a Client (Optional) --"
         self.fields["tags"].widget.attrs["placeholder"] = "language:en_US, cvss, ..."
@@ -887,7 +909,9 @@ class SelectReportTemplateForm(forms.ModelForm):
         self.helper.form_method = "post"
         self.helper.form_id = "report-template-swap-form"
         self.helper.form_tag = True
-        self.helper.form_action = reverse("reporting:ajax_swap_report_template", kwargs={"pk": self.instance.id})
+        self.helper.form_action = reverse(
+            "reporting:ajax_swap_report_template", kwargs={"pk": self.instance.id}
+        )
         self.helper.layout = Layout(
             Row(
                 Column(
@@ -990,7 +1014,9 @@ class SeverityForm(forms.ModelForm):
                 )
             if not re.search(valid_hex_regex, color):
                 raise ValidationError(
-                    _("Please enter a valid hex color, three pairs of characters using A-F and 0-9 (e.g., 7A7A7A)."),
+                    _(
+                        "Please enter a valid hex color, three pairs of characters using A-F and 0-9 (e.g., 7A7A7A)."
+                    ),
                     "invalid",
                 )
 

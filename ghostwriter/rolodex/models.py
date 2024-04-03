@@ -26,7 +26,7 @@ class Client(models.Model):
 
     name = models.CharField(
         "Application Name",
-        # client -> applicatio
+        # client -> application
         max_length=255,
         unique=True,
         help_text="Provide the application's full name as you want it to appear in a report",
@@ -146,7 +146,7 @@ class ProjectType(models.Model):
     """Stores an individual project type, related to :model:`rolodex.Project`."""
 
     project_type = models.CharField(
-        "Project Type",
+        "Activity Type",
         max_length=255,
         unique=True,
         help_text="Enter a project type (e.g. red team, penetration test)",

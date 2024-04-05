@@ -115,7 +115,7 @@
                 <!--Client -> Application-->
                 <hr />
 
-                <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:client_update' client.id %}#contacts">Add a Point of Contact</a>
+                <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:client_update' client.id %}#contacts">Add an Application Owner</a>
                 {% if client.clientcontact_set.all %}
                     <table id="clientTable" class="tablesorter table table-striped">
                         <thead>
@@ -123,7 +123,7 @@
                                 <th class="align-middle pr-4">Name</th>
                                 <th class="align-middle pr-4">Title/Role</th>
                                 <th class="align-middle pr-4">Email</th>
-                                <th class="sorter-false">Latest Date of Project</th>
+                                <th class="sorter-false">Latest Date of Activity</th>
                                 <!--Phone -> Date of project-->
                                 <th class="sorter-false">Note</th>
                                 <th class="sorter-false">Options</th>

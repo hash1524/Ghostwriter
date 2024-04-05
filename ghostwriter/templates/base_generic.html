@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>{% block title %}Ghostwriter{% endblock %}</title>
+  <title>{% block title %}VM Team{% endblock %}</title>
 
   <!-- Load Static Files -->
   <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
@@ -96,7 +96,7 @@
       <!-- Sidebar Top Section -->
       <div class="sidebar-header col d-flex align-items-center justify-content-center">
         <a href="{% url 'home:dashboard' %}">
-          <img src="{% static 'images/all_white_header.png' %}" alt="Ghostwriter">
+          <img src="{% static 'images/all_white_header.png' %}" alt="Mashreq">
         </a>
         <div class="sidebar-header-tab">
           <div class="square">
@@ -109,7 +109,7 @@
       <div class="sidebar-body">
         <!-- Project Shortcut Section -->
         <ul class="list-unstyled components">
-          <p class="sideheader icon icon home-icon">Project Shortcuts</p>
+          <p class="sideheader icon icon home-icon">Activity Shortcuts</p>
 
           <a
             {% if request.session.active_report.id and request.session.active_report.title %}

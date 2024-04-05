@@ -71,7 +71,10 @@ class Client(models.Model):
         help_text="An address to be used for reports or shipping",
         # might have to remove this code block
     )
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(
+        blank=True,
+        help_text="Enter the Business Criticality of the Application here",
+    )
 
     class Meta:
         ordering = ["name"]

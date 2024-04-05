@@ -238,12 +238,10 @@ class ClientForm(forms.ModelForm):
         # self.fields["address"].widget.attrs["placeholder"] = "Application Address..."
         # Might have to remove this code block
         self.fields["timezone"].initial = general_config.default_timezone
-        self.fields["tags"].widget.attrs[
-            "placeholder"
-        ] = "cybersecurity, industry:infosec, ..."
+        self.fields["tags"].widget.attrs["placeholder"] = "BC0/BC1/BC2/BC3"
         # self.fields["codename"].widget.attrs["placeholder"] = "CR Number here..."
         self.fields["note"].label = "Notes"
-        self.fields["tags"].label = "Tags"
+        self.fields["tags"].label = "Business Criticality"
         # Design form layout with Crispy FormHelper
         self.helper = FormHelper()
         # Turn on <form> tags for this parent form

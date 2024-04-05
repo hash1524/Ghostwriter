@@ -284,9 +284,9 @@
                 <td class="align-middle">
                   <span id="finding-status-{{ finding.id }}" class="
                     {% if finding.complete %}
-                      healthy">Ready
+                      healthy"> Closed
                     {% else %}
-                      burned"> Needs Editing
+                      burned"> Open
                     {% endif %}
                   </span>
                 </td>
@@ -303,7 +303,7 @@
                       <a class="dropdown-item icon toggle-off-icon js-set-finding-status" href="javascript:void(0);"
                          set-finding-status-csrftoken="{{ csrf_token }}"
                          set-finding-status-url="{% url 'reporting:ajax_set_finding_status' finding.id 'edit' %}"
-                         set-finding-status="edit" set-finding-status-id="{{ finding.id }}">Flag for Editing</a>
+                         set-finding-status="edit" set-finding-status-id="{{ finding.id }}">Toggle Status</a>
                       <a class="dropdown-item icon toggle-on-icon js-set-finding-status" href="javascript:void(0);"
                          set-finding-status-csrftoken="{{ csrf_token }}"
                          set-finding-status-url="{% url 'reporting:ajax_set_finding_status' finding.id 'complete' %}"

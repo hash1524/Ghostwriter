@@ -161,7 +161,7 @@
               <span id="status-info-btn" class="dropdown-info" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">Status</span>
               <div id="status-info" class="dropdown-menu dropdown-info-content" aria-labelledby="status-info-btn">
-                <p>Mark a finding as ready or in need of editing. Findings marked as in need of editing will appear on
+                <p>Mark a Vulnerability as Closed or Open. Vulenrabilities marked as open will appear on
                   the assigned user's dashboard.</p>
               </div>
             </div>
@@ -303,11 +303,11 @@
                       <a class="dropdown-item icon toggle-off-icon js-set-finding-status" href="javascript:void(0);"
                          set-finding-status-csrftoken="{{ csrf_token }}"
                          set-finding-status-url="{% url 'reporting:ajax_set_finding_status' finding.id 'edit' %}"
-                         set-finding-status="edit" set-finding-status-id="{{ finding.id }}">Toggle Status</a>
+                         set-finding-status="edit" set-finding-status-id="{{ finding.id }}">Vulnerability Open</a>
                       <a class="dropdown-item icon toggle-on-icon js-set-finding-status" href="javascript:void(0);"
                          set-finding-status-csrftoken="{{ csrf_token }}"
                          set-finding-status-url="{% url 'reporting:ajax_set_finding_status' finding.id 'complete' %}"
-                         set-finding-status="complete" set-finding-status-id="{{ finding.id }}">Mark as Complete</a>
+                         set-finding-status="complete" set-finding-status-id="{{ finding.id }}">Vulnerability Closed</a>
                       <a class="dropdown-item icon clone-icon" href="{% url 'reporting:convert_finding' finding.id %}">Clone
                         to Library</a>
                       <a id="finding-delete-button-{{ finding.id }}"

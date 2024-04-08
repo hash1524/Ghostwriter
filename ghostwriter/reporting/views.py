@@ -92,7 +92,9 @@ logger = logging.getLogger(__name__)
 
 
 def get_position(report_pk, severity):
-    findings = ReportFindingLink.objects.filter(Q(report__pk=report_pk) & Q(severity=severity)).order_by("-position")
+    findings = ReportFindingLink.objects.filter(
+        Q(report__pk=report_pk) & Q(severity=severity)
+    ).order_by("-position")
     if findings:
         # Set new position to be one above the last/largest position
         last_position = findings[0].position
@@ -113,8 +115,12 @@ def generate_report_name(report_instance):
         name = name.replace("{title}", instance.title)
         name = name.replace("{company}", company_info.company_name)
         name = name.replace("{client}", instance.project.client.name)
-        name = name.replace("{date}", dateformat.format(timezone.now(), settings.DATE_FORMAT))
-        name = name.replace("{assessment_type}", instance.project.project_type.project_type)
+        name = name.replace(
+            "{date}", dateformat.format(timezone.now(), settings.DATE_FORMAT)
+        )
+        name = name.replace(
+            "{assessment_type}", instance.project.project_type.project_type
+        )
         return name
 
     def replace_date_format(name):
@@ -200,7 +206,12 @@ def ajax_update_report_findings(request):
                                 finding_id,
                             )
             else:
-                data = {"result": "error", "message": "Specified severity weight, {}, is invalid.".format(weight)}
+                data = {
+                    "result": "error",
+                    "message": "Specified severity weight, {}, is invalid.".format(
+                        weight
+                    ),
+                }
         else:
             logger.error(
                 "AJAX request submitted by user %s without access to report %s",
@@ -259,7 +270,9 @@ class AssignFinding(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                 if not verify_access(self.request.user, report.project):
                     return ForbiddenJsonResponse()
             except Report.DoesNotExist:
-                message = "Please select a report to edit before trying to assign a finding."
+                message = (
+                    "Please select a report to edit before trying to assign a finding."
+                )
                 data = {"result": "error", "message": message}
                 return JsonResponse(data)
 
@@ -273,7 +286,9 @@ class AssignFinding(RoleBasedAccessControlMixin, SingleObjectMixin, View):
             report_link.save()
             report_link.tags.add(*finding_instance.tags.all())
 
-            message = "{} successfully added to your active report.".format(finding_instance)
+            message = "{} successfully added to your active report.".format(
+                finding_instance
+            )
             data = {"result": "success", "message": message}
             logger.info(
                 "Copied %s %s to %s %s (%s %s) by request of %s",
@@ -286,7 +301,9 @@ class AssignFinding(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                 self.request.user,
             )
         else:
-            message = "Please select a report to edit before trying to assign a finding."
+            message = (
+                "Please select a report to edit before trying to assign a finding."
+            )
             data = {"result": "error", "message": message}
         return JsonResponse(data)
 
@@ -359,7 +376,9 @@ class ReportFindingLinkDelete(RoleBasedAccessControlMixin, SingleObjectMixin, Vi
         finding.delete()
         data = {
             "result": "success",
-            "message": "Successfully deleted {finding} and cleaned up evidence.".format(finding=finding),
+            "message": "Successfully deleted {finding} and cleaned up evidence.".format(
+                finding=finding
+            ),
         }
         logger.info(
             "Deleted %s %s by request of %s",
@@ -525,12 +544,12 @@ class ReportFindingStatusUpdate(RoleBasedAccessControlMixin, SingleObjectMixin, 
             if status.lower() == "edit":
                 finding.complete = False
                 message = "Successfully flagged finding for editing."
-                display_status = "Needs Editing"
+                display_status = "Open"
                 classes = "burned"
             elif status.lower() == "complete":
                 finding.complete = True
                 message = "Successfully marking finding as complete."
-                display_status = "Ready"
+                display_status = "Closed"
                 classes = "healthy"
             else:
                 result = "error"
@@ -589,10 +608,14 @@ class ReportTemplateSwap(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                 if pptx_template_id < 0:
                     report.pptx_template = None
                 if docx_template_id >= 0:
-                    docx_template_query = ReportTemplate.objects.get(pk=docx_template_id)
+                    docx_template_query = ReportTemplate.objects.get(
+                        pk=docx_template_id
+                    )
                     report.docx_template = docx_template_query
                 if pptx_template_id >= 0:
-                    pptx_template_query = ReportTemplate.objects.get(pk=pptx_template_id)
+                    pptx_template_query = ReportTemplate.objects.get(
+                        pk=pptx_template_id
+                    )
                     report.pptx_template = pptx_template_query
                 data = {
                     "result": "success",
@@ -607,56 +630,56 @@ class ReportTemplateSwap(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                         data["docx_lint_result"] = template_status
                         if template_status != "success":
                             if template_status == "warning":
-                                data[
-                                    "docx_lint_message"
-                                ] = "Selected Word template has warnings from linter. Check the template before generating a report."
+                                data["docx_lint_message"] = (
+                                    "Selected Word template has warnings from linter. Check the template before generating a report."
+                                )
                             elif template_status == "error":
-                                data[
-                                    "docx_lint_message"
-                                ] = "Selected Word template has linting errors and cannot be used to generate a report."
+                                data["docx_lint_message"] = (
+                                    "Selected Word template has linting errors and cannot be used to generate a report."
+                                )
                             elif template_status == "failed":
-                                data[
-                                    "docx_lint_message"
-                                ] = "Selected Word template failed basic linter checks and can't be used to generate a report."
+                                data["docx_lint_message"] = (
+                                    "Selected Word template failed basic linter checks and can't be used to generate a report."
+                                )
                             else:
-                                data[
-                                    "docx_lint_message"
-                                ] = "Selected Word template has an unknown linter status. Check and lint the template before generating a report."
+                                data["docx_lint_message"] = (
+                                    "Selected Word template has an unknown linter status. Check and lint the template before generating a report."
+                                )
                             data["docx_url"] = docx_template_query.get_absolute_url()
                 except Exception:  # pragma: no cover
                     logger.exception("Failed to get the template status")
                     data["docx_lint_result"] = "failed"
-                    data[
-                        "docx_lint_message"
-                    ] = "Could not retrieve the Word template's linter status. Check and lint the template before generating a report."
+                    data["docx_lint_message"] = (
+                        "Could not retrieve the Word template's linter status. Check and lint the template before generating a report."
+                    )
                 try:
                     if pptx_template_query:
                         template_status = pptx_template_query.get_status()
                         data["pptx_lint_result"] = template_status
                         if template_status != "success":
                             if template_status == "warning":
-                                data[
-                                    "pptx_lint_message"
-                                ] = "Selected PowerPoint template has warnings from linter. Check the template before generating a report."
+                                data["pptx_lint_message"] = (
+                                    "Selected PowerPoint template has warnings from linter. Check the template before generating a report."
+                                )
                             elif template_status == "error":
-                                data[
-                                    "pptx_lint_message"
-                                ] = "Selected PowerPoint template has linting errors and cannot be used to generate a report."
+                                data["pptx_lint_message"] = (
+                                    "Selected PowerPoint template has linting errors and cannot be used to generate a report."
+                                )
                             elif template_status == "failed":
-                                data[
-                                    "pptx_lint_message"
-                                ] = "Selected PowerPoint template failed basic linter checks and can't be used to generate a report."
+                                data["pptx_lint_message"] = (
+                                    "Selected PowerPoint template failed basic linter checks and can't be used to generate a report."
+                                )
                             else:
-                                data[
-                                    "pptx_lint_message"
-                                ] = "Selected PowerPoint template has an unknown linter status. Check and lint the template before generating a report."
+                                data["pptx_lint_message"] = (
+                                    "Selected PowerPoint template has an unknown linter status. Check and lint the template before generating a report."
+                                )
                             data["pptx_url"] = pptx_template_query.get_absolute_url()
                 except Exception:  # pragma: no cover
                     logger.exception("Failed to get the template status")
                     data["pptx_lint_result"] = "failed"
-                    data[
-                        "pptx_lint_message"
-                    ] = "Could not retrieve the PowerPoint template's linter status. Check and lint the template before generating a report."
+                    data["pptx_lint_message"] = (
+                        "Could not retrieve the PowerPoint template's linter status. Check and lint the template before generating a report."
+                    )
                 logger.info(
                     "Swapped template for %s %s by request of %s",
                     report.__class__.__name__,
@@ -735,11 +758,17 @@ class ReportTemplateLint(RoleBasedAccessControlMixin, SingleObjectMixin, View):
 
         data = results
         if data["result"] == "success":
-            data["message"] = "Template linter returned results with no errors or warnings."
+            data["message"] = (
+                "Template linter returned results with no errors or warnings."
+            )
         elif not data["result"]:
-            data["message"] = f"Template had an unknown filetype not supported by the linter: {template.doc_type}"
+            data["message"] = (
+                f"Template had an unknown filetype not supported by the linter: {template.doc_type}"
+            )
         else:
-            data["message"] = "Template linter returned results with issues that require attention."
+            data["message"] = (
+                "Template linter returned results with issues that require attention."
+            )
 
         return JsonResponse(data)
 
@@ -759,7 +788,9 @@ class ReportClone(RoleBasedAccessControlMixin, SingleObjectMixin, View):
         report_to_clone = self.get_object()
         report_pk = None
         try:
-            findings = ReportFindingLink.objects.select_related("report").filter(report=report_to_clone.pk)
+            findings = ReportFindingLink.objects.select_related("report").filter(
+                report=report_to_clone.pk
+            )
             report_to_clone.title = report_to_clone.title + " Copy"
             report_to_clone.complete = False
             report_to_clone.pk = None
@@ -775,7 +806,9 @@ class ReportClone(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                 # Clone evidence files and attach them to the new finding
                 for evidence in evidences:
                     if exists(evidence.document.path):
-                        evidence_file = File(evidence.document, os.path.basename(evidence.document.name))
+                        evidence_file = File(
+                            evidence.document, os.path.basename(evidence.document.name)
+                        )
                         evidence.finding = finding
                         evidence._current_evidence = None
                         evidence.document = evidence_file
@@ -811,11 +844,15 @@ class ReportClone(RoleBasedAccessControlMixin, SingleObjectMixin, View):
 
             messages.error(
                 self.request,
-                "Encountered an error while trying to clone your report: {}".format(exception.args),
+                "Encountered an error while trying to clone your report: {}".format(
+                    exception.args
+                ),
                 extra_tags="alert-error",
             )
 
-        return HttpResponseRedirect(reverse("reporting:report_detail", kwargs={"pk": report_pk}))
+        return HttpResponseRedirect(
+            reverse("reporting:report_detail", kwargs={"pk": report_pk})
+        )
 
 
 class AssignBlankFinding(RoleBasedAccessControlMixin, SingleObjectMixin, View):
@@ -870,7 +907,9 @@ class AssignBlankFinding(RoleBasedAccessControlMixin, SingleObjectMixin, View):
 
             messages.error(
                 self.request,
-                "Encountered an error while trying to add a blank finding to your report: {}".format(exception.args),
+                "Encountered an error while trying to add a blank finding to your report: {}".format(
+                    exception.args
+                ),
                 extra_tags="alert-error",
             )
 
@@ -896,8 +935,15 @@ class ConvertFinding(RoleBasedAccessControlMixin, SingleObjectMixin, View):
         return False
 
     def handle_no_permission(self):
-        messages.error(self.request, "You do not have the necessary permission to create new findings.")
-        return redirect(reverse("reporting:report_detail", kwargs={"pk": self.get_object().report.pk}))
+        messages.error(
+            self.request,
+            "You do not have the necessary permission to create new findings.",
+        )
+        return redirect(
+            reverse(
+                "reporting:report_detail", kwargs={"pk": self.get_object().report.pk}
+            )
+        )
 
     def get(self, *args, **kwargs):
         finding_instance = self.get_object()
@@ -926,7 +972,9 @@ class ConvertFinding(RoleBasedAccessControlMixin, SingleObjectMixin, View):
 
             messages.error(
                 self.request,
-                "Encountered an error while trying to convert your finding: {}".format(exception.args),
+                "Encountered an error while trying to convert your finding: {}".format(
+                    exception.args
+                ),
                 extra_tags="alert-error",
             )
             return HttpResponse(status=500)
@@ -937,7 +985,9 @@ class ConvertFinding(RoleBasedAccessControlMixin, SingleObjectMixin, View):
         form = FindingForm(self.request.POST)
         if form.is_valid():
             new_finding = form.save()
-            return HttpResponseRedirect(reverse("reporting:finding_detail", kwargs={"pk": new_finding.pk}))
+            return HttpResponseRedirect(
+                reverse("reporting:finding_detail", kwargs={"pk": new_finding.pk})
+            )
         logger.warning(form.errors.as_data())
         return render(self.request, "reporting/finding_form.html", {"form": form})
 
@@ -1047,15 +1097,17 @@ class FindingListView(RoleBasedAccessControlMixin, ListView):
                 "Displaying search results for: {}".format(search_term),
                 extra_tags="alert-success",
             )
-            return findings.filter(Q(title__icontains=search_term) | Q(description__icontains=search_term)).order_by(
-                "severity__weight", "-cvss_score", "finding_type", "title"
-            )
+            return findings.filter(
+                Q(title__icontains=search_term) | Q(description__icontains=search_term)
+            ).order_by("severity__weight", "-cvss_score", "finding_type", "title")
         return findings
 
     def get(self, request, *args, **kwarg):
         findings_filter = FindingFilter(request.GET, queryset=self.get_queryset())
         return render(
-            request, "reporting/finding_list.html", {"filter": findings_filter, "autocomplete": self.autocomplete}
+            request,
+            "reporting/finding_list.html",
+            {"filter": findings_filter, "autocomplete": self.autocomplete},
         )
 
 
@@ -1092,7 +1144,10 @@ class FindingCreate(RoleBasedAccessControlMixin, CreateView):
         return verify_finding_access(self.request.user, "create")
 
     def handle_no_permission(self):
-        messages.error(self.request, "You do not have the necessary permission to create new findings.")
+        messages.error(
+            self.request,
+            "You do not have the necessary permission to create new findings.",
+        )
         return redirect("reporting:findings")
 
     def get_context_data(self, **kwargs):
@@ -1130,18 +1185,26 @@ class FindingUpdate(RoleBasedAccessControlMixin, UpdateView):
         return verify_finding_access(self.request.user, "edit")
 
     def handle_no_permission(self):
-        messages.error(self.request, "You do not have the necessary permission to edit findings.")
-        return redirect(reverse("reporting:finding_detail", kwargs={"pk": self.get_object().pk}))
+        messages.error(
+            self.request, "You do not have the necessary permission to edit findings."
+        )
+        return redirect(
+            reverse("reporting:finding_detail", kwargs={"pk": self.get_object().pk})
+        )
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["cancel_link"] = reverse("reporting:finding_detail", kwargs={"pk": self.object.pk})
+        ctx["cancel_link"] = reverse(
+            "reporting:finding_detail", kwargs={"pk": self.object.pk}
+        )
         return ctx
 
     def get_success_url(self):
         messages.success(
             self.request,
-            "Master record for {} was successfully updated".format(self.get_object().title),
+            "Master record for {} was successfully updated".format(
+                self.get_object().title
+            ),
             extra_tags="alert-success",
         )
         return reverse("reporting:finding_detail", kwargs={"pk": self.object.pk})
@@ -1172,13 +1235,19 @@ class FindingDelete(RoleBasedAccessControlMixin, DeleteView):
         return verify_finding_access(self.request.user, "delete")
 
     def handle_no_permission(self):
-        messages.error(self.request, "You do not have the necessary permission to delete findings.")
-        return redirect(reverse("reporting:finding_detail", kwargs={"pk": self.get_object().pk}))
+        messages.error(
+            self.request, "You do not have the necessary permission to delete findings."
+        )
+        return redirect(
+            reverse("reporting:finding_detail", kwargs={"pk": self.get_object().pk})
+        )
 
     def get_success_url(self):
         messages.warning(
             self.request,
-            "Master record for {} was successfully deleted".format(self.get_object().title),
+            "Master record for {} was successfully deleted".format(
+                self.get_object().title
+            ),
             extra_tags="alert-warning",
         )
         return reverse_lazy("reporting:findings")
@@ -1235,7 +1304,9 @@ class ArchiveView(RoleBasedAccessControlMixin, SingleObjectMixin, View):
         report_instance = self.get_object()
         try:
             archive_loc = os.path.join(settings.MEDIA_ROOT, "archives/")
-            evidence_loc = os.path.join(settings.MEDIA_ROOT, "evidence", str(report_instance.id))
+            evidence_loc = os.path.join(
+                settings.MEDIA_ROOT, "evidence", str(report_instance.id)
+            )
             report_name = generate_report_name(report_instance)
 
             # Get the templates for Word and PowerPoint
@@ -1254,7 +1325,9 @@ class ArchiveView(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                     raise MissingTemplate
 
             engine = reportwriter.Reportwriter(report_instance, template_loc=None)
-            json_doc, word_doc, excel_doc, ppt_doc = engine.generate_all_reports(docx_template, pptx_template)
+            json_doc, word_doc, excel_doc, ppt_doc = engine.generate_all_reports(
+                docx_template, pptx_template
+            )
 
             # Create a zip file in memory and add the reports to it
             zip_buffer = io.BytesIO()
@@ -1265,7 +1338,9 @@ class ArchiveView(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                 zf.writestr("report.pptx", ppt_doc.getvalue())
                 zip_directory(evidence_loc, zf)
             zip_buffer.seek(0)
-            with open(os.path.join(archive_loc, report_name + ".zip"), "wb+") as archive_file:
+            with open(
+                os.path.join(archive_loc, report_name + ".zip"), "wb+"
+            ) as archive_file:
                 archive_file = ContentFile(zip_buffer.read(), name=report_name + ".zip")
                 new_archive = Archive(
                     project=report_instance.project,
@@ -1321,7 +1396,9 @@ class ArchiveView(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                 "Failed to generate one or more documents for the archive.",
                 extra_tags="alert-danger",
             )
-        return HttpResponseRedirect(reverse("reporting:report_detail", kwargs={"pk": report_instance.id}))
+        return HttpResponseRedirect(
+            reverse("reporting:report_detail", kwargs={"pk": report_instance.id})
+        )
 
 
 class ArchiveDownloadView(RoleBasedAccessControlMixin, SingleObjectMixin, View):
@@ -1338,11 +1415,17 @@ class ArchiveDownloadView(RoleBasedAccessControlMixin, SingleObjectMixin, View):
 
     def get(self, *args, **kwargs):
         archive_instance = self.get_object()
-        file_path = os.path.join(settings.MEDIA_ROOT, archive_instance.report_archive.path)
+        file_path = os.path.join(
+            settings.MEDIA_ROOT, archive_instance.report_archive.path
+        )
         if os.path.exists(file_path):
             with open(file_path, "rb") as archive_file:
-                response = HttpResponse(archive_file.read(), content_type="application/x-zip-compressed")
-                response["Content-Disposition"] = "attachment; filename=" + os.path.basename(file_path)
+                response = HttpResponse(
+                    archive_file.read(), content_type="application/x-zip-compressed"
+                )
+                response["Content-Disposition"] = (
+                    "attachment; filename=" + os.path.basename(file_path)
+                )
                 return response
         raise Http404
 
@@ -1448,7 +1531,9 @@ class ReportCreate(RoleBasedAccessControlMixin, CreateView):
         ctx = super().get_context_data(**kwargs)
         ctx["project"] = self.project
         if self.project:
-            ctx["cancel_link"] = reverse("rolodex:project_detail", kwargs={"pk": self.project.pk})
+            ctx["cancel_link"] = reverse(
+                "rolodex:project_detail", kwargs={"pk": self.project.pk}
+            )
         else:
             ctx["cancel_link"] = reverse("reporting:reports")
         return ctx
@@ -1471,7 +1556,9 @@ class ReportCreate(RoleBasedAccessControlMixin, CreateView):
 
     def get_initial(self):
         if self.project:
-            title = "{} {} ({}) Report".format(self.project.client, self.project.project_type, self.project.start_date)
+            title = "{} {} ({}) Report".format(
+                self.project.client, self.project.project_type, self.project.start_date
+            )
             return {"title": title, "project": self.project.id}
         return super().get_initial()
 
@@ -1518,7 +1605,9 @@ class ReportUpdate(RoleBasedAccessControlMixin, UpdateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["project"] = self.object.project
-        ctx["cancel_link"] = reverse("reporting:report_detail", kwargs={"pk": self.object.pk})
+        ctx["cancel_link"] = reverse(
+            "reporting:report_detail", kwargs={"pk": self.object.pk}
+        )
         return ctx
 
     def form_valid(self, form):
@@ -1529,7 +1618,9 @@ class ReportUpdate(RoleBasedAccessControlMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        messages.success(self.request, "Successfully updated the report", extra_tags="alert-success")
+        messages.success(
+            self.request, "Successfully updated the report", extra_tags="alert-success"
+        )
         return reverse("reporting:report_detail", kwargs={"pk": self.object.pk})
 
 
@@ -1573,12 +1664,16 @@ class ReportDelete(RoleBasedAccessControlMixin, DeleteView):
             "Successfully deleted the report and associated evidence files",
             extra_tags="alert-warning",
         )
-        return "{}#reports".format(reverse("rolodex:project_detail", kwargs={"pk": self.object.project.id}))
+        return "{}#reports".format(
+            reverse("rolodex:project_detail", kwargs={"pk": self.object.project.id})
+        )
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         queryset = kwargs["object"]
-        ctx["cancel_link"] = reverse("rolodex:project_detail", kwargs={"pk": self.object.project.pk})
+        ctx["cancel_link"] = reverse(
+            "rolodex:project_detail", kwargs={"pk": self.object.project.pk}
+        )
         ctx["object_type"] = "entire report, evidence and all"
         ctx["object_to_be_deleted"] = queryset.title
         return ctx
@@ -1700,7 +1795,9 @@ class ReportTemplateUpdate(RoleBasedAccessControlMixin, UpdateView):
 
     def handle_no_permission(self):
         obj = self.get_object()
-        messages.error(self.request, "That template is protected – only an admin can edit it.")
+        messages.error(
+            self.request, "That template is protected – only an admin can edit it."
+        )
         return HttpResponseRedirect(
             reverse(
                 "reporting:template_detail",
@@ -1782,7 +1879,9 @@ class ReportTemplateDelete(RoleBasedAccessControlMixin, DeleteView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         queryset = kwargs["object"]
-        ctx["cancel_link"] = reverse("reporting:template_detail", kwargs={"pk": queryset.pk})
+        ctx["cancel_link"] = reverse(
+            "reporting:template_detail", kwargs={"pk": queryset.pk}
+        )
         ctx["object_type"] = "report template file (and associated file on disk)"
         ctx["object_to_be_deleted"] = queryset.filename
         return ctx
@@ -1811,7 +1910,9 @@ class EvidenceDownload(RoleBasedAccessControlMixin, SingleObjectMixin, View):
     model = Evidence
 
     def test_func(self):
-        return verify_access(self.request.user, self.get_object().finding.report.project)
+        return verify_access(
+            self.request.user, self.get_object().finding.report.project
+        )
 
     def handle_no_permission(self):
         messages.error(self.request, "You do not have permission to access that.")
@@ -1900,7 +2001,9 @@ class GenerateReportDOCX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                     "The selected report template has linting errors and cannot be used to render a DOCX document",
                     extra_tags="alert-danger",
                 )
-                return HttpResponseRedirect(reverse("reporting:report_detail", kwargs={"pk": obj.pk}))
+                return HttpResponseRedirect(
+                    reverse("reporting:report_detail", kwargs={"pk": obj.pk})
+                )
 
             # Template available and passes linting checks, so proceed with generation
             engine = reportwriter.Reportwriter(obj, template_loc)
@@ -1909,7 +2012,9 @@ class GenerateReportDOCX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
             response = HttpResponse(
                 content_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             )
-            response["Content-Disposition"] = f'attachment; filename="{report_name}.docx"'
+            response["Content-Disposition"] = (
+                f'attachment; filename="{report_name}.docx"'
+            )
             docx.save(response)
 
             # Send WebSocket message to update user's webpage
@@ -1976,7 +2081,9 @@ class GenerateReportDOCX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
             )
             messages.error(
                 self.request,
-                "Halted document generation because an evidence file is missing: {}".format(error),
+                "Halted document generation because an evidence file is missing: {}".format(
+                    error
+                ),
                 extra_tags="alert-danger",
             )
         except UnrecognizedImageError as error:
@@ -1988,7 +2095,9 @@ class GenerateReportDOCX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
             )
             messages.error(
                 self.request,
-                "Encountered an error generating the document: {}".format(error).replace('"', "").replace("'", "`"),
+                "Encountered an error generating the document: {}".format(error)
+                .replace('"', "")
+                .replace("'", "`"),
                 extra_tags="alert-danger",
             )
         except Exception as error:
@@ -2000,11 +2109,15 @@ class GenerateReportDOCX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
             )
             messages.error(
                 self.request,
-                "Encountered an error generating the document: {}".format(error).replace('"', "").replace("'", "`"),
+                "Encountered an error generating the document: {}".format(error)
+                .replace('"', "")
+                .replace("'", "`"),
                 extra_tags="alert-danger",
             )
 
-        return HttpResponseRedirect(reverse("reporting:report_detail", kwargs={"pk": obj.pk}))
+        return HttpResponseRedirect(
+            reverse("reporting:report_detail", kwargs={"pk": obj.pk})
+        )
 
 
 class GenerateReportXLSX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
@@ -2040,7 +2153,9 @@ class GenerateReportXLSX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                 output.read(),
                 content_type="application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             )
-            response["Content-Disposition"] = f'attachment; filename="{report_name}.xlsx"'
+            response["Content-Disposition"] = (
+                f'attachment; filename="{report_name}.xlsx"'
+            )
             output.close()
 
             return response
@@ -2056,7 +2171,9 @@ class GenerateReportXLSX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                 "Encountered an error generating the spreadsheet: {}".format(error),
                 extra_tags="alert-danger",
             )
-        return HttpResponseRedirect(reverse("reporting:report_detail", kwargs={"pk": obj.pk}))
+        return HttpResponseRedirect(
+            reverse("reporting:report_detail", kwargs={"pk": obj.pk})
+        )
 
 
 class GenerateReportPPTX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
@@ -2102,7 +2219,9 @@ class GenerateReportPPTX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                     "The selected report template has linting errors and cannot be used to render a PPTX document.",
                     extra_tags="alert-danger",
                 )
-                return HttpResponseRedirect(reverse("reporting:report_detail", kwargs={"pk": obj.pk}))
+                return HttpResponseRedirect(
+                    reverse("reporting:report_detail", kwargs={"pk": obj.pk})
+                )
 
             # Template available and passes linting checks, so proceed with generation
             engine = reportwriter.Reportwriter(obj, template_loc)
@@ -2110,7 +2229,9 @@ class GenerateReportPPTX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
             response = HttpResponse(
                 content_type="application/application/vnd.openxmlformats-officedocument.presentationml.presentation"
             )
-            response["Content-Disposition"] = f'attachment; filename="{report_name}.pptx"'
+            response["Content-Disposition"] = (
+                f'attachment; filename="{report_name}.pptx"'
+            )
             pptx.save(response)
 
             return response
@@ -2159,7 +2280,9 @@ class GenerateReportPPTX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
             )
             messages.error(
                 self.request,
-                "Halted document generation because an evidence file is missing: {}".format(error),
+                "Halted document generation because an evidence file is missing: {}".format(
+                    error
+                ),
                 extra_tags="alert-danger",
             )
         except UnrecognizedImageError as error:
@@ -2171,7 +2294,9 @@ class GenerateReportPPTX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
             )
             messages.error(
                 self.request,
-                "Encountered an error generating the document: {}".format(error).replace('"', "").replace("'", "`"),
+                "Encountered an error generating the document: {}".format(error)
+                .replace('"', "")
+                .replace("'", "`"),
                 extra_tags="alert-danger",
             )
         except Exception as error:
@@ -2183,11 +2308,15 @@ class GenerateReportPPTX(RoleBasedAccessControlMixin, SingleObjectMixin, View):
             )
             messages.error(
                 self.request,
-                "Encountered an error generating the document: {}".format(error).replace('"', "").replace("'", "`"),
+                "Encountered an error generating the document: {}".format(error)
+                .replace('"', "")
+                .replace("'", "`"),
                 extra_tags="alert-danger",
             )
 
-        return HttpResponseRedirect(reverse("reporting:report_detail", kwargs={"pk": obj.pk}))
+        return HttpResponseRedirect(
+            reverse("reporting:report_detail", kwargs={"pk": obj.pk})
+        )
 
 
 class GenerateReportAll(RoleBasedAccessControlMixin, SingleObjectMixin, View):
@@ -2236,7 +2365,9 @@ class GenerateReportAll(RoleBasedAccessControlMixin, SingleObjectMixin, View):
             pptx_template = pptx_template.document.path
 
             # Generate all types of reports
-            json_doc, docx_doc, xlsx_doc, pptx_doc = engine.generate_all_reports(docx_template, pptx_template)
+            json_doc, docx_doc, xlsx_doc, pptx_doc = engine.generate_all_reports(
+                docx_template, pptx_template
+            )
 
             # Create a zip file in memory and add the reports to it
             zip_buffer = io.BytesIO()
@@ -2249,7 +2380,9 @@ class GenerateReportAll(RoleBasedAccessControlMixin, SingleObjectMixin, View):
 
             # Return the buffer in the HTTP response
             response = HttpResponse(content_type="application/x-zip-compressed")
-            response["Content-Disposition"] = f'attachment; filename="{report_name}.zip"'
+            response["Content-Disposition"] = (
+                f'attachment; filename="{report_name}.zip"'
+            )
             response.write(zip_buffer.read())
 
             return response
@@ -2284,7 +2417,9 @@ class GenerateReportAll(RoleBasedAccessControlMixin, SingleObjectMixin, View):
                 extra_tags="alert-danger",
             )
 
-        return HttpResponseRedirect(reverse("reporting:report_detail", kwargs={"pk": obj.pk}))
+        return HttpResponseRedirect(
+            reverse("reporting:report_detail", kwargs={"pk": obj.pk})
+        )
 
 
 # CBVs related to :model:`reporting.ReportFindingLink`
@@ -2318,7 +2453,9 @@ class ReportFindingLinkUpdate(RoleBasedAccessControlMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["cancel_link"] = reverse("reporting:report_detail", kwargs={"pk": self.object.report.pk})
+        ctx["cancel_link"] = reverse(
+            "reporting:report_detail", kwargs={"pk": self.object.report.pk}
+        )
         return ctx
 
     def form_valid(self, form):
@@ -2386,10 +2523,12 @@ class ReportFindingLinkUpdate(RoleBasedAccessControlMixin, UpdateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        user_primary_keys = ProjectAssignment.objects.filter(project=self.object.report.project).values_list(
-            "operator", flat=True
+        user_primary_keys = ProjectAssignment.objects.filter(
+            project=self.object.report.project
+        ).values_list("operator", flat=True)
+        form.fields["assigned_to"].queryset = User.objects.filter(
+            id__in=user_primary_keys
         )
-        form.fields["assigned_to"].queryset = User.objects.filter(id__in=user_primary_keys)
         return form
 
     def get_success_url(self):
@@ -2416,7 +2555,9 @@ class EvidenceDetailView(RoleBasedAccessControlMixin, DetailView):
     model = Evidence
 
     def test_func(self):
-        return verify_access(self.request.user, self.get_object().finding.report.project)
+        return verify_access(
+            self.request.user, self.get_object().finding.report.project
+        )
 
     def handle_no_permission(self):
         messages.error(self.request, "You do not have permission to access that.")
@@ -2482,7 +2623,9 @@ class EvidenceCreate(RoleBasedAccessControlMixin, CreateView):
         super().setup(request, *args, **kwargs)
         finding_pk = self.kwargs.get("pk")
         self.finding_instance = get_object_or_404(ReportFindingLink, pk=finding_pk)
-        self.evidence_queryset = Evidence.objects.filter(finding=self.finding_instance.pk)
+        self.evidence_queryset = Evidence.objects.filter(
+            finding=self.finding_instance.pk
+        )
 
     def get_template_names(self):
         if "modal" in self.kwargs:
@@ -2501,9 +2644,13 @@ class EvidenceCreate(RoleBasedAccessControlMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["cancel_link"] = reverse("reporting:report_detail", kwargs={"pk": self.finding_instance.report.pk})
+        ctx["cancel_link"] = reverse(
+            "reporting:report_detail", kwargs={"pk": self.finding_instance.report.pk}
+        )
         if "modal" in self.kwargs:
-            friendly_names = self.evidence_queryset.values_list("friendly_name", flat=True)
+            friendly_names = self.evidence_queryset.values_list(
+                "friendly_name", flat=True
+            )
             used_friendly_names = []
             # Convert the queryset into a list to pass to JavaScript later
             for name in friendly_names:
@@ -2535,7 +2682,9 @@ class EvidenceCreate(RoleBasedAccessControlMixin, CreateView):
     def get_success_url(self):
         if "modal" in self.kwargs:
             return reverse("reporting:upload_evidence_modal_success")
-        return reverse("reporting:report_detail", args=(self.finding_instance.report.pk,))
+        return reverse(
+            "reporting:report_detail", args=(self.finding_instance.report.pk,)
+        )
 
 
 class EvidenceUpdate(RoleBasedAccessControlMixin, UpdateView):
@@ -2556,7 +2705,9 @@ class EvidenceUpdate(RoleBasedAccessControlMixin, UpdateView):
     form_class = EvidenceForm
 
     def test_func(self):
-        return verify_access(self.request.user, self.get_object().finding.report.project)
+        return verify_access(
+            self.request.user, self.get_object().finding.report.project
+        )
 
     def handle_no_permission(self):
         messages.error(self.request, "You do not have permission to access that.")
@@ -2607,7 +2758,9 @@ class EvidenceDelete(RoleBasedAccessControlMixin, DeleteView):
     template_name = "confirm_delete.html"
 
     def test_func(self):
-        return verify_access(self.request.user, self.get_object().finding.report.project)
+        return verify_access(
+            self.request.user, self.get_object().finding.report.project
+        )
 
     def handle_no_permission(self):
         messages.error(self.request, "You do not have permission to access that.")
@@ -2622,12 +2775,16 @@ class EvidenceDelete(RoleBasedAccessControlMixin, DeleteView):
             message,
             extra_tags="alert-success",
         )
-        return reverse("reporting:report_detail", kwargs={"pk": self.object.finding.report.pk})
+        return reverse(
+            "reporting:report_detail", kwargs={"pk": self.object.finding.report.pk}
+        )
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         queryset = kwargs["object"]
-        ctx["cancel_link"] = reverse("reporting:evidence_detail", kwargs={"pk": queryset.pk})
+        ctx["cancel_link"] = reverse(
+            "reporting:evidence_detail", kwargs={"pk": queryset.pk}
+        )
         ctx["object_type"] = "evidence file (and associated file on disk)"
         ctx["object_to_be_deleted"] = queryset.friendly_name
         return ctx
@@ -2657,7 +2814,9 @@ class FindingNoteCreate(RoleBasedAccessControlMixin, CreateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         finding_instance = get_object_or_404(Finding, pk=self.kwargs.get("pk"))
-        ctx["cancel_link"] = reverse("reporting:finding_detail", kwargs={"pk": finding_instance.pk})
+        ctx["cancel_link"] = reverse(
+            "reporting:finding_detail", kwargs={"pk": finding_instance.pk}
+        )
         return ctx
 
     def get_success_url(self):
@@ -2666,7 +2825,9 @@ class FindingNoteCreate(RoleBasedAccessControlMixin, CreateView):
             "Successfully added your note to this finding.",
             extra_tags="alert-success",
         )
-        return "{}#notes".format(reverse("reporting:finding_detail", kwargs={"pk": self.object.finding.id}))
+        return "{}#notes".format(
+            reverse("reporting:finding_detail", kwargs={"pk": self.object.finding.id})
+        )
 
     def form_valid(self, form, **kwargs):
         self.object = form.save(commit=False)
@@ -2703,12 +2864,18 @@ class FindingNoteUpdate(RoleBasedAccessControlMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["cancel_link"] = reverse("reporting:finding_detail", kwargs={"pk": self.get_object().finding.pk})
+        ctx["cancel_link"] = reverse(
+            "reporting:finding_detail", kwargs={"pk": self.get_object().finding.pk}
+        )
         return ctx
 
     def get_success_url(self):
-        messages.success(self.request, "Successfully updated the note.", extra_tags="alert-success")
-        return reverse("reporting:finding_detail", kwargs={"pk": self.get_object().finding.pk})
+        messages.success(
+            self.request, "Successfully updated the note.", extra_tags="alert-success"
+        )
+        return reverse(
+            "reporting:finding_detail", kwargs={"pk": self.get_object().finding.pk}
+        )
 
 
 # CBVs related to :model:`reporting.LocalFindingNote`
@@ -2734,7 +2901,9 @@ class LocalFindingNoteCreate(RoleBasedAccessControlMixin, CreateView):
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.finding_instance = get_object_or_404(ReportFindingLink, pk=self.kwargs.get("pk"))
+        self.finding_instance = get_object_or_404(
+            ReportFindingLink, pk=self.kwargs.get("pk")
+        )
 
     def test_func(self):
         return verify_access(self.request.user, self.finding_instance.report.project)
@@ -2745,7 +2914,9 @@ class LocalFindingNoteCreate(RoleBasedAccessControlMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["cancel_link"] = reverse("reporting:local_edit", kwargs={"pk": self.finding_instance.pk})
+        ctx["cancel_link"] = reverse(
+            "reporting:local_edit", kwargs={"pk": self.finding_instance.pk}
+        )
         return ctx
 
     def get_success_url(self):
@@ -2792,9 +2963,15 @@ class LocalFindingNoteUpdate(RoleBasedAccessControlMixin, UpdateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         note_instance = get_object_or_404(LocalFindingNote, pk=self.kwargs.get("pk"))
-        ctx["cancel_link"] = reverse("reporting:local_edit", kwargs={"pk": note_instance.finding.id})
+        ctx["cancel_link"] = reverse(
+            "reporting:local_edit", kwargs={"pk": note_instance.finding.id}
+        )
         return ctx
 
     def get_success_url(self):
-        messages.success(self.request, "Successfully updated the note.", extra_tags="alert-success")
-        return reverse("reporting:local_edit", kwargs={"pk": self.get_object().finding.pk})
+        messages.success(
+            self.request, "Successfully updated the note.", extra_tags="alert-success"
+        )
+        return reverse(
+            "reporting:local_edit", kwargs={"pk": self.get_object().finding.pk}
+        )

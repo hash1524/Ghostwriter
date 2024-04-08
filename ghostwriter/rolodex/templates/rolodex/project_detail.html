@@ -58,7 +58,7 @@
     <div class="tab-content">
       {% comment %} Planning Tab {% endcomment %}
       <div id="planning" class="tab-pane in active">
-        <h4>Project Details</h4>
+        <h4>Activity Details</h4>
         <hr/>
 
         <table class="table table-borderless table-centered project-details-table">
@@ -88,7 +88,7 @@
             </td>
           </tr>
           <tr>
-            <td class="text-left bold">Codename</td>
+            <td class="text-left bold">CR Number</td>
             <td class="text-left">
               {% if project.codename %} {{ project.codename }} {% else %} No Codename {% endif %}
             </td>
@@ -112,7 +112,7 @@
             </td>
           </tr> -->
           <tr>
-            <td class="text-left bold">Project Description</td>
+            <td class="text-left bold">Activity Description</td>
             <td class="text-left">
               <a href="javascript:void(0);" id="projectDescriptionDropdown" class="align-icon icon add-icon">Show
                 Description</a>
@@ -136,7 +136,7 @@
         <div class="hidden-element"></div>
 
         {% comment %} Calendar Section {% endcomment %}
-        <h4>Project Calendar</h4>
+        <h4>Activity Calendar</h4>
         <hr/>
 
         <div id="calendar"></div>
@@ -145,7 +145,7 @@
       {% comment %} People Tab {% endcomment %}
       <div id="people" class="tab-pane">
         {% comment %} Assignment Section {% endcomment %}
-        <h4>Project Team Assignments</h4>
+        <h4>Activity Team Assignments</h4>
         <hr/>
 
         {% if request.user|is_privileged %}
@@ -201,7 +201,7 @@
           </table>
         {% else %}
           <div class="alert alert-warning offset-md-2 col-md-8 mt-3" role="alert">There are no operators assigned to
-            this project yet.
+            this activity yet.
           </div>
         {% endif %}
 
@@ -568,9 +568,9 @@
                       {% endif %}
                     {% endif %}
                     {% if finding.complete %}
-                      <td class="low align-middle">Ready for Review</td>
+                      <td class="low align-middle">Closed</td>
                     {% else %}
-                      <td class="high align-middle">Needs Editing</td>
+                      <td class="high align-middle">Open</td>
                     {% endif %}
                   </tr>
                 {% endfor %}
@@ -581,7 +581,7 @@
           {% endfor %}
         {% else %}
           <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">There are no reports attached to this
-            project yet.
+            activity yet.
           </div>
         {% endif %}
 
@@ -1068,7 +1068,7 @@
             {% endif %}
           {% endfor %}
         {% else %}
-          <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">There are no notes for this project.
+          <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">There are no notes for this activity.
           </div>
         {% endif %}
       </div>

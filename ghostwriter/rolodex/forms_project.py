@@ -1227,7 +1227,7 @@ class ProjectForm(forms.ModelForm):
         self.fields["end_date"].widget.input_type = "date"
         self.fields["start_time"].widget.input_type = "time"
         self.fields["end_time"].widget.input_type = "time"
-        # self.fields["slack_channel"].widget.attrs["placeholder"] = "#slack-channel"
+        self.fields["slack_channel"].widget.attrs["placeholder"] = "#slack-channel"
         self.fields["note"].widget.attrs["placeholder"] = "This project is..."
         self.fields["timezone"].initial = general_config.default_timezone
         self.fields["tags"].widget.attrs[
@@ -1285,7 +1285,7 @@ class ProjectForm(forms.ModelForm):
                     ),
                     Row(
                         Column("project_type", css_class="form-group col-md-4 mb-0"),
-                        Column("slack_channel", css_class="form-group col-md-4 mb-0"),
+                        # Column("slack_channel", css_class="form-group col-md-4 mb-0"),
                         Column("tags", css_class="form-group col-md-4 mb-0"),
                         css_class="form-row",
                     ),
@@ -1332,7 +1332,8 @@ class ProjectForm(forms.ModelForm):
         return end_date
 
     def clean_slack_channel(self):
-        slack_channel = self.cleaned_data["slack_channel"]
+        # slack_channel = self.cleaned_data["slack_channel"]
+        slack_channel = "#vm"
         if slack_channel:
             if not slack_channel.startswith("#") and not slack_channel.startswith("@"):
                 raise ValidationError(

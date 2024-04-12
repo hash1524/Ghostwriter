@@ -190,13 +190,13 @@ class Project(models.Model):
         blank=True,
         help_text="Provide additional information about the activity and planning",
     )
-    # slack_channel = models.CharField(
-    #     "Activity Slack Channel",
-    #     max_length=255,
-    #     null=True,
-    #     blank=True,
-    #     help_text="Provide an Slack channel to be used for activity notifications",
-    # )
+    slack_channel = models.CharField(
+        "Activity Slack Channel",
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="Provide an Slack channel to be used for activity notifications",
+    )
     complete = models.BooleanField(
         "Completed", default=False, help_text="Mark this activity as complete"
     )

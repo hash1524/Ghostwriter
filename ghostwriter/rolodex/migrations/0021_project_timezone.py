@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
             model_name="project",
             name="timezone",
             field=timezone_field.fields.TimeZoneField(
-                default="America/Los_Angeles",
+                default="Asia/Kolkata",
+                # America -> Asia
                 help_text="Timezone of the project / working hours",
                 verbose_name="Project Timezone",
             ),

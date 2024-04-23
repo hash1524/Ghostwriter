@@ -196,7 +196,9 @@ class DomainModelTests(TestCase):
         domain = DomainFactory(creation=creation, expiration=renewed, expired=False)
 
         expired = date.today() - timedelta(days=1)
-        expired_domain = DomainFactory(creation=creation, expiration=expired, expired=True, auto_renew=False)
+        expired_domain = DomainFactory(
+            creation=creation, expiration=expired, expired=True, auto_renew=False
+        )
 
         try:
             age = domain.get_domain_age()
@@ -210,7 +212,9 @@ class DomainModelTests(TestCase):
     def test_method_is_expired(self):
         creation = date.today() - timedelta(days=361)
         expiration = date.today() - timedelta(days=1)
-        domain = DomainFactory(creation=creation, expiration=expiration, auto_renew=False)
+        domain = DomainFactory(
+            creation=creation, expiration=expiration, auto_renew=False
+        )
 
         try:
             self.assertEqual(True, domain.is_expired())
@@ -228,7 +232,9 @@ class DomainModelTests(TestCase):
     def test_method_is_expiring_soon(self):
         creation = date.today() - timedelta(days=345)
         expiration = date.today() + timedelta(days=15)
-        domain = DomainFactory(creation=creation, expiration=expiration, auto_renew=False)
+        domain = DomainFactory(
+            creation=creation, expiration=expiration, auto_renew=False
+        )
 
         try:
             self.assertEqual(True, domain.is_expiring_soon())
@@ -246,7 +252,9 @@ class DomainModelTests(TestCase):
     def test_method_may_expire_soon(self):
         creation = date.today() - timedelta(days=345)
         expiration = date.today() + timedelta(days=15)
-        domain = DomainFactory(creation=creation, expiration=expiration, auto_renew=False)
+        domain = DomainFactory(
+            creation=creation, expiration=expiration, auto_renew=False
+        )
 
         try:
             self.assertEqual(True, domain.may_expire_soon())
@@ -318,7 +326,9 @@ class HistoryModelTests(TestCase):
         two_weeks = today + timedelta(days=14)
 
         history_1 = HistoryFactory(start_date=today, end_date=tomorrow, domain=domain)
-        history_2 = HistoryFactory(start_date=next_week, end_date=two_weeks, domain=domain)
+        history_2 = HistoryFactory(
+            start_date=next_week, end_date=two_weeks, domain=domain
+        )
 
         # Deleting this older checkout should not impact the domain's status
         history_1.delete()
@@ -519,7 +529,9 @@ class ServerHistoryModelTests(TestCase):
 
     def test_crud(self):
         # Create
-        entry = ServerHistoryFactory(server=StaticServerFactory(name="teamserver.local"))
+        entry = ServerHistoryFactory(
+            server=StaticServerFactory(name="teamserver.local")
+        )
 
         # Read
         self.assertEqual(entry.server.name, "teamserver.local")
@@ -542,7 +554,9 @@ class ServerHistoryModelTests(TestCase):
             self.fail("ServerHistory.get_absolute_url() raised an exception")
 
     def test_property_ip_address(self):
-        entry = ServerHistoryFactory(server=StaticServerFactory(ip_address="192.168.1.100"))
+        entry = ServerHistoryFactory(
+            server=StaticServerFactory(ip_address="192.168.1.100")
+        )
 
         try:
             self.assertEqual(entry.ip_address, "192.168.1.100")
@@ -553,7 +567,9 @@ class ServerHistoryModelTests(TestCase):
             self.fail("ServerHistory model `ip_address` property failed unexpectedly!")
 
     def test_property_server_name(self):
-        entry = ServerHistoryFactory(server=StaticServerFactory(name="teamserver.local"))
+        entry = ServerHistoryFactory(
+            server=StaticServerFactory(name="teamserver.local")
+        )
 
         try:
             self.assertEqual(entry.server_name, "teamserver.local")
@@ -575,7 +591,9 @@ class ServerHistoryModelTests(TestCase):
             entry.save()
             self.assertEqual(True, entry.will_be_released())
         except Exception:
-            self.fail("ServerHistory model `will_be_released` method failed unexpectedly!")
+            self.fail(
+                "ServerHistory model `will_be_released` method failed unexpectedly!"
+            )
 
     def test_delete_signal(self):
         server = StaticServerFactory(server_status=self.unavailable_status)
@@ -585,8 +603,12 @@ class ServerHistoryModelTests(TestCase):
         next_week = today + timedelta(days=7)
         two_weeks = today + timedelta(days=14)
 
-        history_1 = ServerHistoryFactory(start_date=today, end_date=tomorrow, server=server)
-        history_2 = ServerHistoryFactory(start_date=next_week, end_date=two_weeks, server=server)
+        history_1 = ServerHistoryFactory(
+            start_date=today, end_date=tomorrow, server=server
+        )
+        history_2 = ServerHistoryFactory(
+            start_date=next_week, end_date=two_weeks, server=server
+        )
 
         # Deleting this older checkout should not impact the server's status
         history_1.delete()
@@ -634,7 +656,9 @@ class DomainServerConnectionModelTests(TestCase):
             entry.save()
 
     def test_property_domain_name(self):
-        entry = DomainServerConnectionFactory(domain=HistoryFactory(domain=DomainFactory(name="ghostwriter.wiki")))
+        entry = DomainServerConnectionFactory(
+            domain=HistoryFactory(domain=DomainFactory(name="ghostwriter.wiki"))
+        )
 
         try:
             self.assertEqual(entry.domain_name, "ghostwriter.wiki")
@@ -642,7 +666,9 @@ class DomainServerConnectionModelTests(TestCase):
             entry.domain.domain.save()
             self.assertEqual(entry.domain_name, "getghostwriter.io")
         except Exception:
-            self.fail("DomainServerConnection model `domain_name` property failed unexpectedly!")
+            self.fail(
+                "DomainServerConnection model `domain_name` property failed unexpectedly!"
+            )
 
 
 class DomainNoteModelTests(TestCase):

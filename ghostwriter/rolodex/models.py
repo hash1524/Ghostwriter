@@ -27,12 +27,24 @@ class Client(models.Model):
 
     name = models.CharField(
         "Application Name",
+<<<<<<< HEAD
         max_length=255,
         unique=True,
         help_text="Provide the application's full name as you want it to appear in a report",
     )
     short_name = models.CharField(
         "Application Short Name",
+=======
+        # client -> application
+        max_length=255,
+        unique=True,
+        help_text="Provide the application's full name as you want it to appear in a report",
+        # client -> application
+    )
+    short_name = models.CharField(
+        "Application Short Name",
+        # client -> application
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         max_length=255,
         null=True,
         blank=True,
@@ -40,33 +52,64 @@ class Client(models.Model):
     )
     codename = models.CharField(
         "CR Number",
+<<<<<<< HEAD
         max_length=255,
         null=True,
         blank=True,
+=======
+        # client codename -> CR Number
+        max_length=255,
+        null=True,
+        blank=True,
+        # help_text="Give the client a codename (might be a ticket number, CMS reference, or something else)",
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         help_text="Enter the CR number here",
     )
     note = models.TextField(
         "Application Note",
+<<<<<<< HEAD
+=======
+        # client -> application
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         null=True,
         blank=True,
         help_text="Describe the application or provide some additional information",
     )
     timezone = TimeZoneField(
         "Application Timezone",
+<<<<<<< HEAD
         default="America/Los_Angeles",
         help_text="Primary timezone of the application",
     )
     address = models.TextField(
         "Application Business Address",
+=======
+        # Client -> Application
+        default="Asia/Kolkata",
+        help_text="Primary timezone of the application",
+        # might have to remove this code block
+    )
+    address = models.TextField(
+        "Application Business Address",
+        # client -> application
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         null=True,
         blank=True,
         help_text="An address to be used for reports or shipping",
+        # might have to remove this code block
     )
     tags = TaggableManager(
         blank=True,
         help_text="Enter the Business Criticality of the Application here",
     )
+<<<<<<< HEAD
+    tags = TaggableManager(
+        blank=True,
+        help_text="Enter the Business Criticality of the Application here",
+    )
     extra_fields = models.JSONField(default=dict)
+=======
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
 
     class Meta:
         ordering = ["name"]
@@ -113,7 +156,7 @@ class ClientContact(models.Model):
     )
     timezone = TimeZoneField(
         "Timezone",
-        default="America/Los_Angeles",
+        default="Asia/Kolkata",
         help_text="The contact's timezone",
     )
     note = models.TextField(
@@ -167,6 +210,10 @@ class Project(models.Model):
         max_length=255,
         null=True,
         blank=True,
+<<<<<<< HEAD
+=======
+        # help_text="Give the project a codename (might be a ticket number, PMO reference, or something else)",
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         help_text="Give the CR Number",
     )
     start_date = models.DateField(
@@ -193,7 +240,11 @@ class Project(models.Model):
     )
     timezone = TimeZoneField(
         "Activity Timezone",
+<<<<<<< HEAD
         default="America/Los_Angeles",
+=======
+        default="Asia/Kolkata",
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         help_text="Timezone of the activity / working hours",
     )
     start_time = models.TimeField(
@@ -217,6 +268,10 @@ class Project(models.Model):
         on_delete=models.CASCADE,
         null=False,
         help_text="Select the Application to which this activity should be attached",
+<<<<<<< HEAD
+=======
+        # Client -> Application
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
     )
     operator = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
@@ -359,7 +414,7 @@ class ProjectContact(models.Model):
     )
     timezone = TimeZoneField(
         "Timezone",
-        default="America/Los_Angeles",
+        default="Asia/Kolkata",
         help_text="The contact's timezone",
     )
     note = models.TextField(
@@ -539,6 +594,17 @@ class ProjectSubTask(models.Model):
     and :model:`rolodex.ObjectiveStatus`.
     """
 
+<<<<<<< HEAD
+=======
+    def get_status():  # pragma: no cover
+        """Get the default status for the status field."""
+        try:
+            active_status = ObjectiveStatus.objects.get(objective_status="Active")
+            return active_status.id
+        except ObjectiveStatus.DoesNotExist:
+            return 1
+
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
     task = models.TextField(
         "Task", null=True, blank=True, help_text="Provide a concise objective"
     )

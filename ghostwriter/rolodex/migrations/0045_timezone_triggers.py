@@ -62,6 +62,7 @@ class Migration(migrations.Migration):
             """ALTER TABLE rolodex_projectcontact ALTER COLUMN "primary" SET DEFAULT FALSE;""",
         ),
         migrations.RunSQL(
-            "ALTER TABLE rolodex_projectcontact ALTER COLUMN timezone SET DEFAULT 'America/Los_Angeles';",
+            "ALTER TABLE rolodex_projectcontact ALTER COLUMN timezone SET DEFAULT 'Asia/Kolkata';",
+            # America -> Asia
         ),
     ]

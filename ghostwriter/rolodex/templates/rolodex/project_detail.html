@@ -35,6 +35,10 @@
 
   {% comment %} Project title constructed from attributes {% endcomment %}
   <div class="container">
+<<<<<<< HEAD
+=======
+    <!--removing the {{project.project_type}} and {{project.start_date}} and turning {{project.client}} to project name itself-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
     <h2>{{ project.client }}</h2>
   </div>
   {% if project.tags.all %}
@@ -104,6 +108,15 @@
                 {{ project.end_time|date:"G:i" }} ({{ project.timezone }}) {% else %} No Working Hours Set {% endif %}
             </td>
           </tr>
+<<<<<<< HEAD
+=======
+          <!-- <tr>
+            <td class="text-left bold">Slack Channel</td>
+            <td class="text-left">
+              {% if project.slack_channel %} {{ project.slack_channel }} {% else %} No Slack Channel {% endif %}
+            </td>
+          </tr> -->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
           <tr>
             <td class="text-left bold">Activity Description</td>
             <td class="text-left">
@@ -574,7 +587,7 @@
           {% endfor %}
         {% else %}
           <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">There are no reports attached to this
-            project yet.
+            activity yet.
           </div>
         {% endif %}
 
@@ -1074,7 +1087,11 @@
             {% endif %}
           {% endfor %}
         {% else %}
+<<<<<<< HEAD
           <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">There are no notes for this actviity.
+=======
+          <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">There are no notes for this activity.
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
           </div>
         {% endif %}
       </div>

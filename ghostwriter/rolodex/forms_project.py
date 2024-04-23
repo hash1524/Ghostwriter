@@ -1235,10 +1235,19 @@ class ProjectForm(forms.ModelForm):
             "placeholder"
         ] = "evasive, on-site, travel, ..."
         self.fields["project_type"].label = "Activity Type"
+<<<<<<< HEAD
         self.fields["client"].label = "Application"
         self.fields["client"].empty_label = "-- Select an Application --"
         self.fields["project_type"].empty_label = "-- Select an Activity Type --"
 
+=======
+        # Project -> Activity
+        self.fields["client"].label = "Application"
+        # new line inserted
+        self.fields["client"].empty_label = "-- Select an Application --"
+        # Client -> Application
+        self.fields["project_type"].empty_label = "-- Select an Activity Type --"
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         # Design form layout with Crispy FormHelper
         self.helper = FormHelper()
         # Turn on <form> tags for this parent form
@@ -1255,6 +1264,21 @@ class ProjectForm(forms.ModelForm):
                         Column(
                             FieldWithButtons(
                                 "codename",
+<<<<<<< HEAD
+=======
+                                # HTML(
+                                #     """
+                                #     <button
+                                #         class="btn btn-secondary js-roll-codename"
+                                #         roll-codename-url="{% url 'rolodex:ajax_roll_codename' %}"
+                                #         type="button"
+                                #     >
+                                #     <i class="fas fa-dice"></i>
+                                #     </button>
+                                #     """
+                                # ),
+                                # removing the button to generate random code name for project
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                             ),
                             css_class="col-md-6",
                         ),
@@ -1278,9 +1302,18 @@ class ProjectForm(forms.ModelForm):
                     ),
                     Row(
                         Column("project_type", css_class="form-group col-md-4 mb-0"),
+<<<<<<< HEAD
                         Column("tags", css_class="form-group col-md-4 mb-0"),
                         css_class="form-row",
                     ),
+=======
+                        # Column("slack_channel", css_class="form-group col-md-4 mb-0"),
+                        Column("tags", css_class="form-group col-md-4 mb-0"),
+                        css_class="form-row",
+                    ),
+                    # SwitchToggle("update_checkouts"),
+                    # removed the server checkout toggle
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                     "note",
                     link_css_class="project-icon",
                     css_id="project",
@@ -1322,6 +1355,10 @@ class ProjectForm(forms.ModelForm):
         return end_date
 
     def clean_slack_channel(self):
+<<<<<<< HEAD
+=======
+        # slack_channel = self.cleaned_data["slack_channel"]
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         slack_channel = "#vm"
         if slack_channel:
             if not slack_channel.startswith("#") and not slack_channel.startswith("@"):

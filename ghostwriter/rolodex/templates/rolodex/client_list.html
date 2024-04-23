@@ -5,12 +5,20 @@
 {% load bleach_tags %}
 
 {% block pagetitle %}Application List{% endblock %}
+<<<<<<< HEAD
+=======
+<!--Client -> Application-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
 
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'home:dashboard' %}">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">Applications</li>
+<<<<<<< HEAD
+=======
+            <!--Client -> Application-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         </ul>
     </nav>
 {% endblock %}
@@ -23,13 +31,25 @@
 
     {% if filter.qs|length == 0 %}
     <div class="alert alert-warning offset-md-2 col-md-8 mt-3" role="alert">There are no applications to see here yet, or your search returned no results. Create an application above or adjust your filters.</div>
+<<<<<<< HEAD
+=======
+    <!--Application substitute Client-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
     {% else %}
         <table id="clientTable" class="tablesorter table table-sm table-hover">
             <thead>
                 <tr>
                     <th class="align-middle">Application</th>
+<<<<<<< HEAD
                     <th class="align-middle">Short Name</th>
                     <!--<th class="align-middle">CR Number</th>-->
+=======
+                    <!--Client -> Application-->
+                    <th class="align-middle">Short Name</th>
+                    <!-- <th class="align-middle">CR Number</th> -->
+                    <!--Codename -> CR Number-->
+                    <!--removing this tab element so that the application registration is complete-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                     <th class="align-middle">Activities to Date</th>
                 </tr>
             </thead>
@@ -37,7 +57,12 @@
                 <tr>
                     <td class="align-middle"><a class="clickable" href="{{ client.get_absolute_url }}">{{ client.name }}</i></a></td>
                     <td class="align-middle">{{ client.short_name }}</td>
+<<<<<<< HEAD
                     <!--<td class="align-middle">{{ client.codename }}</td>-->
+=======
+                    <!-- <td class="align-middle">{{ client.codename }}</td> -->
+                    <!-- removing this code block to get rid of the unnecessary column. should reflect the same in details page as well-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                     <td class="align-middle">{{ client.project_set.all.count }}</td>
                 </tr>
             {% endfor %}

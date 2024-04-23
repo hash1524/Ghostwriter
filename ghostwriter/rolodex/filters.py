@@ -33,6 +33,7 @@ class ClientFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(
         method="search_all_names",
         label="Application Name Contains",
+<<<<<<< HEAD
         widget=TextInput(
             attrs={
                 "placeholder": "Partial Name, Short Name, or Codename",
@@ -46,6 +47,12 @@ class ClientFilter(django_filters.FilterSet):
         widget=TextInput(
             attrs={
                 "placeholder": "Application Tag",
+=======
+        # Client -> Application
+        widget=TextInput(
+            attrs={
+                "placeholder": "Partial Name, Short Name, or Code Name",
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                 "autocomplete": "off",
             }
         ),
@@ -102,10 +109,13 @@ class ClientFilter(django_filters.FilterSet):
             | Q(short_name__icontains=value)
             | Q(codename__icontains=value)
         )
+<<<<<<< HEAD
 
     def search_tags(self, queryset, name, value):
         """Filter clients by tags."""
         return queryset.filter(tags__name__in=[value]).distinct()
+=======
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
 
 
 class ProjectFilter(django_filters.FilterSet):
@@ -132,6 +142,10 @@ class ProjectFilter(django_filters.FilterSet):
 
     client = django_filters.CharFilter(
         label="Application Name Contains",
+<<<<<<< HEAD
+=======
+        # Client -> Application,
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         method="search_all_client_names",
         widget=TextInput(
             attrs={
@@ -146,6 +160,7 @@ class ProjectFilter(django_filters.FilterSet):
         widget=TextInput(
             attrs={
                 "placeholder": "Partial Activity Codename",
+<<<<<<< HEAD
                 "autocomplete": "off",
             }
         ),
@@ -156,6 +171,8 @@ class ProjectFilter(django_filters.FilterSet):
         widget=TextInput(
             attrs={
                 "placeholder": "Project Tag",
+=======
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                 "autocomplete": "off",
             }
         ),
@@ -253,6 +270,7 @@ class ProjectFilter(django_filters.FilterSet):
                 Row(
                     Column(
                         PrependedText(
+<<<<<<< HEAD
                             "start_date_range",
                             '<i class="far fa-calendar"></i>',
                         ),
@@ -260,6 +278,8 @@ class ProjectFilter(django_filters.FilterSet):
                     ),
                     Column(
                         PrependedText(
+=======
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                             "start_date", '<i class="fas fa-hourglass-start"></i>'
                         ),
                         css_class="form-group col-md-4 mb-0",

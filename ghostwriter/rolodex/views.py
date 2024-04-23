@@ -1225,6 +1225,22 @@ class ClientCreate(RoleBasedAccessControlMixin, CreateView):
             logger.exception(message)
             return super().form_invalid(form)
 
+<<<<<<< HEAD
+=======
+    # def get_initial(self):
+    #     # Generate and assign a unique codename to the project
+    #     codename_verified = False
+    #     codename = ""
+    #     while not codename_verified:
+    #         codename = codenames.codename(uppercase=True)
+    #         clients = Client.objects.filter(codename__iexact="foo")
+    #         if not clients:
+    #             codename_verified = True
+    #     return {
+    #         "codename": codename,
+    #     }
+
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
 
 class ClientUpdate(RoleBasedAccessControlMixin, UpdateView):
     """

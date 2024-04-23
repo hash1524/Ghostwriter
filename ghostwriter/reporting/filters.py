@@ -215,6 +215,7 @@ class ReportFilter(django_filters.FilterSet):
         widget=TextInput(
             attrs={"placeholder": "Partial Report Title", "autocomplete": "off"}
         ),
+<<<<<<< HEAD
     )
     tags = django_filters.CharFilter(
         method="search_tags",
@@ -225,6 +226,8 @@ class ReportFilter(django_filters.FilterSet):
                 "autocomplete": "off",
             }
         ),
+=======
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
     )
 
     STATUS_CHOICES = (
@@ -302,9 +305,17 @@ class ArchiveFilter(django_filters.FilterSet):
     client = django_filters.CharFilter(
         field_name="project__client__name",
         label="Application Name Contains",
+<<<<<<< HEAD
         lookup_expr="icontains",
         widget=TextInput(
             attrs={"placeholder": "Partial Application Name", "autocomplete": "off"}
+=======
+        # Client -> Application
+        lookup_expr="icontains",
+        widget=TextInput(
+            attrs={"placeholder": "Partial Application Name", "autocomplete": "off"}
+            # Client -> Application
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         ),
     )
 

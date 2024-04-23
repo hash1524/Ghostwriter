@@ -56,7 +56,16 @@ class ClientContactAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Contact Information",
-            {"fields": ("client", "name", "job_title", "email", "phone", "timezone")},
+            {
+                "fields": (
+                    "client",
+                    "name",
+                    "job_title",
+                    "email",
+                    "phone",
+                    "timezone",
+                )
+            },
         ),
         ("Misc", {"fields": ("note",)}),
     )
@@ -243,7 +252,17 @@ class ProjectContactAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Contact Information",
-            {"fields": ("project", "name", "job_title", "email", "phone", "timezone", "primary")},
+            {
+                "fields": (
+                    "project",
+                    "name",
+                    "job_title",
+                    "email",
+                    "phone",
+                    "timezone",
+                    "primary",
+                )
+            },
         ),
         ("Misc", {"fields": ("note",)}),
     )

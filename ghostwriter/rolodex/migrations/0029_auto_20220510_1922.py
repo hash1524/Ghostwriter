@@ -17,13 +17,16 @@ class Migration(migrations.Migration):
             "ALTER TABLE rolodex_projectnote ALTER COLUMN timestamp SET DEFAULT CURRENT_TIMESTAMP;",
         ),
         migrations.RunSQL(
-            "ALTER TABLE rolodex_client ALTER COLUMN timezone SET DEFAULT 'America/Los_Angeles';",
+            "ALTER TABLE rolodex_client ALTER COLUMN timezone SET DEFAULT 'Asia/Kolkata';",
+            # America -> Asia
         ),
         migrations.RunSQL(
-            "ALTER TABLE rolodex_clientcontact ALTER COLUMN timezone SET DEFAULT 'America/Los_Angeles';",
+            "ALTER TABLE rolodex_clientcontact ALTER COLUMN timezone SET DEFAULT 'Asia/Kolkata';",
+            # America -> Asia
         ),
         migrations.RunSQL(
-            "ALTER TABLE rolodex_project ALTER COLUMN timezone SET DEFAULT 'America/Los_Angeles';",
+            "ALTER TABLE rolodex_project ALTER COLUMN timezone SET DEFAULT 'Asia/Kolkata';",
+            # America -> Asia
         ),
         migrations.RunSQL(
             "ALTER TABLE rolodex_project ALTER COLUMN complete SET DEFAULT FALSE;",

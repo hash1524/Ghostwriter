@@ -220,7 +220,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * Supports creating project-specific contacts and adding contacts from the client
   * Project contacts appear under the new `contacts` key in the report data
   * A project contact can be flagged as the primary contact and mark the contact as the report recipient
-  * The primary contact appears under the new `recipient` key in the report data 
+  * The primary contact appears under the new `recipient` key in the report data
 * Added autocomplete options to filter forms for the finding, domain, and server libraries
 * Added an option to copy an activity log entry to your clipboard as JSON for easier sharing
 * Added an option to the `review_cloud_infrastructure()` task to only report Digital Ocean droplets that are currently running
@@ -433,14 +433,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * All new log view page with improved editing functionality
   * Selections for showing/hiding a column are now persistent between page visits and refreshes
-  * Editing table rows now use a modal and allows all fields to be edited and saved at once 
+  * Editing table rows now use a modal and allows all fields to be edited and saved at once
 * The web UI now supports customizing the severity category titles
 * Changed project assignments to allow the same person to be assigned more than once as long as the date ranges do not overlap
 * You can clear the docx or pptx template selected for a report
   * If you clear the template, the default template will be used instead
   * If you do not have a default template configured, the report will not be able to be generated
 * A domain's "reset DNS" flag will now default to true when creating a new domain
-* Moved all CSS and JavaScript files to local hosting for instances where Ghostwriter is running on a system without any internet access 
+* Moved all CSS and JavaScript files to local hosting for instances where Ghostwriter is running on a system without any internet access
 * The IP address field for project targets now accepts individual IP addresses and CIDR ranges (Closes [#211](https://github.com/GhostManager/Ghostwriter/issues/211))
 * Report templates can now be flagged as landscape for tracking (Reference [#281](https://github.com/GhostManager/Ghostwriter/issues/281))
 * Various web UI and scripting improvements for better performance, usability, and accessibility
@@ -675,7 +675,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Updated keyword reference panel displayed when editing findings
 * Subtask forms for objectives will now default to the objective's deadline date instead of "today"
 * Objective deadlines will now be automatically adjusted when the parent objective's deadline changes
-* Database migrations now set default values for timestamps (current time), timezones ("America/Los_Angeles"), and boolean values (False)
+* Database migrations now set default values for timestamps (current time), timezones ("Asia/Kolkata"), and boolean values (False)
   * Enables easier creation of new entries via the GraphQL API
 
 ### Deprecated

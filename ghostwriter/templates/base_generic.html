@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>{% block title %}Ghostwriter{% endblock %}</title>
+  <title>{% block title %}VM Team{% endblock %}</title>
 
   <!-- Load Static Files -->
   <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
@@ -61,28 +61,6 @@
   <!-- Textarea Autoresize -->
   <script src="{% static 'js/jquery.textarea_autosize.js' %}"></script>
 
-  <!-- CVSS JS & CSS -->
-  <!--
-    Copyright (c) 2019, FIRST.ORG, INC.
-    All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
-    following conditions are met:
-    1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following
-       disclaimer.
-    2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
-       following disclaimer in the documentation and/or other materials provided with the distribution.
-    3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote
-       products derived from this software without specific prior written permission.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-    INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  -->
   <link rel="stylesheet" href="{% static 'css/cvss_styles.css' %}">
   <script src="{% static 'js/cvsscalc30.js' %}"></script>
   <script src="{% static 'js/cvsscalc30_ui.js' %}"></script>
@@ -96,7 +74,7 @@
       <!-- Sidebar Top Section -->
       <div class="sidebar-header col d-flex align-items-center justify-content-center">
         <a href="{% url 'home:dashboard' %}">
-          <img src="{% static 'images/all_white_header.png' %}" alt="Ghostwriter">
+          <img src="{% static 'images/all_white_header.png' %}" alt="Mashreq">
         </a>
         <div class="sidebar-header-tab">
           <div class="square">
@@ -109,7 +87,7 @@
       <div class="sidebar-body">
         <!-- Project Shortcut Section -->
         <ul class="list-unstyled components">
-          <p class="sideheader icon icon home-icon">Project Shortcuts</p>
+          <p class="sideheader icon icon home-icon">Activity Shortcuts</p>
 
           <a
             {% if request.session.active_report.id and request.session.active_report.title %}
@@ -156,8 +134,13 @@
           <li>
             <a href="#activeProjectsSubmenu" data-toggle="collapse" aria-expanded="false"
                class="dropdown-toggle sidebar-dropdown-toggle" data-target="#activeProjectsSubmenu">
-              My Active Projects
+<<<<<<< HEAD
+               My Active Activities
+=======
+              My Active Activities
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
               <div class="expand_caret caret"></div>
+              <!--Projects -> Activities-->
             </a>
             <ul class="collapse list-unstyled text-left" id="activeProjectsSubmenu">
               {% if request.user.projectassignment_set.all %}
@@ -182,19 +165,32 @@
           <li>
             <a href="#clientSubmenu" data-toggle="collapse" aria-expanded="false"
                class="dropdown-toggle sidebar-dropdown-toggle" data-target="#clientSubmenu">
-              Clients
+<<<<<<< HEAD
+=======
+              <!--Making a change here-->
+              <!--Clients-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
+              Applications
               <div class="expand_caret caret"></div>
             </a>
             <ul class="collapse list-unstyled text-left" id="clientSubmenu">
               {% comment %} Search for Clients {% endcomment %}
               <form class="px-6 py-2" action="{% url 'rolodex:clients' %}" method="GET">
                 <input type="search" autocomplete="off" class="form-control" id="client-search" name="name"
-                       placeholder="Search Clients..." autofocus="autofocus">
+                placeholder="Search Applications..." autofocus="autofocus">
+                <!--Making another change here,replacing Clients with Application-->
               </form>
               {% comment %} Clients Submenu Items {% endcomment %}
-              <li><a class="icon list-icon" href="{% url 'rolodex:clients' %}">Client Library</a></li>
+              <li><a class="icon list-icon" href="{% url 'rolodex:clients' %}">Application Library</a></li>
+<<<<<<< HEAD
               {% if request.user|is_privileged %}
-                <li><a class="icon plus-icon" href="{% url 'rolodex:client_create' %}">Add New Client</a></li>
+                <li><a class="icon plus-icon" href="{% url 'rolodex:client_create' %}">Add New Application</a></li>
+=======
+              <!--Making change, Appplication substituting Client-->
+              {% if request.user|is_privileged %}
+              <li><a class="icon plus-icon" href="{% url 'rolodex:client_create' %}">Add New Application</a></li>
+              <!--Application Substitutes Client-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
               {% endif %}
             </ul>
           </li>
@@ -214,43 +210,43 @@
               {% endif %}
             </ul>
           </li>
-          <li>
-            <a href="#observationsSubmenu" data-toggle="collapse" aria-expanded="false"
-               class="dropdown-toggle sidebar-dropdown-toggle">Observations</a>
-            <ul class="collapse list-unstyled text-left" id="observationsSubmenu">
-              {% comment %} Search for observations {% endcomment %}
-              <form class="px-6 py-2" action="{% url 'reporting:observations' %}" method="GET">
-                <input type="search" autocomplete="off" class="form-control" id="observation-search" name="title"
-                       placeholder="Search observations..." autofocus="autofocus">
-              </form>
-              {% comment %} observations Submenu Items {% endcomment %}
-              <li><a class="icon list-icon" href="{% url 'reporting:observations' %}">Observation Library</a></li>
-              {% if request.user|can_create_observation %}
-                <li><a class="icon plus-icon" href="{% url 'reporting:observation_create' %}">Add New Observation</a></li>
-              {% endif %}
-            </ul>
-          </li>
         </ul>
 
         <!-- Operations Section -->
         <ul class="list-unstyled components">
-          <p class="sideheader icon execution-icon">Execution</p>
-
-          <!-- Menu Section -->
-          {% if user.is_authenticated %}
-            <li><a href="{% url 'shepherd:user_assets' %}">My Active Assets</a></li>
-          {% endif %}
+          <p class="sideheader icon icon execution-icon">Execution</p>
+<<<<<<< HEAD
           <li>
             <a href="#projectSubmenu" data-toggle="collapse" aria-expanded="false"
-               class="dropdown-toggle sidebar-dropdown-toggle">Projects</a>
+            class="dropdown-toggle sidebar-dropdown-toggle">Activities</a>
             <ul class="collapse list-unstyled text-left" id="projectSubmenu">
-              <li><a class="icon list-icon" href="{% url 'rolodex:projects' %}">Projects Library</a></li>
+              <li><a class="icon list-icon" href="{% url 'rolodex:projects' %}">Activity Library</a></li>
               {% if request.user|is_privileged %}
-                <li><a class="icon plus-icon" href="{% url 'rolodex:project_create_no_client' %}">Add New Project</a></li>
+              <li><a class="icon plus-icon" href="{% url 'rolodex:project_create_no_client' %}">Add New Activity</a></li>
               {% endif %}
             </ul>
           </li>
+=======
+
+          <!-- Menu Section -->
+          <!-- {% if user.is_authenticated %}
+            <li><a href="{% url 'shepherd:user_assets' %}">My Active Assets</a></li>
+          {% endif %} -->
+          <!--removing the code block, contains assets like servers n domains-->
           <li>
+            <a href="#projectSubmenu" data-toggle="collapse" aria-expanded="false"
+               class="dropdown-toggle sidebar-dropdown-toggle">Activities</a>
+               <!--Projects -> Activities-->
+            <ul class="collapse list-unstyled text-left" id="projectSubmenu">
+              <li><a class="icon list-icon" href="{% url 'rolodex:projects' %}">Activity Library</a></li>
+              <!--Projects -> Activity-->
+              {% if request.user|is_privileged %}
+                <li><a class="icon plus-icon" href="{% url 'rolodex:project_create_no_client' %}">Add New Activity</a></li>
+                <!--Projects -> Activity-->
+              {% endif %}
+            </ul>
+          </li>
+          <!-- <li>
             <a href="#oplogSubmenu" data-toggle="collapse" aria-expanded="false"
                class="dropdown-toggle sidebar-dropdown-toggle">Operation Logs</a>
             <ul class="collapse list-unstyled text-left" id="oplogSubmenu">
@@ -258,7 +254,9 @@
               <li><a class="icon plus-icon" href="{% url 'oplog:oplog_create_no_project' %}">Add New Oplog</a></li>
               <li><a class="icon import-icon" href="{% url 'oplog:oplog_import' %}">Import Oplog Entries</a></li>
             </ul>
-          </li>
+          </li> -->
+          <!--removing this code block to get rid of Operation Logs in the side menu-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         </ul>
 
         <!-- Reporting Section -->
@@ -285,14 +283,15 @@
             </ul>
           </li>
           <li><a href="{% url 'reporting:archived_reports' %}">Archived Reports</a></li>
+<<<<<<< HEAD
+=======
         </ul>
 
         <!-- Shepherd Section -->
-        <ul class="list-unstyled components">
-          <p class="sideheader icon maintain-icon">Maintain</p>
-
+        <!--<ul class="list-unstyled components">
+          <p class="sideheader icon maintain-icon">Maintain</p>-->
           <!-- Menu Section -->
-          <li>
+          <!--<li>
             <a href="#serverSubmenu" data-toggle="collapse" aria-expanded="false"
                class="dropdown-toggle sidebar-dropdown-toggle">Servers</a>
             <ul class="collapse list-unstyled text-left" id="serverSubmenu">
@@ -321,7 +320,9 @@
             </ul>
           </li>
           <li><a href="{% url 'shepherd:update' %}">Update Controls</a></li>
-        </ul>
+        </ul>-->
+        <!--removing this code block from side menu bar-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
 
         <!-- Admin Section -->
         <ul class="list-unstyled components">
@@ -353,7 +354,12 @@
                   Findings</a></li>
                 <li><a class="icon export-icon" href="{% url 'reporting:export_findings_to_csv' %}">Export Findings to
                   CSV</a></li>
-                <hr>
+<<<<<<< HEAD
+              </ul>
+            </li>
+          {% endif %}
+=======
+                <!-- <hr>
                 <li><a class="icon import-icon" href="{% url 'admin:shepherd_domain_import' %}">Upload Bulk Domains</a>
                 </li>
                 <li><a class="icon export-icon" href="{% url 'shepherd:export_domains_to_csv' %}">Export Domains to
@@ -362,12 +368,13 @@
                 <li><a class="icon import-icon" href="{% url 'admin:shepherd_staticserver_import' %}">Upload Bulk
                   Servers</a></li>
                 <li><a class="icon export-icon" href="{% url 'shepherd:export_servers_to_csv' %}">Export Servers to
-                  CSV</a></li>
+                  CSV</a></li> -->
+                <!-- removing this code block which has servers and domains under bulk imports and exports in submenu-->
               </ul>
             </li>
           {% endif %}
           <!-- Documentation Section -->
-          <li>
+          <!-- <li>
             <a href="#docsSubmenu" data-toggle="collapse" aria-expanded="false"
                class="dropdown-toggle sidebar-dropdown-toggle">Documentation</a>
             <ul class="collapse list-unstyled text-left" id="docsSubmenu">
@@ -375,7 +382,9 @@
               <li><a class="icon github-icon" href="https://github.com/GhostManager/Ghostwriter">Ghostwriter on
                 GitHub</a></li>
             </ul>
-          </li>
+          </li> -->
+          <!--Removing this code block to get rid of documentation-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         </ul>
 
         <!-- Sidebar Buttons -->
@@ -385,12 +394,21 @@
           {% else %}
             <a href="{% url 'account_login' %}" class="btn btn-primary col-10 icon login-icon">Login</a>
           {% endif %}
-
-          <a href="https://www.specterops.io"><img class="col-8" src="{% static 'images/domain.png' %}"
-                                                   alt="SpecterOps"></a>
+          <hr>
+          <a href="https://www.mashreq.com/en/india/about-us/" target = "_blank"><img class="col-8" src="{% static 'images/domain.png' %}"
+<<<<<<< HEAD
+            alt="Mashreq Global Ntework"></a>
         </div>
       </div>
+      <hr>
 
+=======
+                                                   alt="Mashreq Global Ntework"></a>
+                                                   <!--changed the domain and redirection link-->
+        </div>
+      </div>
+      <hr>
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
       <div class="sidebar-footer col d-flex align-items-center justify-content-center mb-2">
         <span>v{{ VERSION }}, released {{ RELEASE_DATE }}</span>
       </div>

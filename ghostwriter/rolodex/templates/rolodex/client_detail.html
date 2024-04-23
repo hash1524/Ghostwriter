@@ -11,7 +11,11 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'home:dashboard' %}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'rolodex:clients' %}">Clients</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'rolodex:clients' %}">Applications</a></li>
+<<<<<<< HEAD
+=======
+            <!--Client -> Application-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
             <li class="breadcrumb-item active" aria-current="page">{{ client.name }}</li>
         </ul>
     </nav>
@@ -53,7 +57,11 @@
         <!-- Info Tab -->
         <div class="tab-content">
             <div id="general" class="tab-pane in active">
-                <h4>Client Details</h4>
+                <h4>Application Details</h4>
+<<<<<<< HEAD
+=======
+                <!--Client -> Application-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                 <hr />
 
                 <table class="table table-borderless table-centered project-details-table">
@@ -63,14 +71,26 @@
                             {% if client.short_name %} {{ client.short_name }} {% else %} No Short Name {% endif %}
                         </td>
                     </tr>
-                    <tr>
+<<<<<<< HEAD
+                    <!--<tr>
+=======
+                    <!-- <tr>
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                         <td class="text-left bold">Codename</td>
                         <td class="text-left">
                             {% if client.codename %} {{ client.codename }} {% else %} No Codename {% endif %}
                         </td>
-                    </tr>
+<<<<<<< HEAD
+                    </tr>-->
                     <tr>
-                        <td class="text-left bold">Client's Current Time</td>
+                        <td class="text-left bold">Application's Current Time</td>
+=======
+                    </tr> -->
+                    <!-- removing this codeblock, unnecessary detail on the application detail page -->
+                    <tr>
+                        <td class="text-left bold">Application's Current Time</td>
+                        <!--Client -> Application-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                         <td class="text-left"><span class="client-datetime"></span></td>
                     </tr>
                     <tr>
@@ -91,7 +111,11 @@
 
                 <div class="hidden-element"></div>
 
-                <h5>Business Address</h5>
+<<<<<<< HEAD
+                <!--<h5>Business Address</h5>
+=======
+                <!-- <h5>Business Address</h5>
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                 <hr>
 
                 <div class="address">
@@ -100,15 +124,25 @@
                     {% else %}
                         <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">No address provided for this client.</div>
                     {% endif %}
-                </div>
+<<<<<<< HEAD
+                </div>-->
+=======
+                </div> -->
+
+                <!--removing this code block to remove address of business-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
             </div>
 
             <!-- POC Tab -->
             <div id="contacts" class="tab-pane">
-                <h4>Client Contacts</h4>
+                <h4>Application Contacts</h4>
+<<<<<<< HEAD
+=======
+                <!--Client -> Application-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                 <hr />
 
-                <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:client_update' client.id %}#contacts">Add a Point of Contact</a>
+                <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:client_update' client.id %}#contacts">Add an Application Owner</a>
                 {% if client.clientcontact_set.all %}
                     <table id="clientTable" class="tablesorter table table-striped">
                         <thead>
@@ -116,7 +150,11 @@
                                 <th class="align-middle pr-4">Name</th>
                                 <th class="align-middle pr-4">Title/Role</th>
                                 <th class="align-middle pr-4">Email</th>
-                                <th class="sorter-false">Phone</th>
+                                <th class="sorter-false">Latest Date of Activity</th>
+<<<<<<< HEAD
+=======
+                                <!--Phone -> Date of project-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                                 <th class="sorter-false">Note</th>
                                 <th class="sorter-false">Options</th>
                             </tr>
@@ -153,15 +191,26 @@
 
             <!-- Project History Tab -->
             <div id="project-history" class="tab-pane">
-                <h4>Client Projects</h4>
+<<<<<<< HEAD
+                <h4>Application Projects</h4>
+=======
+                <h4>Activities on this Application</h4>
+                <!--Application Projects -> Activities on this Application-->
+                <!--Client -> Application-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                 <hr />
 
-                <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:project_create' client.id %}">Add a Project</a>
+                <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:project_create' client.id %}">Add an Activity</a>
+                <!--Project -> Activity-->
                 {% if client.project_set.all %}
                     <table id="projectTable" class="tablesorter table">
                         <thead>
                             <tr>
-                                <th class="align-middle pr-4">Codename</th>
+<<<<<<< HEAD
+                                <th class="align-middle pr-4">CR Number</th>
+=======
+                                <th class="align-middle pr-4">CR number</th>
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                                 <th class="align-middle pr-4">Project Type</th>
                                 <th class="sorter-date-range-dMMMyyyy pr-4">Execution Window</th>
                                 <th class="sorter-false">Note</th>
@@ -187,12 +236,18 @@
                         {% endfor %}
                     </table>
                 {% else %}
-                    <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">This client has no project history.</div>
+<<<<<<< HEAD
+                <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">This Application has no project history.</div>
+=======
+                <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">This Application has no activity history.</div>
+                <!--Project -> Activity-->
+                <!--Client -> Application-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                 {% endif %}
             </div>
 
             <!-- Infrastructure History Tab -->
-            <div id="infrastructure-history" class="tab-pane">
+            <!--<div id="infrastructure-history" class="tab-pane">
                 {% if domains or servers or vps %}
                     {% if domains %}
                         <h4>Domains Used with Client</h4>
@@ -251,14 +306,16 @@
                         </table>
                     {% endif %}
                 {% else %}
-                  <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">No infrastructure history for this client yet.</div>
+                <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">No infrastructure history for this Application yet.</div>
                 {% endif %}
-            </div>
+            </div> -->
+            <!--Client -> Application-->
+            <!--removing this block to remove the additional tab of infrastucture history-->
 
             {% comment %} Extra Fields Tab {% endcomment %}
             {% if client_extra_fields_spec %}
                 <div id="extra_fields" class="tab-pane">
-                  <h4>Extra Fields</h4>
+                  <h4>Pre-Requisite Details</h4>
                   <hr/>
 
                   {% include "user_extra_fields/field_preview_display.html" with object=client object_extra_fields_spec=client_extra_fields_spec %}
@@ -267,7 +324,11 @@
 
             <!-- Notes Tab -->
             <div id="notes" class="tab-pane">
-                <h4>Client Notes</h4>
+                <h4>Application Notes</h4>
+<<<<<<< HEAD
+=======
+                <!--Client -> Application-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
                 <hr />
 
                 <a class="icon add-icon btn btn-primary mb-3 col-3" href="{% url 'rolodex:client_note_add' client.id %}">Add a Note</a>

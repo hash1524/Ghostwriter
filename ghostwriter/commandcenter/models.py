@@ -36,14 +36,22 @@ def sanitize(sensitive_thing):
             )
         # Handle anything else that's long enough to be a key
         elif length > 15:
-            sanitized_string = sensitive_thing[0:4] + "\u2717" * (length - 8) + sensitive_thing[length - 5 : length - 1]
+            sanitized_string = (
+                sensitive_thing[0:4]
+                + "\u2717" * (length - 8)
+                + sensitive_thing[length - 5 : length - 1]
+            )
     return sanitized_string
 
 
 class NamecheapConfiguration(SingletonModel):
     enable = models.BooleanField(default=False)
-    api_key = models.CharField(max_length=255, default="Namecheap API Key", help_text="Your Namecheap API key")
-    username = models.CharField(max_length=255, default="Account Username", help_text="Your Namecheap username")
+    api_key = models.CharField(
+        max_length=255, default="Namecheap API Key", help_text="Your Namecheap API key"
+    )
+    username = models.CharField(
+        max_length=255, default="Account Username", help_text="Your Namecheap username"
+    )
     api_username = models.CharField(
         "API Username",
         max_length=255,
@@ -74,12 +82,16 @@ class NamecheapConfiguration(SingletonModel):
 
 
 class ReportConfiguration(SingletonModel):
-    enable_borders = models.BooleanField(default=False, help_text="Enable borders around images in Word documents")
+    enable_borders = models.BooleanField(
+        default=False, help_text="Enable borders around images in Word documents"
+    )
     border_weight = models.IntegerField(
         default=12700,
         help_text="Weight in EMUs – 12700 is equal to the 1pt weight in Word",
     )
-    border_color = models.CharField("Picture Border Color", max_length=6, default="2D2B6B")
+    border_color = models.CharField(
+        "Picture Border Color", max_length=6, default="2D2B6B"
+    )
 
     prefix_figure = models.CharField(
         "Character Before Figure Captions",
@@ -161,7 +173,9 @@ class ReportConfiguration(SingletonModel):
 
 class SlackConfiguration(SingletonModel):
     enable = models.BooleanField(default=False)
-    webhook_url = models.CharField(max_length=255, default="https://hooks.slack.com/services/<your_webhook_url>")
+    webhook_url = models.CharField(
+        max_length=255, default="https://hooks.slack.com/services/<your_webhook_url>"
+    )
     slack_emoji = models.CharField(
         max_length=255,
         default=":ghost:",
@@ -198,27 +212,27 @@ class SlackConfiguration(SingletonModel):
 class CompanyInformation(SingletonModel):
     company_name = models.CharField(
         max_length=255,
-        default="SpecterOps",
+        default="Mashreq",
         help_text="Company name handle to reference in reports",
     )
     company_short_name = models.CharField(
         max_length=255,
-        default="SO",
+        default="MGN",
         help_text="Abbreviated company name to reference in reports",
     )
     company_address = models.TextField(
-        default="14 N Moore St, New York, NY 10013",
+        default="3rd Floor, Prestige Shantinketan, Crescent 02, ITPL Main Rd, Bengaluru, Karnataka 560048",
         help_text="Company address to reference in reports",
     )
     company_twitter = models.CharField(
         "Twitter Handle",
         max_length=255,
-        default="@specterops",
+        default="@mashreq",
         help_text="Twitter handle to reference in reports",
     )
     company_email = models.CharField(
         max_length=255,
-        default="info@specterops.io",
+        default="opsindia@mashreq.com",
         help_text="Email address to reference in reports",
     )
 
@@ -230,10 +244,18 @@ class CompanyInformation(SingletonModel):
 
 
 class CloudServicesConfiguration(SingletonModel):
-    enable = models.BooleanField(default=False, help_text="Enable to allow the cloud monitoring task to run")
-    aws_key = models.CharField("AWS Access Key", max_length=255, default="Your AWS Access Key")
-    aws_secret = models.CharField("AWS Secret Key", max_length=255, default="Your AWS Secret Key")
-    do_api_key = models.CharField("Digital Ocean API Key", max_length=255, default="Digital Ocean API Key")
+    enable = models.BooleanField(
+        default=False, help_text="Enable to allow the cloud monitoring task to run"
+    )
+    aws_key = models.CharField(
+        "AWS Access Key", max_length=255, default="Your AWS Access Key"
+    )
+    aws_secret = models.CharField(
+        "AWS Secret Key", max_length=255, default="Your AWS Secret Key"
+    )
+    do_api_key = models.CharField(
+        "Digital Ocean API Key", max_length=255, default="Digital Ocean API Key"
+    )
     ignore_tag = models.CharField(
         "Ignore Tags",
         max_length=255,
@@ -266,7 +288,9 @@ class CloudServicesConfiguration(SingletonModel):
 
 
 class VirusTotalConfiguration(SingletonModel):
-    enable = models.BooleanField(default=False, help_text="Enable to allow domain health checks with VirusTotal")
+    enable = models.BooleanField(
+        default=False, help_text="Enable to allow domain health checks with VirusTotal"
+    )
     api_key = models.CharField(max_length=255, default="VirusTotal API Key")
     sleep_time = models.IntegerField(
         default=20,
@@ -287,13 +311,18 @@ class VirusTotalConfiguration(SingletonModel):
 class GeneralConfiguration(SingletonModel):
     default_timezone = TimeZoneField(
         "Default Timezone",
+<<<<<<< HEAD
         default="America/Los_Angeles",
-        help_text="Select a default timezone for clients and projects",
+        help_text="Select a default timezone for Applications and Activities",
     )
     hostname = models.CharField(
         max_length=255,
         default="ghostwriter.local",
         help_text="Hostname or IP address for Ghostwtiter (used for links in notifications)",
+=======
+        default="Asia/Kolkata",
+        help_text="Select a default timezone for Applications and Activities",
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
     )
 
     def __str__(self):
@@ -319,35 +348,45 @@ class ExtraFieldType(NamedTuple):
 EXTRA_FIELD_TYPES = {
     "checkbox": ExtraFieldType(
         display_name="Checkbox",
-        form_field=lambda *args, **kwargs: forms.BooleanField(required=False, *args, **kwargs),
+        form_field=lambda *args, **kwargs: forms.BooleanField(
+            required=False, *args, **kwargs
+        ),
         form_widget=forms.widgets.CheckboxInput,
         from_str=bool,
         empty_value=lambda: False,
     ),
     "single_line_text": ExtraFieldType(
         display_name="Single-Line of Text",
-        form_field=lambda *args, **kwargs: forms.CharField(required=False, *args, **kwargs),
+        form_field=lambda *args, **kwargs: forms.CharField(
+            required=False, *args, **kwargs
+        ),
         form_widget=forms.widgets.TextInput,
         from_str=lambda s: s,
         empty_value=lambda: "",
     ),
     "rich_text": ExtraFieldType(
         display_name="Formatted Text",
-        form_field=lambda *args, **kwargs: forms.CharField(required=False, *args, **kwargs),
+        form_field=lambda *args, **kwargs: forms.CharField(
+            required=False, *args, **kwargs
+        ),
         form_widget=forms.widgets.Textarea,
         from_str=lambda s: s,
         empty_value=lambda: "",
     ),
     "integer": ExtraFieldType(
         display_name="Integer",
-        form_field=lambda *args, **kwargs: forms.IntegerField(required=False, *args, **kwargs),
+        form_field=lambda *args, **kwargs: forms.IntegerField(
+            required=False, *args, **kwargs
+        ),
         form_widget=forms.widgets.NumberInput,
         from_str=int,
         empty_value=lambda: 0,
     ),
     "float": ExtraFieldType(
         display_name="Number",
-        form_field=lambda *args, **kwargs: forms.FloatField(required=False, *args, **kwargs),
+        form_field=lambda *args, **kwargs: forms.FloatField(
+            required=False, *args, **kwargs
+        ),
         form_widget=forms.widgets.NumberInput,
         from_str=float,
         empty_value=lambda: 0.0,
@@ -372,7 +411,8 @@ class ExtraFieldSpec(models.Model):
     display_name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     type = models.CharField(
-        max_length=255, choices=[(key, typ.display_name) for (key, typ) in EXTRA_FIELD_TYPES.items()]
+        max_length=255,
+        choices=[(key, typ.display_name) for (key, typ) in EXTRA_FIELD_TYPES.items()],
     )
     user_default_value = models.TextField(
         verbose_name="Value for New Objects",
@@ -389,7 +429,9 @@ class ExtraFieldSpec(models.Model):
         return EXTRA_FIELD_TYPES[self.type].empty_value()
 
     def form_field(self, *args, **kwargs):
-        return EXTRA_FIELD_TYPES[self.type].form_field(label=self.display_name, help_text=self.description, *args, **kwargs)
+        return EXTRA_FIELD_TYPES[self.type].form_field(
+            label=self.display_name, help_text=self.description, *args, **kwargs
+        )
 
     def form_widget(self, *args, **kwargs):
         return EXTRA_FIELD_TYPES[self.type].form_widget(*args, **kwargs)

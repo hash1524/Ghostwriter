@@ -74,8 +74,16 @@ function generateDownloadName(name) {
     let year = d.getFullYear();
     let month = d.getMonth() + 1;
     let day = d.getDate();
-    let hour = d.getHours();
-    let minutes = d.getMinutes();
+    let hour = d.getHours() + 5;
+    let minutes = d.getMinutes() + 30;
+    if (minutes >= 60) {
+        hour = hour + 1;
+        minutes = minutes % 60;
+    }
+    if(hour >= 24){
+        day = day + 1;
+        hour = hour % 24;
+    }
     let sec = d.getSeconds();
     if (hour < 10) {
         hour = '0' + hour;
@@ -89,7 +97,9 @@ function generateDownloadName(name) {
     if (month < 10) {
         month = '0' + month;
     }
-    return '' + year + month + day + '_' + hour + minutes + sec + '_' + name
+    // return '' + year + month + day + '_' + hour + minutes + sec + '_' + name
+    //generating a new name
+    return name
 }
 
 // Update the status badges on the tab bar

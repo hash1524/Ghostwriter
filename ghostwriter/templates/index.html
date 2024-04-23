@@ -2,8 +2,8 @@
 {% load custom_tags %}
 {% load determine_primary %}
 
-{% block pagetitle %}Ghostwriter Dashboard{% endblock %}
-{% block navtitle %}Ghostwriter{% endblock %}
+{% block pagetitle %}VM Team Dashboard{% endblock %}
+{% block navtitle %}VM team{% endblock %}
 
 {% block breadcrumbs %}
   <nav aria-label="breadcrumb">
@@ -21,7 +21,11 @@
       <div class="dashboard">
         <div class="dashboard__item">
           <div class="card">
-            <p class="dashboard-header text-center">Project Assignments</p>
+            <p class="dashboard-header text-center">Activity Assignments</p>
+<<<<<<< HEAD
+=======
+            <!--Project -> Activity-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
             {% if active_projects %}
               <table>
                 {% for project in active_projects %}
@@ -34,12 +38,17 @@
                 {% endfor %}
               </table>
             {% else %}
-              <p class="align-middle text-center pt-3">You have no project assignments.</p>
+<<<<<<< HEAD
+            <p class="align-middle text-center pt-3">You have no activity assignments.</p>
+=======
+              <p class="align-middle text-center pt-3">You have no activity assignments.</p>
+              <!--Project -> activity-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
             {% endif %}
           </div>
         </div>
 
-        <div class="dashboard__item">
+        <!-- <div class="dashboard__item">
           <div class="card">
             <p class="dashboard-header text-center">Top Ten Reporting Tasks</p>
             {% count_assignments request as assignment_count %}
@@ -54,9 +63,16 @@
               <p class="align-middle text-center pt-3">You have no reporting tasks. Nice!</p>
             {% endif %}
           </div>
-        </div>
+<<<<<<< HEAD
+        </div>-->
 
-        <div class="dashboard__item">
+        <!--<div class="dashboard__item">
+=======
+        </div> -->
+        <!--removing unncessary block of code on home page-->
+
+        <!-- <div class="dashboard__item">
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
           <div class="card">
             <p class="dashboard-header text-center">Recent Background Tasks</p>
             <table>
@@ -92,7 +108,12 @@
               {% endif %}
             </table>
           </div>
-        </div>
+<<<<<<< HEAD
+        </div>-->
+=======
+        </div> -->
+        <!--removing unncessary block of code on home page-->
+>>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
 
         <div class="dashboard__item">
           <div class="card">

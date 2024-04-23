@@ -17,7 +17,7 @@ LINTER_CONTEXT = {
         "end_day": 25,
         "end_year": 2021,
         "codename": "KABLE-01",
-        "timezone": "America/Los_Angeles",
+        "timezone": "Asia/Kolkata",
         "note": "<p>This is an assessment for Kabletown but targets NBC assets. The goal is to answer specific questions prior to Kabletown absorbing NBC.</p>",
         "note_rt": "",
         "slack_channel": "#ghostwriter",
@@ -32,7 +32,7 @@ LINTER_CONTEXT = {
         "contacts": [
             {
                 "name": "Hank Hooper",
-                "timezone": "America/Los_Angeles",
+                "timezone": "Asia/Kolkata",
                 "job_title": "CEO",
                 "email": "dad@kabletown.family",
                 "phone": "(212) 664-4444",
@@ -41,7 +41,7 @@ LINTER_CONTEXT = {
             },
             {
                 "name": "John Francis Donaghy",
-                "timezone": "America/Los_Angeles",
+                "timezone": "Asia/Kolkata",
                 "job_title": "Vice President of East Coast Television",
                 "email": "jack@nbc.com",
                 "phone": "(212) 664-4444",
@@ -66,7 +66,7 @@ LINTER_CONTEXT = {
             "email": "benny@ghostwriter.wiki",
             "start_date": "Mar. 1, 2021",
             "end_date": "Jun. 25, 2021",
-            "timezone": "America/Los_Angeles",
+            "timezone": "Asia/Kolkata",
             "phone": "(212) 664-4444",
             "note": "<p>Benny will lead the assessment for the full duration.</p>",
             "note_rt": "",
@@ -77,7 +77,7 @@ LINTER_CONTEXT = {
             "email": "cmaddalena@specterops.io",
             "start_date": "Mar. 1, 2021",
             "end_date": "Jun. 25, 2021",
-            "timezone": "America/Los_Angeles",
+            "timezone": "Asia/Kolkata",
             "phone": "(212) 664-4444",
             "note": "<p>Christopher will provide oversight and assistance (as needed).</p>",
             "note_rt": "",
@@ -273,7 +273,9 @@ LINTER_CONTEXT = {
                 "role": "Team Server / C2 Server",
                 "start_date": "Mar. 1, 2021",
                 "end_date": "Jun. 25, 2021",
-                "dns": [{"domain": "ghostwriter.wiki", "endpoint": "", "subdomain": "www"}],
+                "dns": [
+                    {"domain": "ghostwriter.wiki", "endpoint": "", "subdomain": "www"}
+                ],
                 "note": "<p>Long-haul C2 server</p>",
                 "note_rt": "",
                 "extra_fields": {},
@@ -303,7 +305,9 @@ LINTER_CONTEXT = {
                 "activity": "Phishing",
                 "role": "SMTP",
                 "provider": "Amazon Web Services",
-                "dns": [{"domain": "specterops.io", "endpoint": "", "subdomain": "smtp"}],
+                "dns": [
+                    {"domain": "specterops.io", "endpoint": "", "subdomain": "smtp"}
+                ],
                 "ip_address": "30.49.38.30",
                 "name": "SMTP01",
                 "note": "<p>SMTP server for phishing emails; running Gophish</p>",

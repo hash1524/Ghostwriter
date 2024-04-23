@@ -14,7 +14,10 @@ class Migration(migrations.Migration):
             model_name="clientcontact",
             name="timezone",
             field=timezone_field.fields.TimeZoneField(
-                default="America/Los_Angeles", help_text="The contact's timezone", verbose_name="Contact's Timezone"
+                default="Asia/Kolkata",
+                # America -> Asia,
+                help_text="The contact's timezone",
+                verbose_name="Contact's Timezone",
             ),
         ),
     ]

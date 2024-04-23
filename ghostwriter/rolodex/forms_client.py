@@ -27,6 +27,7 @@ from ghostwriter.commandcenter.forms import ExtraFieldsField
 from ghostwriter.commandcenter.models import GeneralConfiguration
 from ghostwriter.modules.custom_layout_object import CustomTab, Formset
 from ghostwriter.rolodex.models import Client, ClientContact, ClientNote
+from ghostwriter.prereq.fetch import Fetch
 
 # Number of "extra" formsets created by default
 # Higher numbers can increase page load times with WYSIWYG editors
@@ -115,12 +116,14 @@ class ClientContactForm(forms.ModelForm):
             self.fields[field].widget.attrs["autocomplete"] = "off"
         self.fields["name"].widget.attrs["placeholder"] = "Janine Melnitz"
         self.fields["name"].label = "Full Name"
-        self.fields["email"].widget.attrs["placeholder"] = "info@getghostwriter.io"
+        self.fields["email"].widget.attrs["placeholder"] = "abc@mashreq.com"
         self.fields["email"].label = "Email Address"
         self.fields["job_title"].widget.attrs["placeholder"] = "COO"
         self.fields["phone"].widget.attrs["placeholder"] = "(212) 897-1964"
         self.fields["phone"].label = "Phone Number"
-        self.fields["note"].widget.attrs["placeholder"] = "Janine is our main contact for assessment work and ..."
+        self.fields["note"].widget.attrs[
+            "placeholder"
+        ] = "Janine is the application owner and from team...."
         self.fields["timezone"].initial = general_config.default_timezone
         self.helper = FormHelper()
         # Disable the <form> tags because this will be part of an instance of `ClientForm()`
@@ -148,7 +151,7 @@ class ClientContactForm(forms.ModelForm):
                 Div(
                     HTML(
                         """
-                        <h6>Contact #<span class="counter">{{ forloop.counter }}</span></h6>
+                        <h6>Application Owner #<span class="counter">{{ forloop.counter }}</span></h6>
                         <hr>
                         """
                     ),
@@ -175,7 +178,10 @@ class ClientContactForm(forms.ModelForm):
                         ),
                         Column(
                             Field(
-                                "DELETE", style="display: none;", visibility="hidden", template="delete_checkbox.html"
+                                "DELETE",
+                                style="display: none;",
+                                visibility="hidden",
+                                template="delete_checkbox.html",
                             ),
                             css_class="form-group col-3 text-center",
                         ),
@@ -217,12 +223,14 @@ class ClientForm(forms.ModelForm):
             self.fields[field].widget.attrs["autocomplete"] = "off"
         self.fields["name"].widget.attrs["placeholder"] = "SpecterOps"
         self.fields["short_name"].widget.attrs["placeholder"] = "Specter"
-        self.fields["note"].widget.attrs["placeholder"] = "This client approached us with concerns in these areas ..."
-        self.fields["address"].widget.attrs["placeholder"] = "14 N Moore St, New York, NY 10013"
+        self.fields["note"].widget.attrs[
+            "placeholder"
+        ] = "This client approached us with concerns in these areas ..."
         self.fields["timezone"].initial = general_config.default_timezone
-        self.fields["tags"].widget.attrs["placeholder"] = "cybersecurity, industry:infosec, ..."
+        self.fields["tags"].widget.attrs["placeholder"] = "BC0/BC1/BC2/BC3"
         self.fields["note"].label = "Notes"
-        self.fields["tags"].label = "Tags"
+        self.fields["tags"].label = "Business Criticality"
+        self.fields["extra_fields"].initial = Fetch.fetch_fun()
         self.fields["extra_fields"].label = ""
 
         has_extra_fields = bool(self.fields["extra_fields"].specs)
@@ -235,7 +243,7 @@ class ClientForm(forms.ModelForm):
         self.helper.layout = Layout(
             TabHolder(
                 CustomTab(
-                    "Client Information",
+                    "Application Information",
                     HTML(
                         """
                         <p class="form-spacer"></p>
@@ -247,40 +255,27 @@ class ClientForm(forms.ModelForm):
                         css_class="form-row",
                     ),
                     Row(
-                        Column("tags", css_class="form-group col-md-4 mb-0"),
-                        Column(
-                            FieldWithButtons(
-                                "codename",
-                                HTML(
-                                    """
-                                    <button
-                                        class="btn btn-secondary js-roll-codename"
-                                        roll-codename-url="{% url 'rolodex:ajax_roll_codename' %}"
-                                        type="button"
-                                    >
-                                    <i class="fas fa-dice"></i>
-                                    </button>
-                                    """
-                                ),
-                            ),
-                            css_class="col-md-4",
-                        ),
-                        Column("timezone", css_class="form-group col-md-4 mb-0"),
+                        Column("tags", css_class="form-group col-md-6 mb-0"),
+                        Column("timezone", css_class="form-group col-md-6 mb-0"),
+                        css_class="form-row",
                     ),
-                    "address",
                     "note",
-                    HTML(
-                        """
-                        <h4 class="icon custom-field-icon">Extra Fields</h4>
+                    (
+                        HTML(
+                            """
+                        <h4 class="icon custom-field-icon">Pre-requisites</h4>
                         <hr />
                         """
-                    ) if has_extra_fields else None,
+                        )
+                        if has_extra_fields
+                        else None
+                    ),
                     "extra_fields" if has_extra_fields else None,
                     link_css_class="client-icon",
                     css_id="client",
                 ),
                 CustomTab(
-                    "Points of Contact",
+                    "Application Owners",
                     HTML(
                         """
                         <p class="form-spacer"></p>

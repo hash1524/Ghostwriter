@@ -1,14 +1,14 @@
 {% load bleach_tags %}
 
 {% comment %} Contacts Section {% endcomment %}
-<h4>Project Points of Contacts</h4>
+<h4>Activity Points of Contacts</h4>
 <hr/>
 
 <a class="icon edit-icon btn btn-primary mb-3 col-3"
    href="{% url 'rolodex:project_component_update' project.id %}#contacts">Add & Edit Contacts</a>
 
-<p>These are points of contact for this project. You can create project-specific contacts here or add contacts from
-  {{ project.client }}. If a point of contact might be part of more projects, consider adding them to
+<p>These are points of contact for this activity. You can create activity-specific contacts here or add contacts from
+  {{ project.client }}. If a point of contact might be part of more activities, consider adding them to
   {{ project.client }}.
 </p>
 
@@ -58,7 +58,7 @@
   </table>
 {% else %}
   <div class="alert alert-warning offset-md-2 col-md-8 mt-1" role="alert">There are no points of contacts assigned to
-    this client yet.
+    this application yet.
   </div>
 {% endif %}
 
@@ -74,7 +74,7 @@
       <div class="col col-6 offset-3">
         <select id="id_client_contact" class="form-select custom-select" aria-label="Assign project contact">
           {% if client_contacts %}
-            <option value="-1" selected>-- Choose a Client Contact --</option>
+            <option value="-1" selected>-- Choose an Application Contact --</option>
             {% for contact in client_contacts %}
               <option value="{{ contact.id }}"> {{ contact.name }} </option>
             {% endfor %}

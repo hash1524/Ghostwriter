@@ -32,15 +32,20 @@ class ClientFilter(django_filters.FilterSet):
 
     name = django_filters.CharFilter(
         method="search_all_names",
-        label="Client Name Contains",
-        widget=TextInput(attrs={"placeholder": "Partial Name, Short Name, or Codename", "autocomplete": "off"}),
+        label="Application Name Contains",
+        widget=TextInput(
+            attrs={
+                "placeholder": "Partial Name, Short Name, or Codename",
+                "autocomplete": "off",
+            }
+        ),
     )
     tags = django_filters.CharFilter(
         method="search_tags",
-        label="Client Tags Contain",
+        label="Application Tags Contain",
         widget=TextInput(
             attrs={
-                "placeholder": "Client Tag",
+                "placeholder": "Application Tag",
                 "autocomplete": "off",
             }
         ),
@@ -74,7 +79,9 @@ class ClientFilter(django_filters.FilterSet):
                         <a class="btn btn-info col-md-2" role="button" href="{%  url 'rolodex:client_create' %}">Create</a>
                         """
                     ),
-                    Submit("submit_btn", "Filter", css_class="btn btn-primary col-md-2"),
+                    Submit(
+                        "submit_btn", "Filter", css_class="btn btn-primary col-md-2"
+                    ),
                     HTML(
                         """
                         <a class="btn btn-outline-secondary col-md-2" role="button" href="{%  url 'rolodex:clients' %}">Reset</a>
@@ -90,7 +97,11 @@ class ClientFilter(django_filters.FilterSet):
         Search for a value that appears in the :model:`rolodex.Client`
         `name`, `short_name`, or `codename` fields.
         """
-        return queryset.filter(Q(name__icontains=value) | Q(short_name__icontains=value) | Q(codename__icontains=value))
+        return queryset.filter(
+            Q(name__icontains=value)
+            | Q(short_name__icontains=value)
+            | Q(codename__icontains=value)
+        )
 
     def search_tags(self, queryset, name, value):
         """Filter clients by tags."""
@@ -120,21 +131,21 @@ class ProjectFilter(django_filters.FilterSet):
     """
 
     client = django_filters.CharFilter(
-        label="Client Name Contains",
+        label="Application Name Contains",
         method="search_all_client_names",
         widget=TextInput(
             attrs={
-                "placeholder": "Partial Client Name",
+                "placeholder": "Partial Application Name",
                 "autocomplete": "off",
             }
         ),
     )
     codename = django_filters.CharFilter(
-        label="Project Codename Contains",
+        label="Activity Codename Contains",
         lookup_expr="icontains",
         widget=TextInput(
             attrs={
-                "placeholder": "Partial Project Codename",
+                "placeholder": "Partial Activity Codename",
                 "autocomplete": "off",
             }
         ),
@@ -153,16 +164,22 @@ class ProjectFilter(django_filters.FilterSet):
         lookup_expr="gte",
         field_name="start_date",
         label="Start Date",
-        widget=forms.DateInput(attrs={"type": "date", "class": "dateinput form-control"}),
+        widget=forms.DateInput(
+            attrs={"type": "date", "class": "dateinput form-control"}
+        ),
     )
     end_date = django_filters.DateFilter(
         lookup_expr="lte",
         field_name="end_date",
         label="End Date",
-        widget=forms.DateInput(attrs={"type": "date", "class": "dateinput form-control"}),
+        widget=forms.DateInput(
+            attrs={"type": "date", "class": "dateinput form-control"}
+        ),
     )
     start_date_range = django_filters.DateRangeFilter(
-        label="Relative Start Date", field_name="start_date", empty_label="-- Relative Start Date --"
+        label="Relative Start Date",
+        field_name="start_date",
+        empty_label="-- Relative Start Date --",
     )
 
     STATUS_CHOICES = (
@@ -170,7 +187,9 @@ class ProjectFilter(django_filters.FilterSet):
         (1, "Completed"),
     )
 
-    complete = django_filters.ChoiceFilter(choices=STATUS_CHOICES, empty_label="All Projects", label="Project Status")
+    complete = django_filters.ChoiceFilter(
+        choices=STATUS_CHOICES, empty_label="All Projects", label="Activity Status"
+    )
 
     PROJECT_TYPE_CHOICES = []
     try:
@@ -240,7 +259,9 @@ class ProjectFilter(django_filters.FilterSet):
                         css_class="form-group col-md-4 mb-0",
                     ),
                     Column(
-                        PrependedText("start_date", '<i class="fas fa-hourglass-start"></i>'),
+                        PrependedText(
+                            "start_date", '<i class="fas fa-hourglass-start"></i>'
+                        ),
                         css_class="form-group col-md-4 mb-0",
                     ),
                     Column(
@@ -259,7 +280,9 @@ class ProjectFilter(django_filters.FilterSet):
                         href="{%  url 'rolodex:project_create_no_client' %}">Create</a>
                         """
                     ),
-                    Submit("submit_btn", "Filter", css_class="btn btn-primary col-md-2"),
+                    Submit(
+                        "submit_btn", "Filter", css_class="btn btn-primary col-md-2"
+                    ),
                     HTML(
                         """
                         <a class="btn btn-outline-secondary col-md-2" role="button"

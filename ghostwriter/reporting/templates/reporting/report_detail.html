@@ -122,66 +122,6 @@
             {% endif %}
           </span>
         </h6>
-
-        <h4>Report Configuration</h4>
-        <hr>
-
-        <table class="table table-responsive-lg table-borderless table-config center">
-          <tr>
-            <td class="text-left icon tag-icon">Figure Label & Prefix</td>
-            <td class="text-justify">{{ report_config.label_figure }} {{ report_config.prefix_figure }}</td>
-          </tr>
-          <tr>
-            <td class="text-left icon tag-icon">Table Label & Prefix</td>
-            <td class="text-justify">{{ report_config.label_table }} {{ report_config.prefix_table }}</td>
-          </tr>
-          <tr>
-            <td class="text-left icon tag-icon">Title Case Captions</td>
-            <td class="text-justify">
-              {% if report_config.title_case_captions %}
-                <span class="align-middle healthy"><i class="fas fa-check"></i></span>
-              {% else %}
-                <span class="align-middle burned"><i class="fas fa-times"></i></span>
-              {% endif %}
-            </td>
-          </tr>
-          <tr>
-            <td class="text-left icon tag-icon">Title Case Exceptions</td>
-            <td class="text-justify"> {{ report_config.title_case_exceptions|split_and_join:"," }}</td>
-          </tr>
-          <tr>
-            <td class="text-left icon toggle-on-icon">Image Borders</td>
-            <td class="text-justify">
-              {% if report_config.enable_borders %}
-                <span class="align-middle healthy"><i class="fas fa-check"></i></span>
-              {% else %}
-                <span class="align-middle burned"><i class="fas fa-times"></i></span>
-              {% endif %}
-            </td>
-          </tr>
-          {% if report_config.enable_borders %}
-            <tr>
-              <td class="text-left icon border-icon">Image Border Weight</td>
-              <td class="text-justify">{{ report_config.border_weight }} EMUs ({{ report_config.border_weight|divide:12700 }}
-                pt)
-              </td>
-            </tr>
-            <tr>
-              <td class="text-left icon border-icon">Image Border Color</td>
-              <td class="text-justify">#{{ report_config.border_color }} <i class="fas fa-tint"
-                                                                           style="color:#{{ report_config.border_color }}"></i>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-left icon signature-icon">Report Download Filename</td>
-              <td class="text-justify"> {{ report_config.report_filename }}</td>
-            </tr>
-            <tr>
-              <td class="text-left icon calendar-icon">Delivery Date</td>
-              <td class="text-justify">{% if report_config.target_delivery_date > 0 %}+{% endif %}{{ report_config.target_delivery_date }} business days</td>
-            </tr>
-          {% endif %}
-        </table>
       </div>
 
       {% comment %} Findings Tab {% endcomment %}
@@ -247,8 +187,7 @@
                   <span id="status-info-btn" class="dropdown-info" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">Status</span>
                   <div id="status-info" class="dropdown-menu dropdown-info-content" aria-labelledby="status-info-btn">
-                    <p>Mark a finding as ready or in need of editing. Findings marked as in need of editing will appear
-                      on
+                    <p>Mark a Vulnerability as Closed or Open. Vulenrabilities marked as open will appear on
                       the assigned user's dashboard.</p>
                   </div>
                 </div>
@@ -378,9 +317,9 @@
                     <td class="align-middle">
                       <span id="finding-status-{{ finding.id }}" class="
                         {% if finding.complete %}
-                          healthy">Ready
+                          healthy">Closed
                       {% else %}
-                        burned"> Needs Editing
+                        burned"> Open
                       {% endif %}
                       </span>
                     </td>
@@ -398,11 +337,11 @@
                           <a class="dropdown-item icon toggle-off-icon js-set-finding-status" href="javascript:void(0);"
                              set-finding-status-csrftoken="{{ csrf_token }}"
                              set-finding-status-url="{% url 'reporting:ajax_set_finding_status' finding.id 'edit' %}"
-                             set-finding-status="edit" set-finding-status-id="{{ finding.id }}">Flag for Editing</a>
+                             set-finding-status="edit" set-finding-status-id="{{ finding.id }}">Vulnerability Open</a>
                           <a class="dropdown-item icon toggle-on-icon js-set-finding-status" href="javascript:void(0);"
                              set-finding-status-csrftoken="{{ csrf_token }}"
                              set-finding-status-url="{% url 'reporting:ajax_set_finding_status' finding.id 'complete' %}"
-                             set-finding-status="complete" set-finding-status-id="{{ finding.id }}">Mark as Complete</a>
+                             set-finding-status="complete" set-finding-status-id="{{ finding.id }}">Vulnerability Closed</a>
                           <a class="dropdown-item icon clone-icon"
                              href="{% url 'reporting:convert_finding' finding.id %}">Clone
                             to Library</a>

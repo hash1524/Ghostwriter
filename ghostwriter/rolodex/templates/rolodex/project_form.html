@@ -23,16 +23,16 @@
           <li class="breadcrumb-item"><a data-toggle="tooltip" title="{{ client }}"
                                          href="{% url 'rolodex:client_detail' client.id %}">{{ client }}</a></li>
         {% endif %}
-        <li class="breadcrumb-item active" aria-current="page">New Project Form</li>
+        <li class="breadcrumb-item active" aria-current="page">New Activity Form</li>
       {% endif %}
     </ul>
   </nav>
 {% endblock %}
 
 {% block content %}
-  <strong class="icon project-icon">Setup a Project</strong>
+  <strong class="icon project-icon">Setup an Activity</strong>
   <hr>
-  <p>Use the tabs to provide basic project parameters, notes, assignments, and objectives:</p>
+  <p>Use the tabs to provide basic activity parameters, notes, assignments, and objectives:</p>
 
   <!-- Form Error Section -->
   {% if form.errors %}
@@ -143,18 +143,6 @@
       tinymce.execCommand('mceAddEditor', false, target);
     });
 
-    {% comment %} Roll Codename with AJAX {% endcomment %}
-    $('.js-roll-codename').click(function () {
-      let url = $(this).attr('roll-codename-url');
-      // Send AJAX POST request
-      $.ajax({
-        url: url,
-        type: 'GET',
-        success: function (data) {
-          $("#id_codename").val(data['codename']);
-        }
-      });
-    });
 
     {% comment %} Split and trim scope list {% endcomment %}
 

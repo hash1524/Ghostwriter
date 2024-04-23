@@ -603,16 +603,12 @@ class Evidence(models.Model):
     )
     tags = TaggableManager(blank=True)
     # Foreign Keys
-<<<<<<< HEAD
     finding = models.ForeignKey(
         "ReportFindingLink", on_delete=models.CASCADE, null=True, blank=True
     )
     report = models.ForeignKey(
         "Report", on_delete=models.CASCADE, null=True, blank=True
     )
-=======
-    finding = models.ForeignKey("ReportFindingLink", on_delete=models.CASCADE)
->>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
     uploaded_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
     )

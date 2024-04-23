@@ -311,7 +311,6 @@ class VirusTotalConfiguration(SingletonModel):
 class GeneralConfiguration(SingletonModel):
     default_timezone = TimeZoneField(
         "Default Timezone",
-<<<<<<< HEAD
         default="America/Los_Angeles",
         help_text="Select a default timezone for Applications and Activities",
     )
@@ -319,10 +318,6 @@ class GeneralConfiguration(SingletonModel):
         max_length=255,
         default="ghostwriter.local",
         help_text="Hostname or IP address for Ghostwtiter (used for links in notifications)",
-=======
-        default="Asia/Kolkata",
-        help_text="Select a default timezone for Applications and Activities",
->>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
     )
 
     def __str__(self):

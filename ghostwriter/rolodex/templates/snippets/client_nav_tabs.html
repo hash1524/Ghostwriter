@@ -4,18 +4,13 @@
     </a>
 </li>
 <li class="nav-item">
-<<<<<<< HEAD
     <a id="id_contacts" class="nav-link tab-icon poc-icon" data-toggle="tab" href="#contacts">
-=======
-    <a id="id_contacts" class="nav-link tab-icon user-icon-circle" data-toggle="tab" href="#contacts">
->>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
         Application Owners History <span class="badge badge-pill badge-light">{{ client.clientcontact_set.all.count }}</span>
     </a>
 </li>
 <li class="nav-item">
     <a id="id_projects" class="nav-link tab-icon history-icon" data-toggle="tab" href="#project-history">
         Activity History <span class="badge badge-pill badge-light">{{ client.project_set.all.count }}</span>
-<<<<<<< HEAD
     </a>
 </li>
 {% if client_extra_fields_spec %}
@@ -25,15 +20,6 @@
         </a>
     </li>
 {% endif %}
-=======
-    </a>
-</li>
-<!-- <li class="nav-item">
-    <a id="id_infrastructure" class="nav-link tab-icon history-icon" data-toggle="tab" href="#infrastructure-history">
-        Infrastructure History <span class="badge badge-pill badge-light">{{ client.project_set.history_set.all.count }}</span>
-    </a>
-</li> -->
->>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
 <li class="nav-item">
     <a id="id_notes" class="nav-link tab-icon comment-icon" data-toggle="tab" href="#notes">
         Notes <span class="badge badge-pill badge-light">{{ client.clientnote_set.all.count }}</span>

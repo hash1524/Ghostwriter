@@ -287,7 +287,9 @@ hr {
   font-size: var(--main-font-size);
 }
 
-.tox-toolbar__group:last-child { margin-left: auto!important; }
+.tox-toolbar__group:last-child {
+  margin-left: auto !important;
+}
 
 /* ---------------------------------------------------
     HEADER STYLES
@@ -3529,8 +3531,4 @@ input[type="color"]:focus,
   /*126,239,104 used to be this color,changing it now */
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(230, 129, 53, 0.6);
   outline: 0 none;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7

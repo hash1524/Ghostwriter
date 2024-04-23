@@ -7,11 +7,7 @@
 <a class="icon edit-icon btn btn-primary mb-3 col-3"
    href="{% url 'rolodex:project_component_update' project.id %}#contacts">Add & Edit Contacts</a>
 
-<<<<<<< HEAD
 <p>These are points of contact for this activity. You can create activity-specific contacts here or add contacts from
-=======
-<p>These are points of contact for this activity. You can create acticity-specific contacts here or add contacts from
->>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
   {{ project.client }}. If a point of contact might be part of more activities, consider adding them to
   {{ project.client }}.
 </p>
@@ -78,11 +74,7 @@
       <div class="col col-6 offset-3">
         <select id="id_client_contact" class="form-select custom-select" aria-label="Assign project contact">
           {% if client_contacts %}
-<<<<<<< HEAD
             <option value="-1" selected>-- Choose an Application Contact --</option>
-=======
-            <option value="-1" selected>-- Choose a Application Contact --</option>
->>>>>>> 9d50a853d9165b1d8e4bf55f5d73fd33f3cd4cd7
             {% for contact in client_contacts %}
               <option value="{{ contact.id }}"> {{ contact.name }} </option>
             {% endfor %}
